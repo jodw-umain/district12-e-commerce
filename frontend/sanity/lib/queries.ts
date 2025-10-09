@@ -66,6 +66,11 @@ export const allPostsQuery = defineQuery(`
     ${postFields}
   }
 `)
+export const allProductsQuery = defineQuery(`
+  *[_type == "product" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+    ${postFields}
+  }
+`)
 
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
