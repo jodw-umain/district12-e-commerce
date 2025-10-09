@@ -111,6 +111,64 @@ export type BlockContent = Array<{
   _key: string
 }>
 
+export type Category = {
+  _id: string
+  _type: 'category'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug?: Slug
+}
+
+export type Product = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading: string
+  productName: string
+  author?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'author'
+  }
+  productDescription: BlockContent
+  productPrice: number
+  format: Array<string>
+  categories: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'category'
+  }>
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  slug: Slug
+  pageBuilder?: Array<
+    | ({
+        _key: string
+      } & CallToAction)
+    | ({
+        _key: string
+      } & InfoSection)
+  >
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -214,18 +272,17 @@ export type Post = {
     _ref: string
     _type: 'reference'
     _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'person'
+    [internalGroqTypeReferenceTo]?: 'author'
   }
 }
 
-export type Person = {
+export type Author = {
   _id: string
-  _type: 'person'
+  _type: 'author'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  firstName: string
-  lastName: string
+  name: string
   picture: {
     asset?: {
       _ref: string
@@ -397,25 +454,25 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: 'sanity.imageDimensions'
-  height?: number
-  width?: number
-  aspectRatio?: number
+  height: number
+  width: number
+  aspectRatio: number
 }
 
 export type SanityImageHotspot = {
   _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
+  x: number
+  y: number
+  height: number
+  width: number
 }
 
 export type SanityImageCrop = {
   _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
+  top: number
+  bottom: number
+  left: number
+  right: number
 }
 
 export type SanityFileAsset = {
@@ -499,10 +556,12 @@ export type AllSanitySchemaTypes =
   | Link
   | InfoSection
   | BlockContent
+  | Category
+  | Product
   | Settings
   | Page
   | Post
-  | Person
+  | Author
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations
@@ -676,8 +735,8 @@ export type AllPostsQueryResult = Array<{
   }
   date: string
   author: {
-    firstName: string
-    lastName: string
+    firstName: null
+    lastName: null
     picture: {
       asset?: {
         _ref: string
@@ -716,8 +775,8 @@ export type MorePostsQueryResult = Array<{
   }
   date: string
   author: {
-    firstName: string
-    lastName: string
+    firstName: null
+    lastName: null
     picture: {
       asset?: {
         _ref: string
@@ -778,8 +837,8 @@ export type PostQueryResult = {
   }
   date: string
   author: {
-    firstName: string
-    lastName: string
+    firstName: null
+    lastName: null
     picture: {
       asset?: {
         _ref: string
