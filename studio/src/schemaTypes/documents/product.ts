@@ -41,19 +41,33 @@ export const product = defineType({
     }),
     defineField({
       name: 'format',
-      type: 'string',
+      type: 'array',
+      of: [{type: 'string'}],
+
       options: {
-        list: ['Physical', 'Digital'],
-        layout: 'radio',
+        list: [
+          {title: 'Physical', value: 'physical'},
+          {title: 'Digital', value: 'digital'},
+        ],
+        layout: 'list',
       },
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'reference',
-      to: [{type: 'category'}],
-      validation: (Rule) => Rule.required(),
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'category'}],
+          options: {disableNew: true, disableEdit: true},
+        },
+      ],
+      options: {
+        layout: 'list',
+      },
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'picture',
