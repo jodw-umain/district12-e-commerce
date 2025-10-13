@@ -116,3 +116,34 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `)
+
+export const getProductsByCategoryQuery = defineQuery(`
+  *[
+    _type == "product" &&
+    (
+      !defined($category)
+      || count(categories[@->slug.current == $category]) > 0
+    )
+  ] | order(_createdAt desc) {
+    _id,
+    _type,
+    productName,
+    "slug": slug.current,
+    productPrice,
+    productDescription,
+    picture{
+      alt,
+      "url": asset->url
+    },
+    format,
+    author->{
+      firstName,
+      lastName,
+      image
+    },
+    categories[]->{
+      title,
+      "slug": slug.current
+    }
+  }
+`)
