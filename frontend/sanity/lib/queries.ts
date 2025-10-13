@@ -147,3 +147,10 @@ export const getProductsByCategoryQuery = defineQuery(`
     }
   }
 `)
+
+export const getCategoriesQuery = defineQuery(`
+  *[_type == "category"]{
+    title,
+    "slug": slug.current
+  }
+`);
