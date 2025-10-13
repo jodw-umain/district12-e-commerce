@@ -8,7 +8,7 @@ export default function Logo() {
       className="relative flex items-center gap-2 w-[120px] h-[40px]"
     >
       <Image
-        src="../../public/logo.png"
+        src="/images/logo.png"
         alt="Logo"
         fill                    
         className="object-contain"
