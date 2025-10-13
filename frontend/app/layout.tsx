@@ -71,7 +71,11 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             enableSystem
             disableTransitionOnChange
         >
-        <NavBar />
+          
+        <div className="fixed top-0 left-0 w-full z-50">
+          <NavBar />
+        </div>
+
         <section className="min-h-screen pt-24">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           <Toaster />
