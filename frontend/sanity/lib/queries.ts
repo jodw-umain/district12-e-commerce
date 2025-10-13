@@ -66,6 +66,27 @@ export const allPostsQuery = defineQuery(`
     ${postFields}
   }
 `)
+// Fetch all products
+export const allProductsQuery = `
+  *[_type == "product"]{
+    _id,
+    productName,
+    slug,
+    author->{firstName, lastName, image},
+    productDescription
+  } | order(_createdAt desc)
+`
+
+// Fetch "more" products with pagination
+export const moreProductsQuery = `
+  *[_type == "product"] | order(_createdAt desc) [$skip...($skip + $limit)]{
+    _id,
+    productName,
+    slug,
+    author->{firstName, lastName, image},
+    productDescription
+  }
+`
 
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
