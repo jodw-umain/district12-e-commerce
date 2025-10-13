@@ -1,10 +1,5 @@
 import {Suspense} from 'react'
-
-import {PortableText} from '@portabletext/react'
-
-// import {AllPosts} from '@/app/components/Posts'
 import {AllProducts} from '@/app/components/Products'
-
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 
