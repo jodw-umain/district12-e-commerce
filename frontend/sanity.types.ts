@@ -760,29 +760,29 @@ export type AllPostsQueryResult = Array<{
 // Query: *[_type=="product"]{  _id,  "slug":slug.current,   "productTitle": productName,  "price": productPrice,   "artist": author->name,  "category": categories[]->title,  "image": picture.asset->url} | order(_createdAt desc)
 export type AllProductsQueryResult = Array<{
   _id: string
-  slug: string
-  productTitle: string
-  price: number
+  slug: string | null
+  productTitle: string | null
+  price: number | null
   artist: string | null
-  category: Array<string>
+  category: Array<string | null> | null
   image: string | null
 }>
 // Variable: oneProductQuery
 // Query: *[_type=="product"][0]{  _id,  "slug":slug.current,   "productTitle": productName,  "price": productPrice,   "artist": author->name,  "category": categories[]->title,  "image": picture.asset->url}
 export type OneProductQueryResult = {
   _id: string
-  slug: string
-  productTitle: string
-  price: number
+  slug: string | null
+  productTitle: string | null
+  price: number | null
   artist: string | null
-  category: Array<string>
+  category: Array<string | null> | null
   image: string | null
 } | null
 // Variable: allArtists
 // Query: *[_type=="author"]{  _id,  name,   "authorImg":picture.asset->url}| order(_createdAt asc)
 export type AllArtistsResult = Array<{
   _id: string
-  name: string
+  name: string | null
   authorImg: string | null
 }>
 // Variable: morePostsQuery
