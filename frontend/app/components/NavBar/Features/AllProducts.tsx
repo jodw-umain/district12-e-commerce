@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function AllProducts() {
+export default function AllProductsButton() {
   return (
     <Link
       href="/products"

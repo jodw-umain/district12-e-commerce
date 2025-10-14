@@ -1,6 +1,7 @@
 import Logo from "./Logo";
 import CategoriesButton from "./Features/Categories";
 import AllProductsButton from "./Features/AllProducts";
+import ArtistsButton from "./Features/Artists";
 
 export default function NavBar() {
   return (
@@ -10,6 +11,7 @@ export default function NavBar() {
       <div className="flex items-center gap-6">
         <AllProductsButton />
         <CategoriesButton />
+        <ArtistsButton />
       </div>
     </nav>
   );

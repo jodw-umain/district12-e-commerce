@@ -156,10 +156,14 @@ export const getCategoriesQuery = defineQuery(`
 `);
 
 export const getArtistsQuery = defineQuery(`
-  *[_type == "artist"] | order(name asc) {
+  *[_type == "author"] | order(name asc) {
     _id,
     name,
-    "slug": slug.current
+    "slug": slug.current,
+    picture {
+      "url": asset->url,
+      alt
+    }
   }
 `);
 
@@ -168,10 +172,11 @@ export const getProductsByArtistQuery = defineQuery(`
     _type == "product" &&
     (
       !defined($artist)
-      || author->slug.current == $artist
+      || author->name == $artist
     )
   ] | order(_createdAt desc) {
     _id,
+    _type,
     productName,
     "slug": slug.current,
     productPrice,
@@ -182,14 +187,15 @@ export const getProductsByArtistQuery = defineQuery(`
     },
     format,
     author->{
-      firstName,
-      lastName,
-      "slug": slug.current,
-      image
+      name,
+      picture{
+        alt,
+        "url": asset->url
+      }
     },
     categories[]->{
       title,
       "slug": slug.current
     }
   }
-`);
+`)
