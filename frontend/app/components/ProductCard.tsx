@@ -3,10 +3,10 @@ import {Card, CardHeader, CardDescription, CardContent, CardTitle, CardFooter} f
 
 interface ProductCard {
   image?: string | null
-  productTitle?: string
+  productTitle?: string | null
   artist?: string | null
-  price?: number
-  category?: string[]
+  price?: number | null
+  category?: string[] | null
 }
 
 export default function ProductCard({image, productTitle, artist, price, category}: ProductCard) {
