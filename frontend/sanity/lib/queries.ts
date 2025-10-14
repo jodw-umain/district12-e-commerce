@@ -162,3 +162,34 @@ export const getArtistsQuery = defineQuery(`
     "slug": slug.current
   }
 `);
+
+export const getProductsByArtistQuery = defineQuery(`
+  *[
+    _type == "product" &&
+    (
+      !defined($artist)
+      || author->slug.current == $artist
+    )
+  ] | order(_createdAt desc) {
+    _id,
+    productName,
+    "slug": slug.current,
+    productPrice,
+    productDescription,
+    picture{
+      alt,
+      "url": asset->url
+    },
+    format,
+    author->{
+      firstName,
+      lastName,
+      "slug": slug.current,
+      image
+    },
+    categories[]->{
+      title,
+      "slug": slug.current
+    }
+  }
+`);
