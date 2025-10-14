@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {BulbOutlineIcon} from '@sanity/icons'
+import {BlockElementIcon} from '@sanity/icons'
 
 /**
  * Call to action schema object.  Objects are reusable schema structures document.
@@ -10,7 +10,7 @@ export const callToAction = defineType({
   name: 'callToAction',
   title: 'Call to Action',
   type: 'object',
-  icon: BulbOutlineIcon,
+  icon: BlockElementIcon,
   validation: (Rule) =>
     // This is a custom validation rule that requires both 'buttonText' and 'link' to be set, or neither to be set
     Rule.custom((fields) => {
@@ -33,14 +33,36 @@ export const callToAction = defineType({
       type: 'text',
     }),
     defineField({
-      name: 'buttonText',
-      title: 'Button text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'link',
-      title: 'Button link',
-      type: 'link',
+      name: 'buttons',
+      title: 'Buttons',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'button',
+          title: 'Button',
+          fields: [
+            {name: 'buttonText', title: 'Button text', type: 'string'},
+            {name: 'link', title: 'Button link', type: 'link'},
+            {
+              name: 'buttonVariant',
+              title: 'Button Variant',
+              type: 'string',
+              options: {
+                list: [
+                  {title: 'Default', value: 'default'},
+                  {title: 'Secondary', value: 'secondary'},
+                  {title: 'Ghost', value: 'ghost'},
+                  {title: 'Destructive', value: 'destructive'},
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'default',
+            },
+          ],
+        },
+      ],
+      validation: (rule) => rule.max(2).warning('You can add up to 2 buttons only.'),
     }),
   ],
   preview: {
