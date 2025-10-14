@@ -18,7 +18,7 @@ export default async function ArtistsButton() {
         </svg>
       </Link>
 
-      <div className="absolute left-0 top-full hidden group-hover:block z-50 bg-white text-black rounded-md shadow-md mt-1 w-48">
+      <div className="absolute left-0 top-full hidden group-hover:block z-50 bg-white text-black rounded-md shadow-md w-48">
         {artists.map((a: { _id: string; name: string}) => (
           <Link
             key={a._id}

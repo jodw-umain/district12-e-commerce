@@ -18,7 +18,7 @@ export default async function CategoriesButton() {
         </svg>
       </Link>
 
-      <div className="absolute left-0 top-full hidden group-hover:block bg-white text-black rounded-md shadow-md mt-1 w-48">
+      <div className="absolute left-0 top-full hidden group-hover:block bg-white text-black rounded-md shadow-md w-48">
         {categories.map((c: { title: string; slug: string }) => (
           <Link
             key={c.slug}
