@@ -9,9 +9,9 @@ export default function NavBar() {
       <Logo />
 
       <div className="flex items-center gap-6">
-        <AllProductsButton />
         <CategoriesButton />
         <ArtistsButton />
+        <AllProductsButton />
       </div>
     </nav>
   );
