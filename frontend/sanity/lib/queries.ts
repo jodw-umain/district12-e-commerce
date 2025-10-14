@@ -103,6 +103,17 @@ export const moreProductsQuery = `
   }
 `
 
+export const allArtists = defineQuery(`
+*
+[_type=="author"]
+{
+  _id,
+  name, 
+  "authorImg":picture.asset->url
+}
+| order(_createdAt asc)
+`)
+
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
     ${postFields}

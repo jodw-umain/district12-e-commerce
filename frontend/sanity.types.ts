@@ -774,6 +774,13 @@ export type OneProductQueryResult = {
   category: Array<string>
   image: string | null
 } | null
+// Variable: allArtists
+// Query: *[_type=="author"]{  _id,  name,   "authorImg":picture.asset->url}| order(_createdAt asc)
+export type AllArtistsResult = Array<{
+  _id: string
+  name: string
+  authorImg: string | null
+}>
 // Variable: morePostsQuery
 // Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type MorePostsQueryResult = Array<{
@@ -897,6 +904,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type=="product"]{\n  _id,\n  "slug":slug.current, \n  "productTitle": productName,\n  "price": productPrice, \n  "artist": author->name,\n  "category": categories[]->title,\n  "image": picture.asset->url\n} | order(_createdAt desc)\n': AllProductsQueryResult
     '\n*[_type=="product"][0]{\n  _id,\n  "slug":slug.current, \n  "productTitle": productName,\n  "price": productPrice, \n  "artist": author->name,\n  "category": categories[]->title,\n  "image": picture.asset->url\n}\n': OneProductQueryResult
+    '\n*\n[_type=="author"]\n{\n  _id,\n  name, \n  "authorImg":picture.asset->url\n}\n| order(_createdAt asc)\n': AllArtistsResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
