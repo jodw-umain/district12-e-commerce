@@ -13,6 +13,12 @@
  */
 
 // Source: schema.json
+export type HeroSection = {
+  _type: 'heroSection'
+  heading?: string
+  subheading?: string
+}
+
 export type CallToAction = {
   _type: 'callToAction'
   heading?: string
@@ -557,6 +563,7 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
+  | HeroSection
   | CallToAction
   | InfoSection
   | BlockContent
