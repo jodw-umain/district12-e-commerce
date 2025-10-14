@@ -67,7 +67,7 @@ export const allPostsQuery = defineQuery(`
   }
 `)
 // Fetch all products
-export const allProductsQuery = `
+export const allProductsQuery = defineQuery(`
   *[_type=="product"]{
   _id,
   "slug":slug.current, 
@@ -77,10 +77,10 @@ export const allProductsQuery = `
   "category": categories[]->title,
   "image": picture.asset->url
 } | order(_createdAt desc)
-`
+`)
 
 // fetch single product
-export const oneProductQuery = `
+export const oneProductQuery = defineQuery(`
 *[_type=="product"][0]{
   _id,
   "slug":slug.current, 
@@ -90,7 +90,7 @@ export const oneProductQuery = `
   "category": categories[]->title,
   "image": picture.asset->url
 }
-`
+`)
 
 // Fetch "more" products with pagination
 export const moreProductsQuery = `

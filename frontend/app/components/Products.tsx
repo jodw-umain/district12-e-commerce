@@ -3,9 +3,10 @@ import {notFound} from 'next/navigation'
 
 import {sanityFetch} from '@/sanity/lib/live'
 import {allProductsQuery, moreProductsQuery} from '@/sanity/lib/queries'
+// import type {AllProductsQueryResult} from '@/sanity.types'
 
 // import Avatar from '@/app/components/Avatar'
-import {createDataAttribute} from 'next-sanity'
+// import {createDataAttribute} from 'next-sanity'
 import ProductCard from './ProductCard'
 
 // const Product = ({product}: {product: Product}) => {

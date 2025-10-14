@@ -2,11 +2,11 @@ import Image from 'next/image'
 import {Card, CardHeader, CardDescription, CardContent, CardTitle, CardFooter} from './ui/card'
 
 interface ProductCard {
-  image?: string
+  image?: string | null
   productTitle?: string
-  artist?: string
-  price?: string
-  category?: string
+  artist?: string | null
+  price?: number
+  category?: string[]
 }
 
 export default function ProductCard({image, productTitle, artist, price, category}: ProductCard) {
