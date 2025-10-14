@@ -33,30 +33,36 @@ export const callToAction = defineType({
       type: 'text',
     }),
     defineField({
-      name: 'buttonText',
-      title: 'Button text',
-      type: 'string',
-    }),
-    defineField({
-      name: 'buttonVariant',
-      title: 'Button Variant',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Default', value: 'default'},
-          {title: 'Secondary', value: 'secondary'},
-          {title: 'Ghost', value: 'ghost'},
-          {title: 'Destructive', value: 'destructive'},
-          {title: 'Link', value: 'link'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'default',
-    }),
-    defineField({
-      name: 'link',
-      title: 'Button link',
-      type: 'link',
+      name: 'buttons',
+      title: 'Buttons',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'button',
+          title: 'Button',
+          fields: [
+            {name: 'buttonText', title: 'Button text', type: 'string'},
+            {name: 'link', title: 'Button link', type: 'link'},
+            {
+              name: 'buttonVariant',
+              title: 'Button Variant',
+              type: 'string',
+              options: {
+                list: [
+                  {title: 'Default', value: 'default'},
+                  {title: 'Secondary', value: 'secondary'},
+                  {title: 'Ghost', value: 'ghost'},
+                  {title: 'Destructive', value: 'destructive'},
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'default',
+            },
+          ],
+        },
+      ],
+      validation: (rule) => rule.max(2).warning('You can add up to 2 buttons only.'),
     }),
   ],
   preview: {

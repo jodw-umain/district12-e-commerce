@@ -22,12 +22,14 @@ export default function CTA({block}: CtaProps) {
           </div>
 
           <Suspense fallback={null}>
-            <div className="flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
-              <ResolvedLink
-                link={block.link}
-              >
-                <Button variant={block.buttonVariant}>{block.buttonText}</Button>
-              </ResolvedLink>
+            <div className="flex flex-wrap items-center justify-center gap-2 lg:gap-6 lg:mt-0 lg:flex-shrink-0">
+            {block.buttons?.map((btn) =>
+  btn.link && btn.buttonText ? (
+    <ResolvedLink key={btn._key} link={btn.link}>
+      <Button variant={btn.buttonVariant}>{btn.buttonText}</Button>
+    </ResolvedLink>
+  ) : null
+)}
             </div>
           </Suspense>
         </div>

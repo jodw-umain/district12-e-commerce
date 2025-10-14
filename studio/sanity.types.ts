@@ -17,28 +17,13 @@ export type CallToAction = {
   _type: 'callToAction'
   heading?: string
   text?: string
-  buttonText?: string
-  buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive' | 'link'
-  link?: Link
-}
-
-export type Link = {
-  _type: 'link'
-  linkType?: 'href' | 'page' | 'post'
-  href?: string
-  page?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'page'
-  }
-  post?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'post'
-  }
-  openInNewTab?: boolean
+  buttons?: Array<{
+    buttonText?: string
+    link?: Link
+    buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
+    _type: 'button'
+    _key: string
+  }>
 }
 
 export type InfoSection = {
@@ -299,6 +284,25 @@ export type Author = {
   }
 }
 
+export type Link = {
+  _type: 'link'
+  linkType?: 'href' | 'page' | 'post'
+  href?: string
+  page?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'page'
+  }
+  post?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'post'
+  }
+  openInNewTab?: boolean
+}
+
 export type SanityAssistInstructionTask = {
   _type: 'sanity.assist.instructionTask'
   path?: string
@@ -554,7 +558,6 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes =
   | CallToAction
-  | Link
   | InfoSection
   | BlockContent
   | Category
@@ -563,6 +566,7 @@ export type AllSanitySchemaTypes =
   | Page
   | Post
   | Author
+  | Link
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations
