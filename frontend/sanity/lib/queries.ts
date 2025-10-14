@@ -154,3 +154,11 @@ export const getCategoriesQuery = defineQuery(`
     "slug": slug.current
   }
 `);
+
+export const getArtistsQuery = defineQuery(`
+  *[_type == "artist"] | order(name asc) {
+    _id,
+    name,
+    "slug": slug.current
+  }
+`);
