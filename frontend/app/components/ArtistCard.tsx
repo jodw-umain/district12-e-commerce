@@ -2,7 +2,7 @@ import Image from 'next/image'
 import {Card, CardContent, CardHeader, CardTitle} from './ui/card'
 
 interface ArtistCardProps {
-  name?: string
+  name?: string | null
   image?: string | null
 }
 
