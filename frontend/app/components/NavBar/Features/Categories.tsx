@@ -19,7 +19,7 @@ export default async function CategoriesButton() {
       </Link>
 
       <div className="absolute left-0 top-full hidden group-hover:block bg-white text-black rounded-md shadow-md w-48">
-        {categories.map((c: { title: string; slug: string | null }) => (
+        {categories.map((c: { title: string | null; slug: string | null }) => (
           <Link
             key={c.slug}
             href={`/categories?category=${c.slug}`}

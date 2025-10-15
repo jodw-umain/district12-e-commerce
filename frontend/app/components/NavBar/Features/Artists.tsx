@@ -19,7 +19,7 @@ export default async function ArtistsButton() {
       </Link>
 
       <div className="absolute left-0 top-full hidden group-hover:block z-50 bg-white text-black rounded-md shadow-md w-48">
-        {artists.map((a: { _id: string; name: string}) => (
+        {artists.map((a: { _id: string; name: string | null; slug: null; picture: { url: string | null; alt: string | null } | null }) => (
           <Link
             key={a._id}
             href={`/artists?artist=${a.name}`}
