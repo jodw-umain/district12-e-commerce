@@ -49,6 +49,18 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+       _type == "artistCard" => {
+        ...,
+        artist->{
+          _id,
+          _type,
+          name,
+          picture{
+            "url": asset->url,  // Get the direct URL
+            alt
+          }
+        }
+      },
     },
   }
 `)
@@ -67,15 +79,30 @@ export const allPostsQuery = defineQuery(`
   }
 `)
 // Fetch all products
-export const allProductsQuery = `
-  *[_type == "product"]{
-    _id,
-    productName,
-    slug,
-    author->{firstName, lastName, image},
-    productDescription
-  } | order(_createdAt desc)
-`
+export const allProductsQuery = defineQuery(`
+  *[_type=="product"]{
+  _id,
+  "slug":slug.current, 
+  "productTitle": productName,
+  "price": productPrice, 
+  "artist": author->name,
+  "category": categories[]->title,
+  "image": picture.asset->url
+} | order(_createdAt desc)
+`)
+
+// fetch single product
+export const oneProductQuery = defineQuery(`
+*[_type=="product"][0]{
+  _id,
+  "slug":slug.current, 
+  "productTitle": productName,
+  "price": productPrice, 
+  "artist": author->name,
+  "category": categories[]->title,
+  "image": picture.asset->url
+}
+`)
 
 // Fetch "more" products with pagination
 export const moreProductsQuery = `
@@ -87,6 +114,17 @@ export const moreProductsQuery = `
     productDescription
   }
 `
+
+export const allArtists = defineQuery(`
+*
+[_type=="author"]
+{
+  _id,
+  name, 
+  "authorImg":picture.asset->url
+}
+| order(_createdAt asc)
+`)
 
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
