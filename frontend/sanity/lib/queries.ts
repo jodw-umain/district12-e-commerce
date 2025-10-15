@@ -61,6 +61,20 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+      _type == "productDetails" => {
+      overrideTitle,
+      overrideDescription,
+      button,
+      product->{
+        productName,
+        "artist": author->name,
+        productDescription,
+        productPrice,
+        "categories": categories[]->{
+          title
+        },
+        picture
+      }
     },
   }
 `)
