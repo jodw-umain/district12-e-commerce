@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export default function ProductCardComponent({block}: ProductCardProps) {
   const product = block.product
-  let categories = product?.categories.join(', ')
+  let categories = product?.categories?.join(', ')
 
   return (
     <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
