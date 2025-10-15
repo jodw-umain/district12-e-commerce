@@ -7,9 +7,17 @@ interface ProductCard {
   artist?: string | null
   price?: number | null
   category?: string[] | null
+  altText?: string | null
 }
 
-export default function ProductCard({image, productTitle, artist, price, category}: ProductCard) {
+export default function ProductCard({
+  image,
+  altText,
+  productTitle,
+  artist,
+  price,
+  category,
+}: ProductCard) {
   let categories = category?.join(', ')
 
   return (
@@ -20,7 +28,7 @@ export default function ProductCard({image, productTitle, artist, price, categor
             src={`${image}`}
             width={200}
             height={200}
-            alt={`Art made by ${artist}`}
+            alt={`${altText}`}
             className="w-auto h-auto"
             priority={true}
           />
