@@ -1,6 +1,6 @@
 [
   {
-    "name": "heroSection",
+    "name": "productCard",
     "type": "type",
     "value": {
       "type": "object",
@@ -9,20 +9,36 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "heroSection"
+            "value": "productCard"
           }
         },
-        "heading": {
+        "product": {
           "type": "objectAttribute",
           "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "subheading": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
+            "type": "object",
+            "attributes": {
+              "_ref": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "reference"
+                }
+              },
+              "_weak": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": true
+              }
+            },
+            "dereferencesTo": "product"
           },
           "optional": true
         }
@@ -69,6 +85,36 @@
               }
             },
             "dereferencesTo": "author"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "heroSection",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "heroSection"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "subheading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         }
@@ -1537,7 +1583,37 @@
                 },
                 "rest": {
                   "type": "inline",
+                  "name": "heroSection"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
                   "name": "artistCard"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "productCard"
                 }
               }
             ]
