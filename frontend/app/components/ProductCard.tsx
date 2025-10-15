@@ -32,7 +32,6 @@ export default function ProductCard({
             className="w-auto h-auto"
             priority={true}
           />
-          {/* <img src={`${image}`} /> */}
         </CardContent>
       </div>
       <div>
