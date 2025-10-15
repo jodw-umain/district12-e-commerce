@@ -1,7 +1,7 @@
 import { getCachedClient } from "@/sanity/lib/getClient";
 import { getProductsByCategoryQuery } from "@/sanity/lib/queries";
 import type { GetProductsByCategoryQueryResult } from '@/sanity.types';
-
+import Image from "next/image";
 
 type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -24,9 +24,9 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
             <li key={p._id}>
-            <img
+            <Image
                 src={p.picture?.url ?? ""}
-                alt={p.picture?.alt || p.productName}
+                alt={p.picture?.alt ?? p.productName ?? "Product image"}//{p.picture?.alt || p.productName}
                 className="rounded-md"
             />
             <h2 className="font-semibold mt-2">{p.productName}</h2>
