@@ -3,6 +3,7 @@ import React from 'react'
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
 import {dataAttr} from '@/sanity/lib/utils'
+import ArtistCardComponent from './ArtistCard'
 
 type BlocksType = {
   [key: string]: React.FC<any>
@@ -23,6 +24,7 @@ type BlockProps = {
 const Blocks: BlocksType = {
   callToAction: Cta,
   infoSection: Info,
+  artistCard: ArtistCardComponent,
 }
 
 /**

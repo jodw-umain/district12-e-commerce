@@ -49,6 +49,18 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+       _type == "artistCard" => {
+        ...,
+        artist->{
+          _id,
+          _type,
+          name,
+          picture{
+            "url": asset->url,  // Get the direct URL
+            alt
+          }
+        }
+      },
     },
   }
 `)
