@@ -6,6 +6,7 @@
 // }
 
 import Image from 'next/image';
+import ResolvedLink from '@/app/components/ResolvedLink'
 import {Button} from '@/app/components/ui/button'
 
 export default function ProductDetails() {
@@ -21,10 +22,14 @@ export default function ProductDetails() {
             <p>price </p>
             <p>category</p>
             <div className='flex gap-2'>
-                   <p>Drawing</p>
-                    <p>Digital</p>
+                   {/* <p>{category}</p> */}
+                    
             </div>
-            <Button/>
+             
+                {/* <ResolvedLink key={btn._key} link={btn.link}>
+                  <Button variant={btn.buttonVariant}>{btn.buttonText}</Button>
+                </ResolvedLink> */}
+          
            
 
         </div>
