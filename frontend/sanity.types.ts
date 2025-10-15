@@ -880,67 +880,67 @@ export type PagesSlugsResult = Array<{
 export type GetProductsByCategoryQueryResult = Array<{
   _id: string
   _type: 'product'
-  productName: string
-  slug: string
-  productPrice: number
-  productDescription: BlockContent
+  productName: string | null
+  slug: string | null
+  productPrice: number | null
+  productDescription: BlockContent | null
   picture: {
     alt: string | null
     url: string | null
-  }
-  format: Array<string>
+  } | null
+  format: Array<string> | null
   author: {
     firstName: null
     lastName: null
     image: null
   } | null
   categories: Array<{
-    title: string
+    title: string | null
     slug: string | null
-  }>
+  }> | null
 }>
 // Variable: getCategoriesQuery
 // Query: *[_type == "category"]{    title,    "slug": slug.current  }
 export type GetCategoriesQueryResult = Array<{
-  title: string
+  title: string | null
   slug: string | null
 }>
 // Variable: getArtistsQuery
 // Query: *[_type == "author"] | order(name asc) {    _id,    name,    "slug": slug.current,    picture {      "url": asset->url,      alt    }  }
 export type GetArtistsQueryResult = Array<{
   _id: string
-  name: string
+  name: string | null
   slug: null
   picture: {
     url: string | null
     alt: string | null
-  }
+  } | null
 }>
 // Variable: getProductsByArtistQuery
 // Query: *[    _type == "product" &&    (      !defined($artist)      || author->name == $artist    )  ] | order(_createdAt desc) {    _id,    _type,    productName,    "slug": slug.current,    productPrice,    productDescription,    picture{      alt,      "url": asset->url    },    format,    author->{      name,      picture{        alt,        "url": asset->url      }    },    categories[]->{      title,      "slug": slug.current    }  }
 export type GetProductsByArtistQueryResult = Array<{
   _id: string
   _type: 'product'
-  productName: string
-  slug: string
-  productPrice: number
-  productDescription: BlockContent
+  productName: string | null
+  slug: string | null
+  productPrice: number | null
+  productDescription: BlockContent | null
   picture: {
     alt: string | null
     url: string | null
-  }
-  format: Array<string>
+  } | null
+  format: Array<string> | null
   author: {
-    name: string
+    name: string | null
     picture: {
       alt: string | null
       url: string | null
-    }
+    } | null
   } | null
   categories: Array<{
-    title: string
+    title: string | null
     slug: string | null
-  }>
+  }> | null
 }>
 
 // Query TypeMap
