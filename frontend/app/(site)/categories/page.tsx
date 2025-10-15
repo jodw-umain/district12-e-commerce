@@ -1,5 +1,7 @@
 import { getCachedClient } from "@/sanity/lib/getClient";
 import { getProductsByCategoryQuery } from "@/sanity/lib/queries";
+import type { GetProductsByCategoryQueryResult } from '@/sanity.types';
+
 
 type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -7,7 +9,7 @@ type PageProps = {
 
 export default async function CategoriesPage({ searchParams }: PageProps) {
   const category = (searchParams?.category as string) || null;
-  const products = await getCachedClient().fetch(
+  const products = await getCachedClient().fetch<GetProductsByCategoryQueryResult>(
     getProductsByCategoryQuery,
     { category }
   );
@@ -20,10 +22,10 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
       </h1>
 
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((p: any) => (
+        {products.map((p) => (
             <li key={p._id}>
             <img
-                src={p.picture?.url}
+                src={p.picture?.url ?? ""}
                 alt={p.picture?.alt || p.productName}
                 className="rounded-md"
             />

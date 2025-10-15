@@ -875,6 +875,73 @@ export type PostPagesSlugsResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string | null
 }>
+// Variable: getProductsByCategoryQuery
+// Query: *[    _type == "product" &&    (      !defined($category)      || count(categories[@->slug.current == $category]) > 0    )  ] | order(_createdAt desc) {    _id,    _type,    productName,    "slug": slug.current,    productPrice,    productDescription,    picture{      alt,      "url": asset->url    },    format,    author->{      firstName,      lastName,      image    },    categories[]->{      title,      "slug": slug.current    }  }
+export type GetProductsByCategoryQueryResult = Array<{
+  _id: string
+  _type: 'product'
+  productName: string
+  slug: string
+  productPrice: number
+  productDescription: BlockContent
+  picture: {
+    alt: string | null
+    url: string | null
+  }
+  format: Array<string>
+  author: {
+    firstName: null
+    lastName: null
+    image: null
+  } | null
+  categories: Array<{
+    title: string
+    slug: string | null
+  }>
+}>
+// Variable: getCategoriesQuery
+// Query: *[_type == "category"]{    title,    "slug": slug.current  }
+export type GetCategoriesQueryResult = Array<{
+  title: string
+  slug: string | null
+}>
+// Variable: getArtistsQuery
+// Query: *[_type == "author"] | order(name asc) {    _id,    name,    "slug": slug.current,    picture {      "url": asset->url,      alt    }  }
+export type GetArtistsQueryResult = Array<{
+  _id: string
+  name: string
+  slug: null
+  picture: {
+    url: string | null
+    alt: string | null
+  }
+}>
+// Variable: getProductsByArtistQuery
+// Query: *[    _type == "product" &&    (      !defined($artist)      || author->name == $artist    )  ] | order(_createdAt desc) {    _id,    _type,    productName,    "slug": slug.current,    productPrice,    productDescription,    picture{      alt,      "url": asset->url    },    format,    author->{      name,      picture{        alt,        "url": asset->url      }    },    categories[]->{      title,      "slug": slug.current    }  }
+export type GetProductsByArtistQueryResult = Array<{
+  _id: string
+  _type: 'product'
+  productName: string
+  slug: string
+  productPrice: number
+  productDescription: BlockContent
+  picture: {
+    alt: string | null
+    url: string | null
+  }
+  format: Array<string>
+  author: {
+    name: string
+    picture: {
+      alt: string | null
+      url: string | null
+    }
+  } | null
+  categories: Array<{
+    title: string
+    slug: string | null
+  }>
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -888,5 +955,9 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
+    '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || count(categories[@->slug.current == $category]) > 0\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult
+    '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
+    '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
+    '\n  *[\n    _type == "product" &&\n    (\n      !defined($artist)\n      || author->name == $artist\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      name,\n      picture{\n        alt,\n        "url": asset->url\n      }\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByArtistQueryResult
   }
 }
