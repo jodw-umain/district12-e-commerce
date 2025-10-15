@@ -11,7 +11,6 @@ export default async function Page() {
   return (
     <>
       <div className="relative">
-        <p>{settings?.title || 'hero'}</p>
       </div>
       <div className="container">
         <aside className="py-12 sm:py-20">

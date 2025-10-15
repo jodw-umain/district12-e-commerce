@@ -13,6 +13,12 @@
  */
 
 // Source: schema.json
+export type HeroSection = {
+  _type: 'heroSection'
+  heading?: string
+  subheading?: string
+}
+
 export type ArtistCard = {
   _type: 'artistCard'
   artist?: {
@@ -570,6 +576,7 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
+  | HeroSection
   | ArtistCard
   | CallToAction
   | InfoSection
