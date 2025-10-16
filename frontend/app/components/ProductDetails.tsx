@@ -4,28 +4,34 @@ import Image from 'next/image'
 import {PortableText} from '@portabletext/react'
 import ResolvedLink from '@/app/components/ResolvedLink'
 import {Button} from '@/app/components/ui/button'
-import type {ProductDetails as ProductDetailsBlock} from '@/sanity.types'
+import {Card, CardHeader, CardDescription, CardContent, CardTitle,} from './ui/card'
 
-type ProductDetailsProps = {
-  product: ProductDetailsBlock & {
-    productData?: {
-      productName?: string
-      artist?: string
-      productDescription?: any
-      productPrice?: number
-      categories?: {title: string}[]
+
+type Product = {
+  productName?: string
+    artist?:string
+   productDescription?: string
+    productPrice?: number
+    categories?: {title: string}[]
       picture?: any
+     button?:{
+       buttonText?: string
+       link?: string
+       buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
+       _type: 'button'
+       _key: string
+     }
     }
-  }
-}
+  
 
-export default function ProductDetails({product}: ProductDetailsProps) {
-  const {overrideTitle, overrideDescription, button, productData} = product
 
-  if (!productData) {
+export default function ProductDetails({product
+}:{product:Product}) {
+
+  if (!product) {
     return (
       <section className="container py-12 text-center">
-        <p>No product data found.</p>
+        <p>No product data found. Sorry</p>
       </section>
     )
   }
@@ -37,15 +43,16 @@ export default function ProductDetails({product}: ProductDetailsProps) {
     productDescription,
     productPrice,
     categories,
-  } = productData
+    button,
+  } = product
 
   return (
-    <section className="flex items-center">
-      <div className="container flex flex-col md:flex-row items-center justify-center gap-8 py-6 px-2 sm:px-6">
+    <Card className="flex items-center">
+      <CardContent className="container flex flex-col md:flex-row items-center justify-center gap-8 py-6 px-2 sm:px-6">
         {picture && (
           <Image
             src={picture}
-            alt={picture.alt || productName}
+            alt={picture.alt || picture.title}
             width={400}
             height={400}
             className="rounded-lg object-cover"
@@ -54,17 +61,17 @@ export default function ProductDetails({product}: ProductDetailsProps) {
         )}
 
         <div className="flex flex-col gap-3 max-w-lg">
-          <h1 className="text-4xl font-bold">
-            {overrideTitle || productName}
-          </h1>
+          <CardTitle className="text-4xl font-bold">
+            {productName}
+          </CardTitle>
 
           {artist && <h2 className="text-gray-500 text-xl">{artist}</h2>}
-
-          {overrideDescription ? (
-            <p>{overrideDescription}</p>
-          ) : Array.isArray(productDescription) ? (
+ <CardDescription>
+ {Array.isArray(productDescription) ? (
             <PortableText value={productDescription} />
+            
           ) : productDescription ? (
+            
             <p>{productDescription}</p>
           ) : null}
 
@@ -84,7 +91,9 @@ export default function ProductDetails({product}: ProductDetailsProps) {
                 </span>
               ))}
             </div>
+          
           )}
+            </CardDescription>
 
           {button?.link && (
             <ResolvedLink link={button.link}>
@@ -97,7 +106,7 @@ export default function ProductDetails({product}: ProductDetailsProps) {
             </ResolvedLink>
           )}
         </div>
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   )
 }
