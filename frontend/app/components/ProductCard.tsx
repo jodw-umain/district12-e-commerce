@@ -1,28 +1,21 @@
 import Image from 'next/image'
 import {Card, CardHeader, CardDescription, CardContent, CardTitle, CardFooter} from './ui/card'
-import {GetPageQueryResult} from '@/sanity.types'
+import {Product as Product, AllProductsQueryResult} from '@/sanity.types'
 
-type PageBuilderArray = NonNullable<NonNullable<GetPageQueryResult>['pageBuilder']>
-type ProductCardBlock = Extract<PageBuilderArray[number], {_type: 'productCard'}>
+export default function ProductCard({product}: {product: AllProductsQueryResult[number]}) {
+  const {productName, productPrice, productImage, productImageAlt, author, categories} = product
 
-interface ProductCardProps {
-  block: ProductCardBlock
-  index: number
-}
-
-export default function ProductCardComponent({block}: ProductCardProps) {
-  const product = block.product
-  let categories = product?.categories?.join(', ')
+  const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
   return (
     <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
       <div>
         <CardContent className="w-full p-0">
           <Image
-            src={`${product?.picture.url}`}
+            src={`${productImage?.url}`}
             width={200}
             height={200}
-            alt={`${product?.picture.alt}`}
+            alt={`${productImageAlt}`}
             className="w-auto h-auto"
             priority={true}
           />
@@ -31,13 +24,13 @@ export default function ProductCardComponent({block}: ProductCardProps) {
       <div>
         <CardHeader className="p-0 pt-4">
           <CardTitle className="flex flex-col">
-            <p className="">{product?.productName}</p>
-            <p className="text-sm font-mono font-normal mt-1">{product?.author?.name}</p>
+            <p className="">{productName}</p>
+            <p className="text-sm font-mono font-normal mt-1">{author}</p>
           </CardTitle>
-          <CardDescription>{categories}</CardDescription>
+          <CardDescription>{categoriesString}</CardDescription>
         </CardHeader>
         <CardFooter className="rounded-none p-0 pt-4">
-          <p>${product?.productPrice}</p>
+          <p>${productPrice}</p>
         </CardFooter>
       </div>
     </Card>
