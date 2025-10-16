@@ -5,6 +5,7 @@ import Info from '@/app/components/InfoSection'
 import Hero from '@/app/components/Hero'
 import {dataAttr} from '@/sanity/lib/utils'
 import ArtistCardComponent from './ArtistCard'
+import ProductCardComponent from './ProductCard'
 import ProductDetails from './ProductDetails'
 type BlocksType = {
   [key: string]: React.FC<any>
@@ -27,6 +28,7 @@ const Blocks: BlocksType = {
   infoSection: Info,
   heroSection: Hero,
   artistCard: ArtistCardComponent,
+  productCard: ProductCardComponent,
   productDetails: ProductDetails,
 
 }
