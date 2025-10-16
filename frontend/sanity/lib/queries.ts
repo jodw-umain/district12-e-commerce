@@ -122,3 +122,17 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `)
+
+export const allProductsQuery = defineQuery(`
+*[_type=="product"]
+{
+  _id,
+  slug,
+  productName,
+  "author": author->name,
+  productPrice,
+  "productImage": picture.asset->{url},
+  "productImageAlt": picture.alt,
+  "categories":categories[]->title
+}
+  `)
