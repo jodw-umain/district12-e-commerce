@@ -1,5 +1,3 @@
-import {Suspense} from 'react'
-import {AllProducts} from '@/app/components/Products'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 
@@ -10,12 +8,9 @@ export default async function Page() {
 
   return (
     <>
-      <div className="relative">
-      </div>
+      <div className="relative"></div>
       <div className="container">
-        <aside className="py-12 sm:py-20">
-          <Suspense>{await AllProducts()}</Suspense>
-        </aside>
+        <aside className="py-12 sm:py-20"></aside>
       </div>
     </>
   )
