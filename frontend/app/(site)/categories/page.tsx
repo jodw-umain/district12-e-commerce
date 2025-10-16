@@ -1,4 +1,4 @@
-import { getCachedClient } from "@/sanity/lib/getClient";
+import { getCachedClient } from "@/sanity/lib/client";
 import { getProductsByCategoryQuery } from "@/sanity/lib/queries";
 import type { GetProductsByCategoryQueryResult } from '@/sanity.types';
 import Image from "next/image";
