@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {PackageIcon, LinkIcon} from '@sanity/icons'
+import {PackageIcon} from '@sanity/icons'
 
 export const productDetails = defineType({
   name: 'productDetails',
@@ -15,7 +15,7 @@ export const productDetails = defineType({
       description: 'Select which product to display details for.',
       validation: (Rule) => Rule.required(),
       options: {
-        disableNew: false, // Allow creating new products directly
+        disableNew: false,
       },
     }),
 

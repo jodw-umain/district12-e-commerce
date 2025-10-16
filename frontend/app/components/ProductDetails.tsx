@@ -1,4 +1,3 @@
-// app/components/ProductDetails.tsx
 'use client'
 
 import Image from 'next/image'
@@ -8,7 +7,7 @@ import {Button} from '@/app/components/ui/button'
 import type {ProductDetails as ProductDetailsBlock} from '@/sanity.types'
 
 type ProductDetailsProps = {
-  block: ProductDetailsBlock & {
+  product: ProductDetailsBlock & {
     productData?: {
       productName?: string
       artist?: string
@@ -20,8 +19,8 @@ type ProductDetailsProps = {
   }
 }
 
-export default function ProductDetails({block}: ProductDetailsProps) {
-  const {overrideTitle, overrideDescription, button, productData} = block
+export default function ProductDetails({product}: ProductDetailsProps) {
+  const {overrideTitle, overrideDescription, button, productData} = product
 
   if (!productData) {
     return (

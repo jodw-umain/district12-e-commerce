@@ -67,6 +67,6 @@ export default async function ProductPage({params}: Props) {
   if (!product?._id) return notFound()
 
   return (
-     <ProductDetails product={product} />
+ <ProductDetails product={product} />
   )
 }
