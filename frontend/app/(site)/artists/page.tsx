@@ -7,7 +7,8 @@ type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export default async function ArtistsPage({ searchParams }: PageProps) {
+
+export default async function ArtistsPage({ searchParams }: PageProps){
   const artist = (searchParams?.artist as string) || null;
   const products = await getCachedClient().fetch<GetProductsByArtistQueryResult>(
     getProductsByArtistQuery,
@@ -27,6 +28,7 @@ export default async function ArtistsPage({ searchParams }: PageProps) {
               src={p.picture?.url ?? ""}
               alt={p.picture?.alt ?? p.productName ?? "Product image"}//{p.picture?.alt || p.productName}
               className="rounded-md"
+              fill
             />
             <h2 className="font-semibold mt-2">{p.productName}</h2>
             <p className="text-sm text-gray-600">${p.productPrice}</p>

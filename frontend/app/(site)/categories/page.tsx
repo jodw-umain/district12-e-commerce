@@ -28,6 +28,7 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
                 src={p.picture?.url ?? ""}
                 alt={p.picture?.alt ?? p.productName ?? "Product image"}//{p.picture?.alt || p.productName}
                 className="rounded-md"
+                fill
             />
             <h2 className="font-semibold mt-2">{p.productName}</h2>
             <p className="text-sm text-gray-600">${p.productPrice}</p>
