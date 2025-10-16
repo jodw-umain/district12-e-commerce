@@ -1,24 +1,32 @@
-import {sanityFetch} from '@/sanity/lib/live'
 import ProductCard from './ProductCard'
-import {allProductsQuery} from '@/sanity/lib/queries'
-
 import {Carousel, CarouselContent, CarouselItem} from './ui/carousel'
-import {AllProductsQueryResult} from '@/sanity.types'
+import {GetPageQueryResult} from '@/sanity.types'
 
-export default async function ProductsBlock() {
-  const {data} = await sanityFetch({query: allProductsQuery})
+// Extract the productsBlock type
+type PageBuilderArray = NonNullable<NonNullable<GetPageQueryResult>['pageBuilder']>
+type ProductsBlockType = Extract<PageBuilderArray[number], {_type: 'productsBlock'}>
 
-  if (!data || data.length === 0) {
+interface ProductsBlockProps {
+  block: ProductsBlockType
+  index: number
+}
+
+export default function ProductsBlockClient({block}: ProductsBlockProps) {
+  const products = block.allProducts
+
+  if (!products || products.length === 0) {
     return (
-      <div>
-        <p>no products found</p>
+      <div className="container">
+        <h2 className="text-4xl mb-6">{block.heading}</h2>
+        <p>No products found</p>
       </div>
     )
   }
 
   return (
-    <div className="continer">
-      <h2 className="text-4xl">Title</h2>
+    <div className="container">
+      <h2 className="text-4xl mb-6">{block.heading}</h2>
+
       <Carousel
         opts={{
           containScroll: false,
@@ -27,7 +35,7 @@ export default async function ProductsBlock() {
         }}
       >
         <CarouselContent>
-          {data.map((product) => (
+          {products.map((product) => (
             <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/6" key={product._id}>
               <ProductCard product={product} />
             </CarouselItem>
