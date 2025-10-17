@@ -959,15 +959,15 @@ export type PagesSlugsResult = Array<{
 // Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->name,  productPrice,  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories":categories[]->title}
 export type AllProductsQueryResult = Array<{
   _id: string
-  slug: string
-  productName: string
+  slug: string | null
+  productName: string | null
   author: string | null
-  productPrice: number
+  productPrice: number | null
   productImage: {
     url: string | null
   } | null
   productImageAlt: string | null
-  categories: Array<string>
+  categories: Array<string | null> | null
 }>
 
 // Query TypeMap

@@ -25,10 +25,10 @@ export default async function Page() {
           }}
         >
           <div className="container">
-            <h1 className="text-5xl font-bold text-white mb-4">
+            <h1 className="text-5xl font-bold mb-4">
               {hero.heading}
             </h1>
-            <p className="text-xl text-gray-200 mb-8">{hero.subheading}</p>
+            <p className="text-xl  mb-8">{hero.subheading}</p>
           </div>
         </section>
       )}
