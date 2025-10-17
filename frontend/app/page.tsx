@@ -1,5 +1,7 @@
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
+import {Suspense} from 'react'
+import ProductCarouselSection from './components/ProductCarouselSection'
 
 export default async function Page() {
   const {data: settings} = await sanityFetch({
@@ -10,8 +12,17 @@ export default async function Page() {
     <>
       <div className="relative"></div>
       <div className="container">
-        
-     
+        <aside className="py-12 sm:py-20">
+          <Suspense
+            fallback={
+              <div>
+                <p>loading...</p>
+              </div>
+            }
+          >
+            {await ProductCarouselSection()}
+          </Suspense>
+        </aside>
       </div>
     </>
   );

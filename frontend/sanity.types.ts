@@ -955,6 +955,20 @@ export type PostPagesSlugsResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string | null
 }>
+// Variable: AllProductsQuery
+// Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->name,  productPrice,  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories":categories[]->title}
+export type AllProductsQueryResult = Array<{
+  _id: string
+  slug: string
+  productName: string
+  author: string | null
+  productPrice: number
+  productImage: {
+    url: string | null
+  } | null
+  productImageAlt: string | null
+  categories: Array<string>
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -968,5 +982,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
+    '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->name,\n  productPrice,\n  "productImage": picture.asset->{url},\n  "productImageAlt": picture.alt,\n  "categories":categories[]->title\n}\n  ': AllProductsQueryResult
   }
 }
