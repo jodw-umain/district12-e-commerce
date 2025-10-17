@@ -13,33 +13,6 @@
  */
 
 // Source: schema.json
-export type ProductDetails = {
-  _type: 'productDetails'
-  product?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'product'
-  }
-  overrideTitle?: string
-  overrideDescription?: string
-  button?: {
-    link?: string
-    buttonText?: string
-    buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
-  }
-}
-
-export type ArtistCard = {
-  _type: 'artistCard'
-  artist?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'author'
-  }
-}
-
 export type HeroSection = {
   _type: 'heroSection'
   heading?: string
@@ -260,12 +233,6 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
-    | ({
-        _key: string
-      } & HeroSection)
-    | ({
-        _key: string
-      } & ArtistCard)
   >
 }
 
@@ -596,8 +563,6 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
-  | ProductDetails
-  | ArtistCard
   | HeroSection
   | CallToAction
   | InfoSection
