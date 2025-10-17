@@ -6,8 +6,12 @@ import ProductCarouselSection from './components/ProductCarouselSection'
 export default async function Page() {
   const {data: settings} = await sanityFetch({
     query: settingsQuery,
+<<<<<<< HEAD
   });
   const {data: landing} = await sanityFetch({query:`*[_type == "landingPage"][0]{hero{heading, subheading, backgroundImage}}`,})
+=======
+  })
+>>>>>>> development
 
   const hero = landing?.hero
   return (
@@ -45,6 +49,5 @@ export default async function Page() {
         </aside>
       </div>
     </>
-  );
+  )
 }
-
