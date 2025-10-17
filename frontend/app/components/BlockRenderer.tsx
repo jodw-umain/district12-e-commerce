@@ -5,6 +5,8 @@ import Info from '@/app/components/InfoSection'
 import Hero from '@/app/components/Hero'
 import {dataAttr} from '@/sanity/lib/utils'
 import ArtistCardComponent from './ArtistCard'
+import ProductCardComponent from './ProductCard'
+import ProductDetails from './ProductDetails'
 import ProductsBlockComponent from './blocks/ProductsBlock'
 
 type BlocksType = {
@@ -28,6 +30,9 @@ const Blocks: BlocksType = {
   infoSection: Info,
   heroSection: Hero,
   artistCard: ArtistCardComponent,
+
+  productDetails: ProductDetails,
+
   productsBlock: ProductsBlockComponent,
 }
 
