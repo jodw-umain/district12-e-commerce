@@ -1,5 +1,5 @@
 import ProductCard from './ProductCard'
-import {Carousel, CarouselContent, CarouselItem} from './ui/carousel'
+import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
 import {GetPageQueryResult} from '@/sanity.types'
 
 // Extract the productsBlock type
