@@ -88,8 +88,9 @@ export const getPageQuery = defineQuery(`
         },
         picture
       }
-    },
+    }
   }
+}
 `)
 
 export const sitemapData = defineQuery(`

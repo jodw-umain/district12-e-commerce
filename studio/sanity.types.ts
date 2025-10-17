@@ -30,6 +30,11 @@ export type ProductDetails = {
   }
 }
 
+export type ProductsBlock = {
+  _type: 'productsBlock'
+  heading?: string
+}
+
 export type ArtistCard = {
   _type: 'artistCard'
   artist?: {
@@ -266,6 +271,9 @@ export type Page = {
     | ({
         _key: string
       } & ArtistCard)
+    | ({
+        _key: string
+      } & ProductsBlock)
   >
 }
 
@@ -597,6 +605,7 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes =
   | ProductDetails
+  | ProductsBlock
   | ArtistCard
   | HeroSection
   | CallToAction

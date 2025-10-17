@@ -13,11 +13,6 @@
  */
 
 // Source: schema.json
-export type ProductsBlock = {
-  _type: 'productsBlock'
-  heading: string
-}
-
 export type ProductDetails = {
   _type: 'productDetails'
   product?: {
@@ -33,6 +28,11 @@ export type ProductDetails = {
     buttonText?: string
     buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
   }
+}
+
+export type ProductsBlock = {
+  _type: 'productsBlock'
+  heading?: string
 }
 
 export type ArtistCard = {
@@ -604,8 +604,8 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
-  | ProductsBlock
   | ProductDetails
+  | ProductsBlock
   | ArtistCard
   | HeroSection
   | CallToAction
@@ -700,13 +700,13 @@ export type SettingsQueryResult = {
   }
 } | null
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },       _type == "artistCard" => {        ...,        artist->{          _id,          _type,          name,          picture{            "url": asset->url,            alt          }        }      },      _type == "productsBlock" => {        ...,        "allProducts": *[_type == "product"]{          _id,          slug,          productName,          productPrice,          "author": author->name,          "productImage": picture.asset->{url},          "productImageAlt": picture.alt,          "categories": categories[]->title        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },       _type == "artistCard" => {        ...,        artist->{          _id,          _type,          name,          picture{            "url": asset->url,            alt          }        }      },      _type == "productsBlock" => {        ...,        "allProducts": *[_type == "product"]{          _id,          slug,          productName,          productPrice,          "author": author->name,          "productImage": picture.asset->{url},          "productImageAlt": picture.alt,          "categories": categories[]->title        }      },      _type == "productDetails" => {      overrideTitle,      overrideDescription,      button,      product->{        productName,        "artist": author->name,        productDescription,        productPrice,        "categories": categories[]->{          title        },        picture      }    }  }}
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
-  name: string
-  slug: Slug
-  heading: string
+  name: string | null
+  slug: Slug | null
+  heading: string | null
   subheading: string | null
   pageBuilder: Array<
     | {
@@ -715,17 +715,17 @@ export type GetPageQueryResult = {
         artist: {
           _id: string
           _type: 'author'
-          name: string
+          name: string | null
           picture: {
             url: string | null
             alt: string | null
-          }
+          } | null
         } | null
       }
     | {
         _key: string
         _type: 'callToAction'
-        heading: string
+        heading?: string
         text?: string
         buttons?: Array<{
           buttonText?: string
@@ -773,18 +773,18 @@ export type GetPageQueryResult = {
     | {
         _key: string
         _type: 'productsBlock'
-        heading: string
+        heading?: string
         allProducts: Array<{
           _id: string
-          slug: Slug
-          productName: string
-          productPrice: number
+          slug: Slug | null
+          productName: string | null
+          productPrice: number | null
           author: string | null
           productImage: {
             url: string | null
           } | null
           productImageAlt: string | null
-          categories: Array<string>
+          categories: Array<string | null> | null
         }>
       }
   > | null
@@ -961,7 +961,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n       _type == "artistCard" => {\n        ...,\n        artist->{\n          _id,\n          _type,\n          name,\n          picture{\n            "url": asset->url,\n            alt\n          }\n        }\n      },\n      _type == "productsBlock" => {\n        ...,\n        "allProducts": *[_type == "product"]{\n          _id,\n          slug,\n          productName,\n          productPrice,\n          "author": author->name,\n          "productImage": picture.asset->{url},\n          "productImageAlt": picture.alt,\n          "categories": categories[]->title\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n       _type == "artistCard" => {\n        ...,\n        artist->{\n          _id,\n          _type,\n          name,\n          picture{\n            "url": asset->url,\n            alt\n          }\n        }\n      },\n      _type == "productsBlock" => {\n        ...,\n        "allProducts": *[_type == "product"]{\n          _id,\n          slug,\n          productName,\n          productPrice,\n          "author": author->name,\n          "productImage": picture.asset->{url},\n          "productImageAlt": picture.alt,\n          "categories": categories[]->title\n        }\n      },\n      _type == "productDetails" => {\n      overrideTitle,\n      overrideDescription,\n      button,\n      product->{\n        productName,\n        "artist": author->name,\n        productDescription,\n        productPrice,\n        "categories": categories[]->{\n          title\n        },\n        picture\n      }\n    }\n  }\n}\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult

@@ -1,6 +1,6 @@
 [
   {
-    "name": "productsBlock",
+    "name": "productDetails",
     "type": "type",
     "value": {
       "type": "object",
@@ -9,15 +9,45 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "productsBlock"
+            "value": "productDetails"
           }
         },
-        "heading": {
+        "product": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "_ref": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "reference"
+                }
+              },
+              "_weak": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": true
+              }
+            },
+            "dereferencesTo": "product"
+          },
+          "optional": true
+        },
+        "overrideTitle": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
           },
-          "optional": false
+          "optional": true
         },
         "overrideDescription": {
           "type": "objectAttribute",
@@ -71,6 +101,29 @@
                 "optional": true
               }
             }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "productsBlock",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "productsBlock"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         }
