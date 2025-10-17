@@ -1,6 +1,6 @@
 [
   {
-    "name": "productCard",
+    "name": "productsBlock",
     "type": "type",
     "value": {
       "type": "object",
@@ -9,38 +9,15 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "productCard"
+            "value": "productsBlock"
           }
         },
-        "product": {
+        "heading": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "_ref": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              },
-              "_type": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string",
-                  "value": "reference"
-                }
-              },
-              "_weak": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": true
-              }
-            },
-            "dereferencesTo": "product"
+            "type": "string"
           },
-          "optional": true
+          "optional": false
         }
       }
     }
@@ -1613,7 +1590,7 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "productCard"
+                  "name": "productsBlock"
                 }
               }
             ]

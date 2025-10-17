@@ -49,7 +49,7 @@ export const page = defineType({
         {type: 'infoSection'},
         {type: 'heroSection'},
         {type: 'artistCard'},
-        {type: 'productCard'},
+        {type: 'productsBlock'},
       ],
 
       options: {

@@ -61,19 +61,17 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
-      _type == "productCard" => {
+      _type == "productsBlock" => {
         ...,
-        product->{
+        "allProducts": *[_type == "product"]{
           _id,
-          _type,
-          productPrice,
-          "categories": categories[]->title,
-          author->{name, _id},
+          slug,
           productName,
-          picture{
-            "url": asset->url,
-            alt
-          }
+          productPrice,
+          "author": author->name,
+          "productImage": picture.asset->{url},
+          "productImageAlt": picture.alt,
+          "categories": categories[]->title
         }
       },
     },
