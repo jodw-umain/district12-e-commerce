@@ -6,7 +6,6 @@ import ResolvedLink from '@/app/components/ResolvedLink'
 import {Button} from '@/app/components/ui/button'
 import {Card, CardHeader, CardDescription, CardContent, CardTitle,} from './ui/card'
 
-
 type Product = {
   productName?: string
     artist?:string
@@ -23,8 +22,6 @@ type Product = {
      }
     }
   
-
-
 export default function ProductDetails({product
 }:{product:Product}) {
 
@@ -66,7 +63,7 @@ export default function ProductDetails({product
           </CardTitle>
 
           {artist && <h2 className="text-gray-500 text-xl">{artist}</h2>}
- <CardDescription>
+        <CardDescription>
  {Array.isArray(productDescription) ? (
             <PortableText value={productDescription} />
             
