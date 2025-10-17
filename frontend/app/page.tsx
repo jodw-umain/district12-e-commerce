@@ -7,11 +7,31 @@ export default async function Page() {
   const {data: settings} = await sanityFetch({
     query: settingsQuery,
   });
+  const {data: landing} = await sanityFetch({query:`*[_type == "landingPage"][0]{hero{heading, subheading, backgroundImage}}`,})
 
+  const hero = landing?.hero
   return (
     <>
       <div className="relative"></div>
       <div className="container">
+              {hero && (
+        <section
+          className="relative flex items-center justify-center text-center py-20"
+          style={{
+            backgroundImage: hero.backgroundImage
+              ? `url(${hero.backgroundImage.asset.url})`
+              : undefined,
+            backgroundSize: 'cover',
+          }}
+        >
+          <div className="container">
+            <h1 className="text-5xl font-bold text-white mb-4">
+              {hero.heading}
+            </h1>
+            <p className="text-xl text-gray-200 mb-8">{hero.subheading}</p>
+          </div>
+        </section>
+      )}
         <aside className="py-12 sm:py-20">
           <Suspense
             fallback={
