@@ -996,6 +996,27 @@ export type AllProductsQueryResult = Array<{
   productImageAlt: string | null
   categories: Array<string | null> | null
 }>
+// Variable: getLandingPage
+// Query: *[_type == "landingPage"][0]{      hero {        heading,        subheading,        backgroundImage      }    }
+export type GetLandingPageResult = {
+  hero: {
+    heading: string | null
+    subheading: string | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1010,5 +1031,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->name,\n  productPrice,\n  "productImage": picture.asset->{url},\n  "productImageAlt": picture.alt,\n  "categories":categories[]->title\n}\n  ': AllProductsQueryResult
+    '\n    *[_type == "landingPage"][0]{\n      hero {\n        heading,\n        subheading,\n        backgroundImage\n      }\n    }\n  ': GetLandingPageResult
   }
 }

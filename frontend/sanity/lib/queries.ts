@@ -149,3 +149,13 @@ export const AllProductsQuery = defineQuery(`
   "categories":categories[]->title
 }
   `)
+
+export const getLandingPage = defineQuery(`
+    *[_type == "landingPage"][0]{
+      hero {
+        heading,
+        subheading,
+        backgroundImage
+      }
+    }
+  `)

@@ -1,10 +1,11 @@
  import Image from 'next/image'
  import {urlForImage} from '@/sanity/lib/utils'
  import {sanityFetch} from '@/sanity/lib/live'
+ import { getLandingPage } from '@/sanity/lib/queries'
 
 export default async function HeroSection (){
 
-    const {data: landing} = await sanityFetch({query:`*[_type == "landingPage"][0]{hero{heading, subheading, backgroundImage}}`,})
+    const {data: landing} = await sanityFetch({query: getLandingPage})
 
   const hero = landing?.hero
 
@@ -14,12 +15,7 @@ export default async function HeroSection (){
       {hero && (
         <section
           className="text-white relative flex items-center py-6 px-2 sm:px-6"
-          style={{
-            backgroundImage: hero.backgroundImage
-              ? `url(${hero.backgroundImage.asset.url})`
-              : undefined,
-          }}
-        >
+         >
            {imageUrl && (
     <Image
   src={imageUrl}
