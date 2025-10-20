@@ -150,6 +150,20 @@ export const AllProductsQuery = defineQuery(`
 }
   `)
 
+export const allAuthorsQuery = defineQuery(`
+  *[_type == "author"] | order(_createdAt desc) {
+    _id,
+    name,
+    picture{
+      alt,
+      "url": asset->url,
+      "metadata": asset->metadata,
+      hotspot,
+      crop
+    }
+  }
+`)
+
 export const getLandingPage = defineQuery(`
     *[_type == "landingPage"][0]{
       hero {
