@@ -1,18 +1,18 @@
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 import {Suspense} from 'react'
+import HeroSection from './components/HeroSection/HeroSection'
 import ProductCarouselSection from './components/ProductCarouselSection'
 
 export default async function Page() {
   const {data: settings} = await sanityFetch({
     query: settingsQuery,
-  })
+  });
 
   return (
     <>
-      <div className="relative"></div>
-      <div className="container">
-        <aside className="py-12 sm:py-20">
+      <div className="">
+          <HeroSection/>
           <Suspense
             fallback={
               <div>
@@ -22,8 +22,8 @@ export default async function Page() {
           >
             {await ProductCarouselSection()}
           </Suspense>
-        </aside>
       </div>
     </>
-  )
+  );
 }
+
