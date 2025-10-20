@@ -937,7 +937,7 @@ export type PostPagesSlugsResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string
 }>
-// Variable: AllProductsQuery
+// Variable: allProductsQuery
 // Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->name,  productPrice,  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories":categories[]->title}
 export type AllProductsQueryResult = Array<{
   _id: string
@@ -952,7 +952,7 @@ export type AllProductsQueryResult = Array<{
   categories: Array<string>
 }>
 // Variable: productQuery
-// Query: *[_type == "product" && slug.current == $slug] [0] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "slug": slug.current,  productName,  productPrice,  "date": coalesce(date, _updatedAt),  "author": author->{name, picture},  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories": categories[]->title,  description,  }
+// Query: *[_type == "product" && slug.current == $slug] [0] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "slug": slug.current,  productName,  productPrice,  "date": coalesce(date, _updatedAt),  "author": author->{name, picture},  picture,  "categories": categories[]->title,  productDescription,  }
 export type ProductQueryResult = {
   _id: string
   status: 'draft' | 'published'
@@ -976,13 +976,27 @@ export type ProductQueryResult = {
       _type: 'image'
     }
   } | null
-  productImage: {
-    url: string | null
-  } | null
-  productImageAlt: string | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
   categories: Array<string>
-  description: null
+  productDescription: BlockContent
 } | null
+// Variable: productDetailsPageSlug
+// Query: *[_type == "product" && defined(slug.current)]  {"slug": slug.current}
+export type ProductDetailsPageSlugResult = Array<{
+  slug: string
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -997,6 +1011,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->name,\n  productPrice,\n  "productImage": picture.asset->{url},\n  "productImageAlt": picture.alt,\n  "categories":categories[]->title\n}\n  ': AllProductsQueryResult
-    '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{name, picture},\n  "productImage": picture.asset->{url},\n  "productImageAlt": picture.alt,\n  "categories": categories[]->title,\n  description,\n\n  }\n': ProductQueryResult
+    '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{name, picture},\n  picture,\n  "categories": categories[]->title,\n  productDescription,\n\n  }\n': ProductQueryResult
+    '\n  *[_type == "product" && defined(slug.current)]\n  {"slug": slug.current}\n': ProductDetailsPageSlugResult
   }
 }

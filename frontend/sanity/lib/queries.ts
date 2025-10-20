@@ -143,10 +143,9 @@ const productFields = /* groq */ `
   productPrice,
   "date": coalesce(date, _updatedAt),
   "author": author->{name, picture},
-  "productImage": picture.asset->{url},
-  "productImageAlt": picture.alt,
+  picture,
   "categories": categories[]->title,
-  description,
+  productDescription,
 `
 
 export const productQuery = defineQuery(`
@@ -154,3 +153,18 @@ export const productQuery = defineQuery(`
     ${productFields}
   }
 `)
+
+export const productDetailsPageSlug = defineQuery(`
+  *[_type == "product" && defined(slug.current)]
+  {"slug": slug.current}
+`)
+// export const productDetailsPageMetadata = defineQuery(`
+//  *[_type == "product" && slug.current == $slug][0]{
+//       productName,
+//       productDescription,
+//       productPrice,
+//       picture,
+//       "artist": author->name
+//     }`,
+//     {slug: params.slug},
+// `)
