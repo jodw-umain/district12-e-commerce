@@ -134,3 +134,23 @@ export const AllProductsQuery = defineQuery(`
   "categories":categories[]->title
 }
   `)
+
+const productFields = /* groq */ `
+  _id,
+  "status": select(_originalId in path("drafts.**") => "draft", "published"),
+  "slug": slug.current,
+  productName,
+  productPrice,
+  "date": coalesce(date, _updatedAt),
+  "author": author->{name, picture},
+  "productImage": picture.asset->{url},
+  "productImageAlt": picture.alt,
+  "categories": categories[]->title,
+  description,
+`
+
+export const productQuery = defineQuery(`
+  *[_type == "product" && slug.current == $slug] [0] {
+    ${productFields}
+  }
+`)
