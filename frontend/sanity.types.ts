@@ -996,6 +996,19 @@ export type AllProductsQueryResult = Array<{
   productImageAlt: string | null
   categories: Array<string | null> | null
 }>
+// Variable: allAuthorsQuery
+// Query: *[_type == "author"] | order(_createdAt desc) {    _id,    name,    picture{      alt,      "url": asset->url,      "metadata": asset->metadata,      hotspot,      crop    }  }
+export type AllAuthorsQueryResult = Array<{
+  _id: string
+  name: string | null
+  picture: {
+    alt: string | null
+    url: string | null
+    metadata: SanityImageMetadata | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
+  } | null
+}>
 // Variable: getLandingPage
 // Query: *[_type == "landingPage"][0]{      hero {        heading,        subheading,        backgroundImage      }    }
 export type GetLandingPageResult = {
@@ -1031,6 +1044,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->name,\n  productPrice,\n  "productImage": picture.asset->{url},\n  "productImageAlt": picture.alt,\n  "categories":categories[]->title\n}\n  ': AllProductsQueryResult
+    '\n  *[_type == "author"] | order(_createdAt desc) {\n    _id,\n    name,\n    picture{\n      alt,\n      "url": asset->url,\n      "metadata": asset->metadata,\n      hotspot,\n      crop\n    }\n  }\n': AllAuthorsQueryResult
     '\n    *[_type == "landingPage"][0]{\n      hero {\n        heading,\n        subheading,\n        backgroundImage\n      }\n    }\n  ': GetLandingPageResult
   }
 }
