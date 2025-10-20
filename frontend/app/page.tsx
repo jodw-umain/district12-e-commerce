@@ -1,5 +1,6 @@
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
+import {urlForImage} from '@/sanity/lib/utils'
 import {Suspense} from 'react'
 import Image from 'next/image'
 import ProductCarouselSection from './components/ProductCarouselSection'
@@ -11,36 +12,35 @@ export default async function Page() {
   const {data: landing} = await sanityFetch({query:`*[_type == "landingPage"][0]{hero{heading, subheading, backgroundImage}}`,})
 
   const hero = landing?.hero
+
+    const imageUrl = urlForImage(hero?.backgroundImage)?.url()
   return (
     <>
-      <div className="relative"></div>
-      <div className="container">
+      <div className="">
               {hero && (
         <section
-          className="relative flex items-center py-6 px-2 sm:px-6"
-         
+          className="text-white relative flex items-center py-6 px-2 sm:px-6"
           style={{
             backgroundImage: hero.backgroundImage
               ? `url(${hero.backgroundImage.asset.url})`
               : undefined,
-            backgroundSize: 'cover',
           }}
         >
-           <Image
-              src={hero.backgroundImage}
-                width={200}
-                height={200}
-                alt={hero.headin || 'Header section'}
-                className="w-auto h-auto"
-                priority={true}
-           />
-
-         
-          <div className="flex flex-col justify-between gap-5">
-            <h1 className="text-5xl px-1 py-10">
+           {imageUrl && (
+    <Image
+  src={imageUrl}
+  alt={hero?.backgroundImage?.alt || 'Hero background'}
+  fill
+  className="object-cover"
+  priority
+  unoptimized
+/>
+      )}
+          <div className="flex flex-col justify-between gap-5 z-10 w-full">
+            <h1 className=" sm:text-5xl text-3xl px-1 py-10">
               {hero.heading}
             </h1>
-            <p className="text-2xl self-end">{hero.subheading}</p>
+            <p className="text-xl self-end">{hero.subheading}</p>
           </div>
         </section>
       )}

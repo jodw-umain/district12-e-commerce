@@ -213,6 +213,7 @@ export type LandingPage = {
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
+      alt?: string
       _type: 'image'
     }
   }
