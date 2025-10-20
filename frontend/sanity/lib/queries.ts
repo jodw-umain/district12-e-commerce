@@ -74,8 +74,23 @@ export const getPageQuery = defineQuery(`
           "categories": categories[]->title
         }
       },
-    },
+      _type == "productDetails" => {
+      overrideTitle,
+      overrideDescription,
+      button,
+      product->{
+        productName,
+        "artist": author->name,
+        productDescription,
+        productPrice,
+        "categories": categories[]->{
+          title
+        },
+        picture
+      }
+    }
   }
+}
 `)
 
 export const sitemapData = defineQuery(`
@@ -133,4 +148,14 @@ export const AllProductsQuery = defineQuery(`
   "productImageAlt": picture.alt,
   "categories":categories[]->title
 }
+  `)
+
+export const getLandingPage = defineQuery(`
+    *[_type == "landingPage"][0]{
+      hero {
+        heading,
+        subheading,
+        backgroundImage
+      }
+    }
   `)
