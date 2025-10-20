@@ -1,32 +1,55 @@
-import {sanityFetch} from '@/sanity/lib/live'
-import {productQuery} from '@/sanity/lib/queries'
+import type {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
+import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+import ProductDetails from '@/app/components/ProductDetails'
+import {productDetailsPageSlug, productQuery} from '@/sanity/lib/queries'
+import {sanityFetch} from '@/sanity/lib/live'
 
 type Props = {
+  //   params: {slug: string}
   params: Promise<{slug: string}>
 }
 
-export default async function ProductPage(props: Props) {
-  const params = await props.params
-  const [{data: product}] = await Promise.all([
-    sanityFetch({
-      query: productQuery,
-      params,
-    }),
-  ])
+//params for the slug
+export async function generateStaticParams() {
+  const {data} = await sanityFetch({
+    query: productDetailsPageSlug,
+    perspective: 'published',
+    stega: false,
+  })
 
-  if (!product?._id) {
-    return notFound()
-  }
-  return (
-    <div>
-      <p>{product._id}</p>
-      <p>{product.productName}</p>
-      <p>{product.productPrice}</p>
-      <p>{product.date}</p>
-      <p>{product.author.name}</p>
-      <p>{product.categories}</p>
-      <p>{product.productImageAlt}</p>
-    </div>
-  )
+  //   return data.map((item: {slug: string}) => ({slug: item.slug}))
+  return data
+}
+
+//Metadata
+export async function generateMetadata(props: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const params = await props.params
+  const {data: product} = await sanityFetch({
+    query: productQuery,
+    params,
+    stega: false,
+  })
+
+  if (!product) return {}
+
+  const previousImages = (await parent).openGraph?.images || []
+  const ogImage = resolveOpenGraphImage(product.picture)
+
+  return {
+    title: product.productName,
+    description:
+      typeof product.productDescription === 'string' ? product.productDescription : undefined,
+    openGraph: {
+      images: ogImage ? [ogImage, ...previousImages] : previousImages,
+    },
+  } satisfies Metadata
+}
+
+export default async function ProductPage({params}: Props) {
+  const [{data: product}] = await Promise.all([sanityFetch({query: productQuery, params})])
+
+  if (!product?._id) return notFound()
+
+  return <ProductDetails product={product} />
 }
