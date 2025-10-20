@@ -53,7 +53,7 @@ export type HeroSection = {
 
 export type CallToAction = {
   _type: 'callToAction'
-  heading: string
+  heading?: string
   text?: string
   buttons?: Array<{
     buttonText?: string
@@ -141,7 +141,7 @@ export type Category = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
+  title?: string
   slug?: Slug
 }
 
@@ -151,25 +151,25 @@ export type Product = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  heading: string
-  productName: string
+  heading?: string
+  productName?: string
   author?: {
     _ref: string
     _type: 'reference'
     _weak?: boolean
     [internalGroqTypeReferenceTo]?: 'author'
   }
-  productDescription: BlockContent
-  productPrice: number
-  format: Array<string>
-  categories: Array<{
+  productDescription?: BlockContent
+  productPrice?: number
+  format?: Array<string>
+  categories?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
     _key: string
     [internalGroqTypeReferenceTo]?: 'category'
   }>
-  picture: {
+  picture?: {
     asset?: {
       _ref: string
       _type: 'reference'
@@ -182,7 +182,7 @@ export type Product = {
     alt?: string
     _type: 'image'
   }
-  slug: Slug
+  slug?: Slug
   pageBuilder?: Array<
     | ({
         _key: string
@@ -193,13 +193,38 @@ export type Product = {
   >
 }
 
+export type LandingPage = {
+  _id: string
+  _type: 'landingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  hero?: {
+    heading?: string
+    subheading?: string
+    backgroundImage?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+  }
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
+  title?: string
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -254,9 +279,9 @@ export type Page = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  name: string
-  slug: Slug
-  heading: string
+  name?: string
+  slug?: Slug
+  heading?: string
   subheading?: string
   pageBuilder?: Array<
     | ({
@@ -283,11 +308,11 @@ export type Post = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
-  slug: Slug
+  title?: string
+  slug?: Slug
   content?: BlockContent
   excerpt?: string
-  coverImage: {
+  coverImage?: {
     asset?: {
       _ref: string
       _type: 'reference'
@@ -315,8 +340,8 @@ export type Author = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  name: string
-  picture: {
+  name?: string
+  picture?: {
     asset?: {
       _ref: string
       _type: 'reference'
@@ -390,7 +415,7 @@ export type SanityAssistOutputField = {
 
 export type SanityAssistInstructionContext = {
   _type: 'sanity.assist.instruction.context'
-  reference: {
+  reference?: {
     _ref: string
     _type: 'reference'
     _weak?: boolean
@@ -423,7 +448,7 @@ export type AssistInstructionContext = {
 
 export type SanityAssistInstructionUserInput = {
   _type: 'sanity.assist.instruction.userInput'
-  message: string
+  message?: string
   description?: string
 }
 
@@ -506,25 +531,25 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: 'sanity.imageDimensions'
-  height: number
-  width: number
-  aspectRatio: number
+  height?: number
+  width?: number
+  aspectRatio?: number
 }
 
 export type SanityImageHotspot = {
   _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
+  x?: number
+  y?: number
+  height?: number
+  width?: number
 }
 
 export type SanityImageCrop = {
   _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
 }
 
 export type SanityFileAsset = {
@@ -592,7 +617,7 @@ export type Geopoint = {
 
 export type Slug = {
   _type: 'slug'
-  current: string
+  current?: string
   source?: string
 }
 
@@ -613,6 +638,7 @@ export type AllSanitySchemaTypes =
   | BlockContent
   | Category
   | Product
+  | LandingPage
   | Settings
   | Page
   | Post
@@ -651,7 +677,7 @@ export type SettingsQueryResult = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
+  title?: string
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -704,9 +730,9 @@ export type SettingsQueryResult = {
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
-  name: string
-  slug: Slug
-  heading: string
+  name: string | null
+  slug: Slug | null
+  heading: string | null
   subheading: string | null
   pageBuilder: Array<
     | {
@@ -715,17 +741,17 @@ export type GetPageQueryResult = {
         artist: {
           _id: string
           _type: 'author'
-          name: string
+          name: string | null
           picture: {
             url: string | null
             alt: string | null
-          }
+          } | null
         } | null
       }
     | {
         _key: string
         _type: 'callToAction'
-        heading: string
+        heading?: string
         text?: string
         buttons?: Array<{
           buttonText?: string
@@ -776,15 +802,15 @@ export type GetPageQueryResult = {
         heading?: string
         allProducts: Array<{
           _id: string
-          slug: Slug
-          productName: string
-          productPrice: number
+          slug: Slug | null
+          productName: string | null
+          productPrice: number | null
           author: string | null
           productImage: {
             url: string | null
           } | null
           productImageAlt: string | null
-          categories: Array<string>
+          categories: Array<string | null> | null
         }>
       }
   > | null
@@ -793,12 +819,12 @@ export type GetPageQueryResult = {
 // Query: *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
 export type SitemapDataResult = Array<
   | {
-      slug: string
+      slug: string | null
       _type: 'page'
       _updatedAt: string
     }
   | {
-      slug: string
+      slug: string | null
       _type: 'post'
       _updatedAt: string
     }
@@ -808,8 +834,8 @@ export type SitemapDataResult = Array<
 export type AllPostsQueryResult = Array<{
   _id: string
   status: 'draft' | 'published'
-  title: string
-  slug: string
+  title: string | 'Untitled'
+  slug: string | null
   excerpt: string | null
   coverImage: {
     asset?: {
@@ -823,7 +849,7 @@ export type AllPostsQueryResult = Array<{
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
-  }
+  } | null
   date: string
   author: {
     firstName: null
@@ -840,7 +866,7 @@ export type AllPostsQueryResult = Array<{
       crop?: SanityImageCrop
       alt?: string
       _type: 'image'
-    }
+    } | null
   } | null
 }>
 // Variable: morePostsQuery
@@ -848,8 +874,8 @@ export type AllPostsQueryResult = Array<{
 export type MorePostsQueryResult = Array<{
   _id: string
   status: 'draft' | 'published'
-  title: string
-  slug: string
+  title: string | 'Untitled'
+  slug: string | null
   excerpt: string | null
   coverImage: {
     asset?: {
@@ -863,7 +889,7 @@ export type MorePostsQueryResult = Array<{
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
-  }
+  } | null
   date: string
   author: {
     firstName: null
@@ -880,7 +906,7 @@ export type MorePostsQueryResult = Array<{
       crop?: SanityImageCrop
       alt?: string
       _type: 'image'
-    }
+    } | null
   } | null
 }>
 // Variable: postQuery
@@ -910,8 +936,8 @@ export type PostQueryResult = {
   }> | null
   _id: string
   status: 'draft' | 'published'
-  title: string
-  slug: string
+  title: string | 'Untitled'
+  slug: string | null
   excerpt: string | null
   coverImage: {
     asset?: {
@@ -925,7 +951,7 @@ export type PostQueryResult = {
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
-  }
+  } | null
   date: string
   author: {
     firstName: null
@@ -942,32 +968,32 @@ export type PostQueryResult = {
       crop?: SanityImageCrop
       alt?: string
       _type: 'image'
-    }
+    } | null
   } | null
 } | null
 // Variable: postPagesSlugs
 // Query: *[_type == "post" && defined(slug.current)]  {"slug": slug.current}
 export type PostPagesSlugsResult = Array<{
-  slug: string
+  slug: string | null
 }>
 // Variable: pagesSlugs
 // Query: *[_type == "page" && defined(slug.current)]  {"slug": slug.current}
 export type PagesSlugsResult = Array<{
-  slug: string
+  slug: string | null
 }>
 // Variable: AllProductsQuery
 // Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->name,  productPrice,  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories":categories[]->title}
 export type AllProductsQueryResult = Array<{
   _id: string
-  slug: string
-  productName: string
+  slug: string | null
+  productName: string | null
   author: string | null
-  productPrice: number
+  productPrice: number | null
   productImage: {
     url: string | null
   } | null
   productImageAlt: string | null
-  categories: Array<string>
+  categories: Array<string | null> | null
 }>
 
 // Query TypeMap

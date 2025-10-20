@@ -1,6 +1,7 @@
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 import {Suspense} from 'react'
+import Image from 'next/image'
 import ProductCarouselSection from './components/ProductCarouselSection'
 
 export default async function Page() {
@@ -17,6 +18,7 @@ export default async function Page() {
               {hero && (
         <section
           className="relative flex items-center py-6 px-2 sm:px-6"
+         
           style={{
             backgroundImage: hero.backgroundImage
               ? `url(${hero.backgroundImage.asset.url})`
@@ -24,6 +26,16 @@ export default async function Page() {
             backgroundSize: 'cover',
           }}
         >
+           <Image
+              src={hero.backgroundImage}
+                width={200}
+                height={200}
+                alt={hero.headin || 'Header section'}
+                className="w-auto h-auto"
+                priority={true}
+           />
+
+         
           <div className="flex flex-col justify-between gap-5">
             <h1 className="text-5xl px-1 py-10">
               {hero.heading}
