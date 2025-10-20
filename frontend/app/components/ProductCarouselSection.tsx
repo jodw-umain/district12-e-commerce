@@ -3,8 +3,6 @@ import ProductCard from './ProductCard'
 import {Carousel, CarouselContent, CarouselItem} from './ui/carousel'
 import {AllProductsQuery} from '@/sanity/lib/queries'
 
-interface ProductsBlockProps {}
-
 export default async function ProductCarouselSection() {
   const {data} = await sanityFetch({query: AllProductsQuery})
 
