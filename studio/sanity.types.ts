@@ -193,6 +193,31 @@ export type Product = {
   >
 }
 
+export type LandingPage = {
+  _id: string
+  _type: 'landingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  hero?: {
+    heading?: string
+    subheading?: string
+    backgroundImage?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+  }
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -613,6 +638,7 @@ export type AllSanitySchemaTypes =
   | BlockContent
   | Category
   | Product
+  | LandingPage
   | Settings
   | Page
   | Post

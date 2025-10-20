@@ -704,9 +704,9 @@ export type SettingsQueryResult = {
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
-  name: string | null
-  slug: Slug | null
-  heading: string | null
+  name: string
+  slug: Slug
+  heading: string
   subheading: string | null
   pageBuilder: Array<
     | {
@@ -715,17 +715,17 @@ export type GetPageQueryResult = {
         artist: {
           _id: string
           _type: 'author'
-          name: string | null
+          name: string
           picture: {
             url: string | null
             alt: string | null
-          } | null
+          }
         } | null
       }
     | {
         _key: string
         _type: 'callToAction'
-        heading?: string
+        heading: string
         text?: string
         buttons?: Array<{
           buttonText?: string
@@ -776,15 +776,15 @@ export type GetPageQueryResult = {
         heading?: string
         allProducts: Array<{
           _id: string
-          slug: Slug | null
-          productName: string | null
-          productPrice: number | null
+          slug: Slug
+          productName: string
+          productPrice: number
           author: string | null
           productImage: {
             url: string | null
           } | null
           productImageAlt: string | null
-          categories: Array<string | null> | null
+          categories: Array<string>
         }>
       }
   > | null
@@ -959,15 +959,15 @@ export type PagesSlugsResult = Array<{
 // Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->name,  productPrice,  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories":categories[]->title}
 export type AllProductsQueryResult = Array<{
   _id: string
-  slug: string | null
-  productName: string | null
+  slug: string
+  productName: string
   author: string | null
-  productPrice: number | null
+  productPrice: number
   productImage: {
     url: string | null
   } | null
   productImageAlt: string | null
-  categories: Array<string | null> | null
+  categories: Array<string>
 }>
 
 // Query TypeMap
