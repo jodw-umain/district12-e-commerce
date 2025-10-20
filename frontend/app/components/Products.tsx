@@ -2,7 +2,7 @@ import Link from 'next/link'
 import {notFound} from 'next/navigation'
 
 import {sanityFetch} from '@/sanity/lib/live'
-import {allProductsQuery, moreProductsQuery} from '@/sanity/lib/queries'
+import {getAllProductsQuery, moreProductsQuery} from '@/sanity/lib/queries'
 import type {Product as Product} from '@/sanity.types'
 
 import Avatar from '@/app/components/Avatar'
@@ -92,7 +92,7 @@ export const MoreProducts = async ({skip, limit}: {skip: string; limit: number})
 }
 
 export const AllProducts = async () => {
-  const {data} = await sanityFetch({query: allProductsQuery})
+  const {data} = await sanityFetch({query: getAllProductsQuery})
 
   if (!data || data.length === 0) {
     return notFound()

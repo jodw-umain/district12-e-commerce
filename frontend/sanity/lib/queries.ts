@@ -67,15 +67,41 @@ export const allPostsQuery = defineQuery(`
   }
 `)
 // Fetch all products
-export const allProductsQuery = `
-  *[_type == "product"]{
+// export const allProductsQuery = `
+//   *[_type == "product"]{
+//     _id,
+//     productName,
+//     slug,
+//     author->{firstName, lastName, image},
+//     productDescription
+//   } | order(_createdAt desc)
+// `
+export const getAllProductsQuery = defineQuery(`
+  *[_type == "product"] | order(_createdAt desc) {
     _id,
+    _type,
     productName,
-    slug,
-    author->{firstName, lastName, image},
-    productDescription
-  } | order(_createdAt desc)
-`
+    "slug": slug.current,
+    productPrice,
+    productDescription,
+    picture {
+      alt,
+      "url": asset->url
+    },
+    format,
+    author->{
+      name,
+      picture {
+        alt,
+        "url": asset->url
+      }
+    },
+    categories[]->{
+      title,
+      "slug": slug.current
+    }
+  }
+`);
 
 // Fetch "more" products with pagination
 export const moreProductsQuery = `
@@ -122,7 +148,8 @@ export const getProductsByCategoryQuery = defineQuery(`
     _type == "product" &&
     (
       !defined($category)
-      || count(categories[@->slug.current == $category]) > 0
+      || category->slug.current == $category
+      || $category in categories[]->slug.current
     )
   ] | order(_createdAt desc) {
     _id,
@@ -140,6 +167,10 @@ export const getProductsByCategoryQuery = defineQuery(`
       firstName,
       lastName,
       image
+    },
+    category->{
+      title,
+      "slug": slug.current
     },
     categories[]->{
       title,
@@ -159,7 +190,6 @@ export const getArtistsQuery = defineQuery(`
   *[_type == "author"] | order(name asc) {
     _id,
     name,
-    "slug": slug.current,
     picture {
       "url": asset->url,
       alt
@@ -196,6 +226,18 @@ export const getProductsByArtistQuery = defineQuery(`
     categories[]->{
       title,
       "slug": slug.current
+    }
+  }
+`)
+
+export const navbarQuery = defineQuery(`
+  *[_type == "navbar"][0]{
+    logo,
+    items[]{
+      label,
+      type,
+      url,
+      dropdownItems[]{label, url}
     }
   }
 `)

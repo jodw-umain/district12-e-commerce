@@ -1,19 +1,22 @@
+import { client } from "@/sanity/lib/client";
 import { getCachedClient } from "@/sanity/lib/client";
 import { getProductsByCategoryQuery } from "@/sanity/lib/queries";
 import type { GetProductsByCategoryQueryResult } from '@/sanity.types';
 import Image from "next/image";
 
 type PageProps = {
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
+  // params: { slug: string }
+  params: Promise<{ slug: string }>;
+}
 
-export default async function CategoriesPage({ searchParams }: PageProps) {
-  const category = (searchParams?.category as string) || null;
-  const products = await getCachedClient().fetch<GetProductsByCategoryQueryResult>(
+export default async function CategoriesPage({ params }: PageProps) {
+  // const category = ((params)?.slug as string) || null;
+  const { slug } = await params;      
+  const category = slug?.toLowerCase() || null;   
+  const products = await client.fetch<GetProductsByCategoryQueryResult>(
     getProductsByCategoryQuery,
     { category }
   );
-
 
   return (
     <section className="p-8">
@@ -23,16 +26,20 @@ export default async function CategoriesPage({ searchParams }: PageProps) {
 
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
-            <li key={p._id}>
-            <Image
+          <li key={p._id} className="flex flex-col">
+            <div className="relative aspect-square w-full overflow-hidden rounded-md">
+              <Image
                 src={p.picture?.url ?? ""}
-                alt={p.picture?.alt ?? p.productName ?? "Product image"}//{p.picture?.alt || p.productName}
-                className="rounded-md"
+                alt={p.picture?.alt ?? p.productName ?? "Product image"}
                 fill
-            />
+                sizes="(max-width:768px)100vw,33vw"
+                className="object-cover"
+              />
+            </div>
+
             <h2 className="font-semibold mt-2">{p.productName}</h2>
             <p className="text-sm text-gray-600">${p.productPrice}</p>
-            </li>
+          </li>
         ))}
       </ul>
     </section>

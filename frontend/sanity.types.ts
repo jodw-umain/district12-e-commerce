@@ -876,7 +876,7 @@ export type PagesSlugsResult = Array<{
   slug: string | null
 }>
 // Variable: getProductsByCategoryQuery
-// Query: *[    _type == "product" &&    (      !defined($category)      || count(categories[@->slug.current == $category]) > 0    )  ] | order(_createdAt desc) {    _id,    _type,    productName,    "slug": slug.current,    productPrice,    productDescription,    picture{      alt,      "url": asset->url    },    format,    author->{      firstName,      lastName,      image    },    categories[]->{      title,      "slug": slug.current    }  }
+// Query: *[    _type == "product" &&    (      !defined($category)      || category->slug.current == $category      || $category in categories[]->slug.current    )  ] | order(_createdAt desc) {    _id,    _type,    productName,    "slug": slug.current,    productPrice,    productDescription,    picture{      alt,      "url": asset->url    },    format,    author->{      firstName,      lastName,      image    },    category->{      title,      "slug": slug.current    },    categories[]->{      title,      "slug": slug.current    }  }
 export type GetProductsByCategoryQueryResult = Array<{
   _id: string
   _type: 'product'
@@ -894,6 +894,7 @@ export type GetProductsByCategoryQueryResult = Array<{
     lastName: null
     image: null
   } | null
+  category: null
   categories: Array<{
     title: string | null
     slug: string | null
@@ -942,6 +943,9 @@ export type GetProductsByArtistQueryResult = Array<{
     slug: string | null
   }> | null
 }>
+// Variable: navbarQuery
+// Query: *[_type == "navbar"][0]{    logo,    items[]{      label,      type,      url,      dropdownItems[]{label, url}    }  }
+export type NavbarQueryResult = null
 
 // Query TypeMap
 import '@sanity/client'
@@ -955,9 +959,10 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
-    '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || count(categories[@->slug.current == $category]) > 0\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult
+    '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || category->slug.current == $category\n      || $category in categories[]->slug.current\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    category->{\n      title,\n      "slug": slug.current\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult
     '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
     '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
     '\n  *[\n    _type == "product" &&\n    (\n      !defined($artist)\n      || author->name == $artist\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      name,\n      picture{\n        alt,\n        "url": asset->url\n      }\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByArtistQueryResult
+    '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    }\n  }\n': NavbarQueryResult
   }
 }

@@ -1,16 +1,21 @@
+import { client } from "@/sanity/lib/client";
 import { getCachedClient } from "@/sanity/lib/client";
 import { getProductsByArtistQuery } from "@/sanity/lib/queries";
 import type { GetProductsByArtistQueryResult } from '@/sanity.types';
 import Image from "next/image";
 
+// type PageProps = {
+//   searchParams?: { [key: string]: string | string[] | undefined };
+// };
+
 type PageProps = {
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
+  params: { slug: string }
+}
 
 
-export default async function ArtistsPage({ searchParams }: PageProps){
-  const artist = (searchParams?.artist as string) || null;
-  const products = await getCachedClient().fetch<GetProductsByArtistQueryResult>(
+export default async function ArtistsPage({ params }: PageProps){
+  const artist = (params?.slug.replace("-", " ") as string) || null;
+  const products = await client.fetch<GetProductsByArtistQueryResult>(
     getProductsByArtistQuery,
     { artist }
   );
@@ -24,12 +29,14 @@ export default async function ArtistsPage({ searchParams }: PageProps){
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
           <li key={p._id}>
-            <Image
-              src={p.picture?.url ?? ""}
-              alt={p.picture?.alt ?? p.productName ?? "Product image"}//{p.picture?.alt || p.productName}
-              className="rounded-md"
-              fill
-            />
+            <div className="relative aspect-square w-full overflow-hidden rounded-md">
+              <Image
+                src={p.picture?.url ?? ""}
+                alt={p.picture?.alt ?? p.productName ?? "Product image"}
+                className="rounded-md"
+                fill
+              />
+            </div>
             <h2 className="font-semibold mt-2">{p.productName}</h2>
             <p className="text-sm text-gray-600">${p.productPrice}</p>
           </li>

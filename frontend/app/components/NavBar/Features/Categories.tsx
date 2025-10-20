@@ -20,9 +20,7 @@ export default async function CategoriesButton() {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="text-sm">
-            <Link href="/categories" className="text-sm">
-              Categories
-            </Link>
+            <button className="ml-1">Categories</button>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-48 gap-1 p-2">
