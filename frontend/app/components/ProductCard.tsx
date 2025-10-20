@@ -10,28 +10,20 @@ export default function ProductCard({product}: {product: AllProductsQueryResult[
   const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
   return (
-    <Link
-      className="hover:text-brand underline transition-colors"
-      href={`/products/${slug}`}
-      key={_id}
-    >
-      <span className="absolute inset-0 z-10" />
-
+    <Link className="hover:text-brand underline transition-colors" href={`/products/${slug}`}>
       <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
-        <div>
-          <CardContent className="w-full p-0">
-            {productImage?.url && (
-              <Image
-                src={productImage.url}
-                width={200}
-                height={200}
-                alt={productImageAlt || productName || 'Product image'}
-                className="w-auto h-auto"
-                priority={true}
-              />
-            )}
-          </CardContent>
-        </div>
+        <CardContent className="w-full p-0">
+          {productImage?.url && (
+            <Image
+              src={productImage.url}
+              width={200}
+              height={200}
+              alt={productImageAlt || productName || 'Product image'}
+              className="w-auto h-auto"
+              priority={true}
+            />
+          )}
+        </CardContent>
         <div>
           <CardHeader className="p-0 pt-4">
             <CardTitle className="flex flex-col">
