@@ -6,7 +6,13 @@ const nextConfig: NextConfig = {
     SC_DISABLE_SPEEDY: 'false',
   },
   images: {
-    remotePatterns: [new URL('https://cdn.sanity.io/images/s338g403/production/**')],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+      },
+    ],
   },
 }
 
