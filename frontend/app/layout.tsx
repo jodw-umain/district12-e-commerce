@@ -1,4 +1,5 @@
-import './globals.css'
+import './globals.css';
+import NavBar from "./components/NavBar/NavBar";
 
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
@@ -69,8 +70,13 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-          >
-        <section className="min-h-screen">
+        >
+          
+        <div className="fixed top-0 left-0 w-full z-50">
+          <NavBar />
+        </div>
+
+        <section className="min-h-screen pt-24">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           <Toaster />
           {isDraftMode && (
