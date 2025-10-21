@@ -13,6 +13,38 @@
  */
 
 // Source: schema.json
+export type ProductDetails = {
+  _type: 'productDetails'
+  product?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'product'
+  }
+  overrideTitle?: string
+  overrideDescription?: string
+  button?: {
+    link?: string
+    buttonText?: string
+    buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
+  }
+}
+
+export type ProductsBlock = {
+  _type: 'productsBlock'
+  heading?: string
+}
+
+export type ArtistCard = {
+  _type: 'artistCard'
+  artist?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'author'
+  }
+}
+
 export type HeroSection = {
   _type: 'heroSection'
   heading?: string
@@ -161,6 +193,32 @@ export type Product = {
   >
 }
 
+export type LandingPage = {
+  _id: string
+  _type: 'landingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  hero?: {
+    heading?: string
+    subheading?: string
+    backgroundImage?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -233,6 +291,15 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & HeroSection)
+    | ({
+        _key: string
+      } & ArtistCard)
+    | ({
+        _key: string
+      } & ProductsBlock)
   >
 }
 
@@ -563,12 +630,16 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
+  | ProductDetails
+  | ProductsBlock
+  | ArtistCard
   | HeroSection
   | CallToAction
   | InfoSection
   | BlockContent
   | Category
   | Product
+  | LandingPage
   | Settings
   | Page
   | Post
@@ -656,7 +727,7 @@ export type SettingsQueryResult = {
   }
 } | null
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },       _type == "artistCard" => {        ...,        artist->{          _id,          _type,          name,          picture{            "url": asset->url,            alt          }        }      },      _type == "productsBlock" => {        ...,        "allProducts": *[_type == "product"]{          _id,          slug,          productName,          productPrice,          "author": author->name,          "productImage": picture.asset->{url},          "productImageAlt": picture.alt,          "categories": categories[]->title        }      },      _type == "productDetails" => {      overrideTitle,      overrideDescription,      button,      product->{        productName,        "artist": author->name,        productDescription,        productPrice,        "categories": categories[]->{          title        },        picture      }    }  }}
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
@@ -665,6 +736,19 @@ export type GetPageQueryResult = {
   heading: string | null
   subheading: string | null
   pageBuilder: Array<
+    | {
+        _key: string
+        _type: 'artistCard'
+        artist: {
+          _id: string
+          _type: 'author'
+          name: string | null
+          picture: {
+            url: string | null
+            alt: string | null
+          } | null
+        } | null
+      }
     | {
         _key: string
         _type: 'callToAction'
@@ -678,6 +762,12 @@ export type GetPageQueryResult = {
           _key: string
         }>
         link: null
+      }
+    | {
+        _key: string
+        _type: 'heroSection'
+        heading?: string
+        subheading?: string
       }
     | {
         _key: string
@@ -706,6 +796,23 @@ export type GetPageQueryResult = {
           _type: 'block'
           _key: string
         }> | null
+      }
+    | {
+        _key: string
+        _type: 'productsBlock'
+        heading?: string
+        allProducts: Array<{
+          _id: string
+          slug: Slug | null
+          productName: string | null
+          productPrice: number | null
+          author: string | null
+          productImage: {
+            url: string | null
+          } | null
+          productImageAlt: string | null
+          categories: Array<string | null> | null
+        }>
       }
   > | null
 } | null
@@ -971,13 +1078,48 @@ export type GetProductsByArtistQueryResult = Array<{
 // Variable: navbarQuery
 // Query: *[_type == "navbar"][0]{    logo,    items[]{      label,      type,      url,      dropdownItems[]{label, url}    }  }
 export type NavbarQueryResult = null
+// Variable: AllProductsQuery
+// Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->name,  productPrice,  "productImage": picture.asset->{url},  "productImageAlt": picture.alt,  "categories":categories[]->title}
+export type AllProductsQueryResult = Array<{
+  _id: string
+  slug: string | null
+  productName: string | null
+  author: string | null
+  productPrice: number | null
+  productImage: {
+    url: string | null
+  } | null
+  productImageAlt: string | null
+  categories: Array<string | null> | null
+}>
+// Variable: getLandingPage
+// Query: *[_type == "landingPage"][0]{      hero {        heading,        subheading,        backgroundImage      }    }
+export type GetLandingPageResult = {
+  hero: {
+    heading: string | null
+    subheading: string | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n       _type == "artistCard" => {\n        ...,\n        artist->{\n          _id,\n          _type,\n          name,\n          picture{\n            "url": asset->url,\n            alt\n          }\n        }\n      },\n      _type == "productsBlock" => {\n        ...,\n        "allProducts": *[_type == "product"]{\n          _id,\n          slug,\n          productName,\n          productPrice,\n          "author": author->name,\n          "productImage": picture.asset->{url},\n          "productImageAlt": picture.alt,\n          "categories": categories[]->title\n        }\n      },\n      _type == "productDetails" => {\n      overrideTitle,\n      overrideDescription,\n      button,\n      product->{\n        productName,\n        "artist": author->name,\n        productDescription,\n        productPrice,\n        "categories": categories[]->{\n          title\n        },\n        picture\n      }\n    }\n  }\n}\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "product"] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture {\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      name,\n      picture {\n        alt,\n        "url": asset->url\n      }\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetAllProductsQueryResult

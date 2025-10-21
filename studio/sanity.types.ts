@@ -13,6 +13,38 @@
  */
 
 // Source: schema.json
+export type ProductDetails = {
+  _type: 'productDetails'
+  product?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'product'
+  }
+  overrideTitle?: string
+  overrideDescription?: string
+  button?: {
+    link?: string
+    buttonText?: string
+    buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
+  }
+}
+
+export type ProductsBlock = {
+  _type: 'productsBlock'
+  heading?: string
+}
+
+export type ArtistCard = {
+  _type: 'artistCard'
+  artist?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'author'
+  }
+}
+
 export type HeroSection = {
   _type: 'heroSection'
   heading?: string
@@ -161,6 +193,32 @@ export type Product = {
   >
 }
 
+export type LandingPage = {
+  _id: string
+  _type: 'landingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  hero?: {
+    heading?: string
+    subheading?: string
+    backgroundImage?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -233,6 +291,15 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & HeroSection)
+    | ({
+        _key: string
+      } & ArtistCard)
+    | ({
+        _key: string
+      } & ProductsBlock)
   >
 }
 
@@ -563,12 +630,16 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
+  | ProductDetails
+  | ProductsBlock
+  | ArtistCard
   | HeroSection
   | CallToAction
   | InfoSection
   | BlockContent
   | Category
   | Product
+  | LandingPage
   | Settings
   | Page
   | Post

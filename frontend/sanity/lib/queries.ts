@@ -49,8 +49,48 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
-    },
+       _type == "artistCard" => {
+        ...,
+        artist->{
+          _id,
+          _type,
+          name,
+          picture{
+            "url": asset->url,
+            alt
+          }
+        }
+      },
+      _type == "productsBlock" => {
+        ...,
+        "allProducts": *[_type == "product"]{
+          _id,
+          slug,
+          productName,
+          productPrice,
+          "author": author->name,
+          "productImage": picture.asset->{url},
+          "productImageAlt": picture.alt,
+          "categories": categories[]->title
+        }
+      },
+      _type == "productDetails" => {
+      overrideTitle,
+      overrideDescription,
+      button,
+      product->{
+        productName,
+        "artist": author->name,
+        productDescription,
+        productPrice,
+        "categories": categories[]->{
+          title
+        },
+        picture
+      }
+    }
   }
+}
 `)
 
 export const sitemapData = defineQuery(`
@@ -142,6 +182,30 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `)
+
+export const AllProductsQuery = defineQuery(`
+*[_type=="product"]
+{
+  _id,
+  "slug":slug.current,
+  productName,
+  "author":author->name,
+  productPrice,
+  "productImage": picture.asset->{url},
+  "productImageAlt": picture.alt,
+  "categories":categories[]->title
+}
+  `)
+
+export const getLandingPage = defineQuery(`
+    *[_type == "landingPage"][0]{
+      hero {
+        heading,
+        subheading,
+        backgroundImage
+      }
+    }
+  `)
 
 export const getProductsByCategoryQuery = defineQuery(`
   *[
