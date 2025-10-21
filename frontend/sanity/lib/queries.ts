@@ -107,6 +107,17 @@ export const allPostsQuery = defineQuery(`
   }
 `)
 
+// Fetch "more" products with pagination
+export const moreProductsQuery = `
+  *[_type == "product"] | order(_createdAt desc) [$skip...($skip + $limit)]{
+    _id,
+    productName,
+    slug,
+    author->{firstName, lastName, image},
+    productDescription
+  }
+`
+
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
     ${postFields}
@@ -142,12 +153,36 @@ export const getAllProductsQuery = defineQuery(`
   _id,
   "slug":slug.current,
   productName,
-  "author":author->name,
+  "author":author->authorName,
   productPrice,
-  picture,
-  "categories":categories[]->title
+  "categories":categories[]->title,
+  picture
 }
   `)
+
+// export const getAllProductsQuery = defineQuery(`
+//   *[_type == "product"] | order(_createdAt desc) {
+//     _id,
+//     _type,
+//     productName,
+//     "slug": slug.current,
+//     productPrice,
+//     picture {
+//       alt,
+//       "url": asset->url
+//     },
+//     author->{
+//       name,
+//       picture {
+//         alt,
+//         "url": asset->url
+//       }
+//     },
+//     categories[]->
+//       title,
+//   }
+// `);
+
 
 export const getLandingPage = defineQuery(`
     *[_type == "landingPage"][0]{
@@ -181,4 +216,103 @@ export const productQuery = defineQuery(`
 export const productDetailsPageSlug = defineQuery(`
   *[_type == "product" && defined(slug.current)]
   {"slug": slug.current}
+`)
+
+export const getProductsByCategoryQuery = defineQuery(`
+  *[
+    _type == "product" &&
+    (
+      !defined($category)
+      || category->slug.current == $category
+      || $category in categories[]->slug.current
+    )
+  ] | order(_createdAt desc) {
+    _id,
+    _type,
+    productName,
+    "slug": slug.current,
+    productPrice,
+    productDescription,
+    picture{
+      alt,
+      "url": asset->url
+    },
+    format,
+    author->{
+      firstName,
+      lastName,
+      image
+    },
+    category->{
+      title,
+      "slug": slug.current
+    },
+    categories[]->{
+      title,
+      "slug": slug.current
+    }
+  }
+`)
+
+export const getCategoriesQuery = defineQuery(`
+  *[_type == "category"]{
+    title,
+    "slug": slug.current
+  }
+`);
+
+export const getArtistsQuery = defineQuery(`
+  *[_type == "author"] | order(name asc) {
+    _id,
+    name,
+    picture {
+      "url": asset->url,
+      alt
+    }
+  }
+`);
+
+export const getProductsByArtistQuery = defineQuery(`
+  *[
+    _type == "product" &&
+    (
+      !defined($artist)
+      || author->name == $artist
+    )
+  ] | order(_createdAt desc) {
+    _id,
+    _type,
+    productName,
+    "slug": slug.current,
+    productPrice,
+    productDescription,
+    picture{
+      alt,
+      "url": asset->url
+    },
+    format,
+    author->{
+      name,
+      picture{
+        alt,
+        "url": asset->url
+      }
+    },
+    categories[]->{
+      title,
+      "slug": slug.current
+    }
+  }
+`)
+
+export const navbarQuery = defineQuery(`
+  *[_type == "navbar"][0]{
+    logo,
+    items[]{
+      label,
+      type,
+      url,
+      dropdownItems[]{label, url}
+    }
+  }
 `)

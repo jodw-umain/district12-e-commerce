@@ -13,6 +13,7 @@ import {artistCard} from './objects/artistCard'
 import {productsBlock} from './objects/productsBlock'
 import {productDetails} from './objects/productDetails'
 import {landingPage} from './singletons/landingPage'
+import navbar from './documents/navbar'
 
 // Export an array of all the schema types.  This is used in the Sanity Studio configuration. https://www.sanity.io/docs/schema-types
 
@@ -21,6 +22,7 @@ export const schemaTypes = [
   settings,
   landingPage,
   // Documents
+  navbar,
   page,
   post,
   author,
