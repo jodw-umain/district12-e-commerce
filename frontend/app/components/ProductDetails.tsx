@@ -1,30 +1,17 @@
-'use client'
-
 import Image from 'next/image'
 import {PortableText} from '@portabletext/react'
-import ResolvedLink from '@/app/components/ResolvedLink'
+// import ResolvedLink from '@/app/components/ResolvedLink'
 import {Button} from '@/app/components/ui/button'
-import {Card, CardHeader, CardDescription, CardContent, CardTitle,} from './ui/card'
+import {Card, CardDescription, CardContent, CardTitle} from './ui/card'
+import {urlForImage} from '@/sanity/lib/utils'
+import {ProductQueryResult} from '@/sanity.types'
 
-type Product = {
-  productName?: string
-    artist?:string
-   productDescription?: string
-    productPrice?: number
-    categories?: {title: string}[]
-      picture?: any
-     button?:{
-       buttonText?: string
-       link?: string
-       buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
-       _type: 'button'
-       _key: string
-     }
-    }
-  
-export default function ProductDetails({product
-}:{product:Product}) {
+type Product = NonNullable<ProductQueryResult>
 
+export default function ProductDetails(
+  {product}: {product: Product},
+  // {product: Product}
+) {
   if (!product) {
     return (
       <section className="container py-12 text-center">
@@ -32,76 +19,56 @@ export default function ProductDetails({product
       </section>
     )
   }
+  const {productName, author, categories, picture, productDescription, productPrice} = product
 
-  const {
-    picture,
-    productName,
-    artist,
-    productDescription,
-    productPrice,
-    categories,
-    button,
-  } = product
+  const productImage = urlForImage(picture)?.url()
 
   return (
     <Card className="flex items-center">
       <CardContent className="container flex flex-col md:flex-row items-center justify-center gap-8 py-6 px-2 sm:px-6">
-        {picture && (
-          <Image
-            src={picture}
-            alt={picture.alt || picture.title}
-            width={400}
-            height={400}
-            className="rounded-lg object-cover"
-            priority
-          />
-        )}
+        <Image
+          src={productImage || '/fallback-image.jpg'}
+          alt={picture.alt || 'product image'}
+          width={400}
+          height={400}
+          className="rounded-lg object-cover"
+          priority
+        />
 
         <div className="flex flex-col gap-3 max-w-lg">
-          <CardTitle className="text-4xl font-bold">
-            {productName}
-          </CardTitle>
+          <CardTitle className="text-4xl font-bold">{productName}</CardTitle>
 
-          {artist && <h2 className="text-gray-500 text-xl">{artist}</h2>}
-        <CardDescription>
- {Array.isArray(productDescription) ? (
-            <PortableText value={productDescription} />
-            
-          ) : productDescription ? (
-            
-            <p>{productDescription}</p>
-          ) : null}
+          {author?.name && <h2 className="text-gray-500 text-xl">{author.name}</h2>}
+          <CardDescription>
+            {Array.isArray(productDescription) ? (
+              <PortableText value={productDescription} />
+            ) : productDescription ? (
+              <p>{productDescription}</p>
+            ) : null}
 
-          {productPrice !== undefined && (
-            <p className="text-2xl font-semibold mt-3">
-              ${productPrice}
-            </p>
-          )}
-          {categories && categories.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2">
-              {categories.map((cat, idx) => (
-                <span
-                  key={idx}
-                  className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded"
-                >
-                  {cat.title}
-                </span>
-              ))}
-            </div>
-          
-          )}
-            </CardDescription>
+            {productPrice !== undefined && (
+              <p className="text-2xl font-semibold mt-3">${productPrice}</p>
+            )}
+            {categories && categories.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {categories.map((cat, idx) => (
+                  <span key={idx} className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded">
+                    {cat}
+                  </span>
+                ))}
+              </div>
+            )}
+          </CardDescription>
 
-          {button?.link && (
+          {/* {button?.link && (
             <ResolvedLink link={button.link}>
-              <Button
-                variant={button.buttonVariant || 'default'}
-                className="mt-4"
-              >
+              <Button variant={button.buttonVariant || 'default'} className="mt-4">
                 {button.buttonText || 'Buy now'}
               </Button>
             </ResolvedLink>
-          )}
+          )} */}
+
+          <Button>Add to cart</Button>
         </div>
       </CardContent>
     </Card>
