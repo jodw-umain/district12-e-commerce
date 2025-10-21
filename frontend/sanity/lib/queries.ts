@@ -106,42 +106,6 @@ export const allPostsQuery = defineQuery(`
     ${postFields}
   }
 `)
-// Fetch all products
-// export const allProductsQuery = `
-//   *[_type == "product"]{
-//     _id,
-//     productName,
-//     slug,
-//     author->{firstName, lastName, image},
-//     productDescription
-//   } | order(_createdAt desc)
-// `
-export const getAllProductsQuery = defineQuery(`
-  *[_type == "product"] | order(_createdAt desc) {
-    _id,
-    _type,
-    productName,
-    "slug": slug.current,
-    productPrice,
-    productDescription,
-    picture {
-      alt,
-      "url": asset->url
-    },
-    format,
-    author->{
-      name,
-      picture {
-        alt,
-        "url": asset->url
-      }
-    },
-    categories[]->{
-      title,
-      "slug": slug.current
-    }
-  }
-`);
 
 // Fetch "more" products with pagination
 export const moreProductsQuery = `
@@ -183,19 +147,42 @@ export const pagesSlugs = defineQuery(`
   {"slug": slug.current}
 `)
 
-export const AllProductsQuery = defineQuery(`
+export const getAllProductsQuery = defineQuery(`
 *[_type=="product"]
 {
   _id,
   "slug":slug.current,
   productName,
-  "author":author->name,
+  "author":author->authorName,
   productPrice,
-  "productImage": picture.asset->{url},
-  "productImageAlt": picture.alt,
-  "categories":categories[]->title
+  "categories":categories[]->title,
+  picture
 }
   `)
+
+// export const getAllProductsQuery = defineQuery(`
+//   *[_type == "product"] | order(_createdAt desc) {
+//     _id,
+//     _type,
+//     productName,
+//     "slug": slug.current,
+//     productPrice,
+//     picture {
+//       alt,
+//       "url": asset->url
+//     },
+//     author->{
+//       name,
+//       picture {
+//         alt,
+//         "url": asset->url
+//       }
+//     },
+//     categories[]->
+//       title,
+//   }
+// `);
+
 
 export const getLandingPage = defineQuery(`
     *[_type == "landingPage"][0]{
@@ -206,6 +193,30 @@ export const getLandingPage = defineQuery(`
       }
     }
   `)
+
+const productFields = /* groq */ `
+  _id,
+  "status": select(_originalId in path("drafts.**") => "draft", "published"),
+  "slug": slug.current,
+  productName,
+  productPrice,
+  "date": coalesce(date, _updatedAt),
+  "author": author->{name, picture},
+  picture,
+  "categories": categories[]->title,
+  productDescription,
+`
+
+export const productQuery = defineQuery(`
+  *[_type == "product" && slug.current == $slug] [0] {
+    ${productFields}
+  }
+`)
+
+export const productDetailsPageSlug = defineQuery(`
+  *[_type == "product" && defined(slug.current)]
+  {"slug": slug.current}
+`)
 
 export const getProductsByCategoryQuery = defineQuery(`
   *[
