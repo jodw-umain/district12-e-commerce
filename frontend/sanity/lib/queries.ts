@@ -183,7 +183,7 @@ export const pagesSlugs = defineQuery(`
   {"slug": slug.current}
 `)
 
-export const AllProductsQuery = defineQuery(`
+export const getAllProductsQuery = defineQuery(`
 *[_type=="product"]
 {
   _id,
@@ -191,8 +191,7 @@ export const AllProductsQuery = defineQuery(`
   productName,
   "author":author->name,
   productPrice,
-  "productImage": picture.asset->{url},
-  "productImageAlt": picture.alt,
+  picture,
   "categories":categories[]->title
 }
   `)
@@ -304,4 +303,27 @@ export const navbarQuery = defineQuery(`
       dropdownItems[]{label, url}
     }
   }
+`)
+const productFields = /* groq */ `
+  _id,
+  "status": select(_originalId in path("drafts.**") => "draft", "published"),
+  "slug": slug.current,
+  productName,
+  productPrice,
+  "date": coalesce(date, _updatedAt),
+  "author": author->{name, picture},
+  picture,
+  "categories": categories[]->title,
+  productDescription,
+`
+
+export const productQuery = defineQuery(`
+  *[_type == "product" && slug.current == $slug] [0] {
+    ${productFields}
+  }
+`)
+
+export const productDetailsPageSlug = defineQuery(`
+  *[_type == "product" && defined(slug.current)]
+  {"slug": slug.current}
 `)
