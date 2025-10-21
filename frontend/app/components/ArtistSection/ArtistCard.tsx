@@ -9,7 +9,7 @@ export default async function ArtistCard({artist}: {artist: GetAuthorsQueryResul
   const imageUrl = urlForImage(artist?.picture)?.url()
 
   return (
-    <Link className="hover:text-brand underline transition-colors" href={`/artist/${slug}`}>
+    <Link className="" href={`/artist/${slug}`}>
       <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
         <div>
           <CardContent className="w-full p-0">
