@@ -276,10 +276,12 @@ export const getProductsByArtistQuery = defineQuery(`
     },
     format,
     author->{
-      name,
+      authorName,
+    "slug":slug.current
       picture{
         alt,
         "url": asset->url
+
       }
     },
     categories[]->{
