@@ -28,7 +28,7 @@ export default function ProductDetails(
       <CardContent className="container flex flex-col md:flex-row items-center justify-center gap-8 py-6 px-2 sm:px-6">
         <Image
           src={productImage || '/fallback-image.jpg'}
-          alt={picture.alt || 'product image'}
+          alt={picture?.alt || 'product image'}
           width={400}
           height={400}
           className="rounded-lg object-cover"

@@ -8,8 +8,8 @@ export const author = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'name',
-      title: 'name',
+      name: 'authorName',
+      title: 'Artist name',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
@@ -41,10 +41,20 @@ export const author = defineType({
       },
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: 'authorName',
+        maxLength: 96,
+      },
+    }),
   ],
   preview: {
     select: {
-      name: 'name',
+      name: 'authorName',
       picture: 'picture',
     },
     prepare(selection) {

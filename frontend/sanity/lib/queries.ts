@@ -155,34 +155,19 @@ export const getAllProductsQuery = defineQuery(`
   productName,
   "author":author->authorName,
   productPrice,
-  "categories":categories[]->title,
-  picture
+  picture,
+  "categories":categories[]->title
 }
   `)
 
-// export const getAllProductsQuery = defineQuery(`
-//   *[_type == "product"] | order(_createdAt desc) {
-//     _id,
-//     _type,
-//     productName,
-//     "slug": slug.current,
-//     productPrice,
-//     picture {
-//       alt,
-//       "url": asset->url
-//     },
-//     author->{
-//       name,
-//       picture {
-//         alt,
-//         "url": asset->url
-//       }
-//     },
-//     categories[]->
-//       title,
-//   }
-// `);
-
+export const getAuthorsQuery = defineQuery(`
+  *[_type == "author"] | order(_createdAt desc) {
+    _id,
+    authorName,
+    picture,
+    "slug":slug.current
+  }
+`)
 
 export const getLandingPage = defineQuery(`
     *[_type == "landingPage"][0]{
@@ -217,7 +202,6 @@ export const productDetailsPageSlug = defineQuery(`
   *[_type == "product" && defined(slug.current)]
   {"slug": slug.current}
 `)
-
 export const getProductsByCategoryQuery = defineQuery(`
   *[
     _type == "product" &&
@@ -259,7 +243,7 @@ export const getCategoriesQuery = defineQuery(`
     title,
     "slug": slug.current
   }
-`);
+`)
 
 export const getArtistsQuery = defineQuery(`
   *[_type == "author"] | order(name asc) {
@@ -270,7 +254,7 @@ export const getArtistsQuery = defineQuery(`
       alt
     }
   }
-`);
+`)
 
 export const getProductsByArtistQuery = defineQuery(`
   *[

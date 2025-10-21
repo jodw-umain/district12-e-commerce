@@ -20,7 +20,7 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
               src={productImage}
               width={200}
               height={200}
-              alt={picture.alt || productName || 'Product image'}
+              alt={picture?.alt || productName || 'Product image'}
               className="w-auto h-auto"
               priority={true}
             />

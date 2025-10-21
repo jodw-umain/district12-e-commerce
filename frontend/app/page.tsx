@@ -3,7 +3,7 @@ import {sanityFetch} from '@/sanity/lib/live'
 import {Suspense} from 'react'
 import HeroSection from './components/HeroSection/HeroSection'
 import ProductCarouselSection from './components/ProductCarouselSection/ProductCarouselSection'
-
+import ArtistSection from '@/app/components/ArtistSection/ArtistSection'
 export default async function Page() {
   const {data: settings} = await sanityFetch({
     query: settingsQuery,
@@ -21,6 +21,7 @@ export default async function Page() {
           }
         >
           {await ProductCarouselSection()}
+          {await ArtistSection()}
         </Suspense>
       </div>
     </>
