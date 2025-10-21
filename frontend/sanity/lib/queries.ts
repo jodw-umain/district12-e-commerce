@@ -182,13 +182,3 @@ export const productDetailsPageSlug = defineQuery(`
   *[_type == "product" && defined(slug.current)]
   {"slug": slug.current}
 `)
-// export const productDetailsPageMetadata = defineQuery(`
-//  *[_type == "product" && slug.current == $slug][0]{
-//       productName,
-//       productDescription,
-//       productPrice,
-//       picture,
-//       "artist": author->name
-//     }`,
-//     {slug: params.slug},
-// `)
