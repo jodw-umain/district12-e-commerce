@@ -149,12 +149,12 @@ export const getAllProductsQuery = defineQuery(`
 }
   `)
 
-export const allAuthorsQuery = defineQuery(`
+export const getAuthorsQuery = defineQuery(`
   *[_type == "author"] | order(_createdAt desc) {
     _id,
-    name,
+    authorName,
     picture,
-     slug{current}
+    "slug":slug.current
   }
 `)
 

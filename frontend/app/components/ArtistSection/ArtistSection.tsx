@@ -1,11 +1,11 @@
 import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
-import {allAuthorsQuery} from '@/sanity/lib/queries'
+import {getAuthorsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 import {urlForImage} from '@/sanity/lib/utils'
 import ArtistCard from './ArtistCard'
 
 export default async function ArtistSection() {
-  const {data} = await sanityFetch({query: allAuthorsQuery})
+  const {data} = await sanityFetch({query: getAuthorsQuery})
 
   return (
     <div className="container">

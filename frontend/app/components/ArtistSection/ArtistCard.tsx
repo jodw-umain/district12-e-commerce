@@ -1,13 +1,12 @@
 import Image from 'next/image'
 import {Card, CardHeader, CardContent, CardTitle} from '../ui/card'
-import {Author as AuthorType, AllAuthorsQueryResult} from '@/sanity.types'
+import {Author as AuthorType, GetAuthorsQueryResult} from '@/sanity.types'
 import {urlForImage} from '@/sanity/lib/utils'
 import Link from 'next/link'
 
-export default async function ArtistCard({artist}: {artist: AllAuthorsQueryResult[number]}) {
-  const {name, picture, slug} = artist
+export default async function ArtistCard({artist}: {artist: GetAuthorsQueryResult[number]}) {
+  const {authorName, picture, slug} = artist
   const imageUrl = urlForImage(artist?.picture)?.url()
-  console.log(imageUrl)
 
   return (
     <Link className="hover:text-brand underline transition-colors" href={`/artist/${slug}`}>
@@ -20,7 +19,7 @@ export default async function ArtistCard({artist}: {artist: AllAuthorsQueryResul
                   src={imageUrl}
                   width={200}
                   height={200}
-                  alt={picture?.alt || name || 'Artist image'}
+                  alt={picture?.alt || authorName || 'Artist image'}
                   className="w-auto h-auto"
                   priority={true}
                 />
@@ -30,7 +29,7 @@ export default async function ArtistCard({artist}: {artist: AllAuthorsQueryResul
         </div>
         <div>
           <CardHeader className="p-0 pt-4">
-            <CardTitle className="flex flex-col">{name}</CardTitle>
+            <CardTitle className="flex flex-col">{authorName}</CardTitle>
           </CardHeader>
         </div>
       </Card>
