@@ -315,7 +315,4 @@ export const navbarQuery = defineQuery(`
       dropdownItems[]{label, url}
     }
   }
-<<<<<<< HEAD
-`)
-=======
 `)
