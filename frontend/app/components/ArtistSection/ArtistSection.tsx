@@ -1,7 +1,6 @@
 import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
 import {getAuthorsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
-import {urlForImage} from '@/sanity/lib/utils'
 import ArtistCard from './ArtistCard'
 
 export default async function ArtistSection() {
