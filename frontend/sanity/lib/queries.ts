@@ -153,7 +153,8 @@ export const allAuthorsQuery = defineQuery(`
   *[_type == "author"] | order(_createdAt desc) {
     _id,
     name,
-    picture
+    picture,
+     slug{current}
   }
 `)
 

@@ -1007,7 +1007,7 @@ export type GetAllProductsQueryResult = Array<{
   categories: Array<string | null> | null
 }>
 // Variable: allAuthorsQuery
-// Query: *[_type == "author"] | order(_createdAt desc) {    _id,    name,    picture  }
+// Query: *[_type == "author"] | order(_createdAt desc) {    _id,    name,    picture,     slug{current}  }
 export type AllAuthorsQueryResult = Array<{
   _id: string
   name: null
@@ -1023,6 +1023,9 @@ export type AllAuthorsQueryResult = Array<{
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
+  } | null
+  slug: {
+    current: string | null
   } | null
 }>
 // Variable: getLandingPage
@@ -1106,7 +1109,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->name,\n  productPrice,\n  picture,\n  "categories":categories[]->title\n}\n  ': GetAllProductsQueryResult
-    '\n  *[_type == "author"] | order(_createdAt desc) {\n    _id,\n    name,\n    picture\n  }\n': AllAuthorsQueryResult
+    '\n  *[_type == "author"] | order(_createdAt desc) {\n    _id,\n    name,\n    picture,\n     slug{current}\n  }\n': AllAuthorsQueryResult
     '\n    *[_type == "landingPage"][0]{\n      hero {\n        heading,\n        subheading,\n        backgroundImage\n      }\n    }\n  ': GetLandingPageResult
     '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{name, picture},\n  picture,\n  "categories": categories[]->title,\n  productDescription,\n\n  }\n': ProductQueryResult
     '\n  *[_type == "product" && defined(slug.current)]\n  {"slug": slug.current}\n': ProductDetailsPageSlugResult
