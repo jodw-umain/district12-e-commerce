@@ -33,7 +33,6 @@ export default async function ArtistCard({artist}: {artist: GetAuthorsQueryResul
           </CardHeader>
         </div>
       </Card>
-      //{' '}
     </Link>
   )
 }
