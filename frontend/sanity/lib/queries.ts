@@ -136,7 +136,7 @@ export const pagesSlugs = defineQuery(`
   {"slug": slug.current}
 `)
 
-export const allProductsQuery = defineQuery(`
+export const getAllProductsQuery = defineQuery(`
 *[_type=="product"]
 {
   _id,
