@@ -27,14 +27,7 @@ export default async function ArtistsButton() {
           <NavigationMenuContent>
             <ul className="grid w-48 gap-1 p-2">
               {artists.map(
-                (a: {
-                  _id: string
-                  name: string | null
-                  slug: null
-                  picture:
-                    | { url: string | null; alt: string | null }
-                    | null
-                }) => (
+                (a) => (
                   <li key={a._id}>
                     <NavigationMenuLink asChild>
                       <Link

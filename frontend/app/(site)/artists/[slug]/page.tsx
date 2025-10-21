@@ -4,17 +4,14 @@ import { getProductsByArtistQuery } from "@/sanity/lib/queries";
 import type { GetProductsByArtistQueryResult } from '@/sanity.types';
 import Image from "next/image";
 
-// type PageProps = {
-//   searchParams?: { [key: string]: string | string[] | undefined };
-// };
-
 type PageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 
 export default async function ArtistsPage({ params }: PageProps){
-  const artist = (params?.slug.replace("-", " ") as string) || null;
+  const { slug } = await params;  
+  const artist = (slug.replace("-", " ") as string) || null;
   const products = await client.fetch<GetProductsByArtistQueryResult>(
     getProductsByArtistQuery,
     { artist }
