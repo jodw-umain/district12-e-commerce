@@ -1,10 +1,10 @@
 import {sanityFetch} from '@/sanity/lib/live'
 import ProductCard from '../ProductCard'
 import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
-import {allProductsQuery} from '@/sanity/lib/queries'
+import {getAllProductsQuery} from '@/sanity/lib/queries'
 
 export default async function ProductCarouselSection() {
-  const {data} = await sanityFetch({query: allProductsQuery})
+  const {data} = await sanityFetch({query: getAllProductsQuery})
 
   return (
     <div className="container">

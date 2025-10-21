@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import {Card, CardHeader, CardDescription, CardContent, CardTitle, CardFooter} from './ui/card'
-import {Product as ProductType, AllProductsQueryResult} from '@/sanity.types'
+import {Product as ProductType, GetAllProductsQueryResult} from '@/sanity.types'
 import Link from 'next/link'
 import {urlForImage} from '@/sanity/lib/utils'
 
-export default function ProductCard({product}: {product: AllProductsQueryResult[number]}) {
+export default function ProductCard({product}: {product: GetAllProductsQueryResult[number]}) {
   const {productName, picture, productPrice, author, categories, slug, _id} = product
 
   const productImage = urlForImage(picture)?.url()
