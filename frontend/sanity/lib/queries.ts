@@ -144,8 +144,7 @@ export const allProductsQuery = defineQuery(`
   productName,
   "author":author->name,
   productPrice,
-  "productImage": picture.asset->{url},
-  "productImageAlt": picture.alt,
+  picture,
   "categories":categories[]->title
 }
   `)

@@ -2,10 +2,12 @@ import Image from 'next/image'
 import {Card, CardHeader, CardDescription, CardContent, CardTitle, CardFooter} from './ui/card'
 import {Product as ProductType, AllProductsQueryResult} from '@/sanity.types'
 import Link from 'next/link'
+import {urlForImage} from '@/sanity/lib/utils'
 
 export default function ProductCard({product}: {product: AllProductsQueryResult[number]}) {
-  const {productName, productPrice, productImage, productImageAlt, author, categories, slug, _id} =
-    product
+  const {productName, picture, productPrice, author, categories, slug, _id} = product
+
+  const productImage = urlForImage(picture)?.url()
 
   const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
@@ -13,12 +15,12 @@ export default function ProductCard({product}: {product: AllProductsQueryResult[
     <Link className="hover:text-brand underline transition-colors" href={`/products/${slug}`}>
       <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
         <CardContent className="w-full p-0">
-          {productImage?.url && (
+          {productImage && (
             <Image
-              src={productImage.url}
+              src={productImage}
               width={200}
               height={200}
-              alt={productImageAlt || productName || 'Product image'}
+              alt={picture.alt || productName || 'Product image'}
               className="w-auto h-auto"
               priority={true}
             />
