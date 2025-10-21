@@ -22,7 +22,6 @@ export default async function Page() {
         >
           {await ProductCarouselSection()}
           {await ArtistSection()}
-          <ArtistSection />
         </Suspense>
       </div>
     </>

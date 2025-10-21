@@ -341,7 +341,7 @@ export type Author = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  name?: string
+  authorName?: string
   picture?: {
     asset?: {
       _ref: string
@@ -355,6 +355,7 @@ export type Author = {
     alt?: string
     _type: 'image'
   }
+  slug?: Slug
 }
 
 export type Link = {
