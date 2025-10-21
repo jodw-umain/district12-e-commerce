@@ -300,3 +300,16 @@ export const navbarQuery = defineQuery(`
     }
   }
 `)
+
+export const footerQuery = defineQuery(`
+  *[_type == "footer"][0]{
+    logo,
+    description,
+    columns[]{
+      title,
+      links[]{
+        label,
+        url
+      }
+    }
+  }`)
