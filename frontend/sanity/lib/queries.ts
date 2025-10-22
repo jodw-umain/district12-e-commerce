@@ -302,14 +302,25 @@ export const navbarQuery = defineQuery(`
 `)
 
 export const footerQuery = defineQuery(`
-  *[_type == "footer"][0]{
-    logo,
-    description,
-    columns[]{
+ *[_type == "footer"][0]{
+    "columns": navigation[]{
       title,
-      links[]{
+      links[]{ label, url }
+    },
+    contact{
+      title,
+      contactItems[]{
         label,
+        value,
         url
+      },
+      socialLinks[]{
+        platform,
+        url,
+        icon{ "url": asset->url }
       }
-    }
-  }`)
+    },
+    "logo": logo.logo,
+    "description": logo.description
+  }
+`)
