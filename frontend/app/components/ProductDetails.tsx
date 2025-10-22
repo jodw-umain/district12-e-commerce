@@ -3,6 +3,7 @@ import {PortableText} from '@portabletext/react'
 import {Card, CardDescription, CardContent, CardTitle} from './ui/card'
 import {urlForImage} from '@/sanity/lib/utils'
 import {ProductQueryResult} from '@/sanity.types'
+import AddToCartButton from './AddToCartButton'
 
 type Product = NonNullable<ProductQueryResult>
 
@@ -57,6 +58,8 @@ export default function ProductDetails({product}: {product: Product}) {
               </div>
             )}
           </CardDescription>
+
+          <AddToCartButton product={product} />
         </div>
       </CardContent>
     </Card>
