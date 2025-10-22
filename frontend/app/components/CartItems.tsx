@@ -16,7 +16,12 @@ export default function CartItems() {
   const addItem = useStore(useCartStore, (state) => state.addItem)
   const decreaseQuantity = useStore(useCartStore, (state) => state.decreaseQuantity)
   const removeItem = useStore(useCartStore, (state) => state.removeItem)
+  const totalPrice = useStore(useCartStore, (state) => state.getTotalPrice())
+  const calculateItemTotal = (price: number, quantity: number) => {
+    return price * quantity
+  }
 
+  console.log(totalPrice)
   // Handle hydration
   useEffect(() => {
     setIsHydrated(true)
@@ -65,10 +70,10 @@ export default function CartItems() {
           </Link>
         </div>
       ) : (
-        <>
-          <ul className="flex flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:space-x-4">
+          <ul className="flex flex-col space-y-4">
             {cartItems.map((item) => (
-              <li key={item._id} className="border p-4 rounded-md flex gap-3">
+              <li key={item._id} className="border p-4 rounded-md gap-3 md:flex">
                 <Image
                   src={`${urlForImage(item.picture)}`}
                   width={200}
@@ -81,7 +86,7 @@ export default function CartItems() {
                   <h3>{item.author?.authorName}</h3>
                   <p className="text-sm text-gray-600">${item.productPrice}</p>
                   <div className="inline-flex space-x-4 items-center justify-between">
-                    <div className="flex space-x-4 justify-center items-center jus">
+                    <div className="flex space-x-2 justify-center items-center jus">
                       <Button onClick={() => handleDecreaseQuantity(item._id)}>
                         <span>-</span>
                       </Button>
@@ -101,18 +106,27 @@ export default function CartItems() {
           </ul>
           <div>
             <h2>Summary</h2>
-            <div>
-              <p>art name</p>
-              <p>art total price for</p>
-              <p>art units</p>
-            </div>
-            <div>
-              <p>art name</p>
-              <p>art total price for</p>
-              <p>art units</p>
-            </div>
+
+            {cartItems.map((item) => {
+              const itemTotal = calculateItemTotal(item.productPrice, item.quantity)
+
+              return (
+                <div key={item._id} className="flex justify-between items-center py-2 border-b">
+                  <div className="flex-1">
+                    <p className="font-medium">{item.productName}</p>
+                    <p className="text-sm text-gray-600">
+                      ${item.productPrice} × {item.quantity}
+                    </p>
+                  </div>
+
+                  <p className="font-semibold">${itemTotal.toFixed(2)}</p>
+                </div>
+              )
+            })}
+            <h3>Total price: ${totalPrice}</h3>
+            <Button>Pay now lol</Button>
           </div>
-        </>
+        </div>
       )}
     </section>
   )
