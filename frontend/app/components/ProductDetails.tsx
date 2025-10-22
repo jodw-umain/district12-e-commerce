@@ -8,10 +8,7 @@ import {ProductQueryResult} from '@/sanity.types'
 
 type Product = NonNullable<ProductQueryResult>
 
-export default function ProductDetails(
-  {product}: {product: Product},
-  // {product: Product}
-) {
+export default function ProductDetails({product}: {product: Product}) {
   if (!product) {
     return (
       <section className="container py-12 text-center">
@@ -59,14 +56,6 @@ export default function ProductDetails(
               </div>
             )}
           </CardDescription>
-
-          {/* {button?.link && (
-            <ResolvedLink link={button.link}>
-              <Button variant={button.buttonVariant || 'default'} className="mt-4">
-                {button.buttonText || 'Buy now'}
-              </Button>
-            </ResolvedLink>
-          )} */}
 
           <Button>Add to cart</Button>
         </div>
