@@ -30,7 +30,6 @@ export const schemaTypes = [
   author,
   product,
   category,
-  footer,
 
   // Objects
   blockContent,

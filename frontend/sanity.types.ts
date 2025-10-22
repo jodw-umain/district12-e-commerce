@@ -1163,6 +1163,9 @@ export type GetProductsByArtistQueryResult = Array<{
 // Variable: navbarQuery
 // Query: *[_type == "navbar"][0]{    logo,    items[]{      label,      type,      url,      dropdownItems[]{label, url}    }  }
 export type NavbarQueryResult = null
+// Variable: footerQuery
+// Query: *[_type == "footer"][0]{    "columns": navigation[]{      title,      links[]{ label, url }    },    contact{      title,      contactItems[]{        label,        value,        url      },      socialLinks[]{        platform,        url,        icon{ "url": asset->url }      }    },    "logo": logo.logo,    "description": logo.description  }
+export type FooterQueryResult = null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1186,5 +1189,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
     '\n  *[\n    _type == "product" &&\n    (\n      !defined($artist)\n      || author->name == $artist\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      name,\n      picture{\n        alt,\n        "url": asset->url\n      }\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByArtistQueryResult
     '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    }\n  }\n': NavbarQueryResult
+    '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
   }
 }
