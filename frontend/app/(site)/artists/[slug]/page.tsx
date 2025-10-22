@@ -4,6 +4,7 @@ import type {GetProductsByArtistQueryResult} from '@/sanity.types'
 import Image from 'next/image'
 import {Button} from '@/app/components/ui/button'
 import Link from 'next/link'
+import {Card, CardHeader, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card'
 
 export default async function ArtistsPage({params}: {params: {slug: string}}) {
   const slug = params.slug
@@ -21,55 +22,62 @@ export default async function ArtistsPage({params}: {params: {slug: string}}) {
   return (
     <section className="p-8 container">
       <div className="sm:flex justify-between py-8 ">
-        <div className="flex flex-col">
-          <div className="items-center rounded-full w-40 h-40 overflow-hidden">
-            {artist?.picture?.url && (
-              <Image
-                src={artist.picture.url}
-                alt={artist.picture?.alt ?? 'Artist image'}
-                width={200}
-                height={200}
-                className="object-cover"
-              />
-            )}
-          </div>
-          <h1>{artist?.authorName}</h1>
-          <p>@{artist?.authorName}</p>
-          <Button className="mt-4">Contact</Button>
-        </div>
+        <Card className="flex flex-col sm:pr-8">
+          <CardContent>
+            <div className="items-center rounded-full w-40 h-40 overflow-hidden">
+              {artist?.picture?.url && (
+                <Image
+                  src={artist.picture.url}
+                  alt={artist.picture?.alt ?? 'Artist image'}
+                  width={200}
+                  height={200}
+                  className="object-cover"
+                />
+              )}
+            </div>
+            <CardTitle>
+              <h1>{artist?.authorName}</h1>
+            </CardTitle>
+            <p>@{artist?.authorName}</p>
+            <Button className="mt-4">Contact</Button>
+          </CardContent>
+        </Card>
         <div className="items-center">
-          <ul className="">
+          <ul className="flex flex-col gap-10">
             {data.map((p) => {
               return (
-                <Link
-                  className="hover:text-brand underline transition-colors"
-                  href={`/products/${p.slug}`}
-                >
-                  <li key={p._id}>
-                    <div className="w-full h-full realtive">
-                      {p.picture?.url && (
-                        <Image
-                          src={p.picture.url}
-                          alt={p.picture?.alt ?? 'Product image'}
-                          width={500}
-                          height={200}
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    <h2 className="mt-2">{p.productName}</h2>
-                    <p className="text-gray-600">${p.productPrice}</p>
-                    {p.categories && p.categories.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {p.categories.map((cat) => (
-                          <p key={cat.slug} className="">
-                            {cat.title}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                  </li>
-                </Link>
+                <Card>
+                  <Link href={`/products/${p.slug}`}>
+                    <CardContent>
+                      <li key={p._id}>
+                        <div className="w-full h-full">
+                          {p.picture?.url && (
+                            <Image
+                              src={p.picture.url}
+                              alt={p.picture?.alt ?? 'Product image'}
+                              width={500}
+                              height={200}
+                              className="object-cover"
+                            />
+                          )}
+                        </div>
+                        <CardTitle>
+                          <h2 className="mt-2">{p.productName}</h2>
+                        </CardTitle>
+                        <p className="text-gray-600">${p.productPrice}</p>
+                        {p.categories && p.categories.length > 0 && (
+                          <CardFooter className="flex flex-wrap gap-2 mt-2">
+                            {p.categories.map((cat) => (
+                              <p key={cat.slug} className="">
+                                {cat.title}
+                              </p>
+                            ))}
+                          </CardFooter>
+                        )}
+                      </li>
+                    </CardContent>
+                  </Link>
+                </Card>
               )
             })}
           </ul>
