@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getClient } from '@/sanity/lib/client'
 import { navbarQuery } from '@/sanity/lib/queries'
 import AllProductsButton from "./AllProducts";
-import ShoppingCart from './ShoppingCart'
 import {urlForImage} from '@/sanity/lib/utils'
+import { sanityFetch } from '@/sanity/lib/live';
+import { NavbarQueryResult } from '@/sanity.types';
 
 function Dropdown({
   label,
@@ -46,18 +46,21 @@ interface NavbarData {
     url?: string
     dropdownItems?: { label: string; url: string }[]
   }[]
+  shoppingBagIcon?: any
 }
 
 export default async function NavBar() {
-  const data: NavbarData | null = await getClient().fetch(navbarQuery)
-  const { logo, items = [] } = (data || {}) as NavbarData
+  
+  const result = await sanityFetch({ query: navbarQuery })
+  const data = result.data as NavbarQueryResult | null
+  const { logo, items = [], shoppingBagIcon } = data || {}
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
       <Link href="/" aria-label="Home">
         {logo ? (
           <Image
-            src={urlForImage(logo)?.width(120).height(40).url() || ''}
+            src={urlForImage(logo)?.url() || ''}
             alt="Site logo"
             width={120}
             height={40}
@@ -69,7 +72,7 @@ export default async function NavBar() {
       </Link>
 
       <div className="flex items-center gap-6">
-        {items.map((item:any) => {
+        {items?.map((item:any) => {
           if (item.type === 'link') {
             return (
               <Link
@@ -95,8 +98,22 @@ export default async function NavBar() {
 
           return null
         })}
+
         <AllProductsButton />
-        <ShoppingCart />
+
+        <Link href="/shoppingcart" aria-label="Shopping cart">
+          { shoppingBagIcon? (
+            <Image
+              src={urlForImage(shoppingBagIcon)?.url() || ''}
+              alt="shopping Bag Icon"
+              width={40}
+              height={40}
+              priority
+            />
+          ) : (
+            <span className="text-xl font-bold">District 12</span>
+          )}
+        </Link>
       </div>
     </nav>
   )
