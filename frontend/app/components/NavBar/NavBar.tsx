@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getClient } from '@/sanity/lib/client'
 import { navbarQuery } from '@/sanity/lib/queries'
 import AllProductsButton from "./AllProducts";
 import {urlForImage} from '@/sanity/lib/utils'
+import { sanityFetch } from '@/sanity/lib/live';
+import { NavbarQueryResult } from '@/sanity.types';
 
 function Dropdown({
   label,
@@ -49,8 +50,10 @@ interface NavbarData {
 }
 
 export default async function NavBar() {
-  const data: NavbarData | null = await getClient().fetch(navbarQuery)
-  const { logo, items = [], shoppingBagIcon } = (data || {}) as NavbarData
+  
+  const result = await sanityFetch({ query: navbarQuery })
+  const data = result.data as NavbarQueryResult | null
+  const { logo, items = [], shoppingBagIcon } = data || {}
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
@@ -69,7 +72,7 @@ export default async function NavBar() {
       </Link>
 
       <div className="flex items-center gap-6">
-        {items.map((item:any) => {
+        {items?.map((item:any) => {
           if (item.type === 'link') {
             return (
               <Link
