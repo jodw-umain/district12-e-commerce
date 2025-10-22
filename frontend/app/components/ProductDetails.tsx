@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import {PortableText} from '@portabletext/react'
-import {Button} from '@/app/components/ui/button'
 import {Card, CardDescription, CardContent, CardTitle} from './ui/card'
 import {urlForImage} from '@/sanity/lib/utils'
 import {ProductQueryResult} from '@/sanity.types'
@@ -34,7 +33,10 @@ export default function ProductDetails({product}: {product: Product}) {
         <div className="flex flex-col gap-3 max-w-lg">
           <CardTitle className="text-4xl font-bold">{productName}</CardTitle>
 
-          {author?.name && <h2 className="text-gray-500 text-xl">{author.name}</h2>}
+          {author?.authorName && (
+            <h2 className="text-gray-500 text-xl">{product.author?.authorName}</h2>
+          )}
+
           <CardDescription>
             {Array.isArray(productDescription) ? (
               <PortableText value={productDescription} />
@@ -55,8 +57,6 @@ export default function ProductDetails({product}: {product: Product}) {
               </div>
             )}
           </CardDescription>
-
-          <Button>Add to cart</Button>
         </div>
       </CardContent>
     </Card>
