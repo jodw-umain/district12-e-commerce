@@ -1,0 +1,119 @@
+'use client'
+
+import {useCartStore} from '@/lib/stores/useCartStore'
+import {urlForImage} from '@/sanity/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import {useStore} from 'zustand'
+import {Button} from './ui/button'
+import {useEffect, useState} from 'react'
+
+export default function CartItems() {
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  const cartItems = useStore(useCartStore, (state) => state.items) || []
+  const totalItems = useStore(useCartStore, (state) => state.getTotalItems()) || 0
+  const addItem = useStore(useCartStore, (state) => state.addItem)
+  const decreaseQuantity = useStore(useCartStore, (state) => state.decreaseQuantity)
+  const removeItem = useStore(useCartStore, (state) => state.removeItem)
+
+  // Handle hydration
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+
+  if (!isHydrated) {
+    // change to loading skeleton
+    return <div>Loading...</div>
+  }
+
+  const handleAddProduct = (product: any) => {
+    console.log('Adding product:', product)
+    if (addItem) {
+      addItem(product)
+    }
+  }
+
+  const handleDecreaseQuantity = (productId: string) => {
+    console.log('Decreasing quantity for product:', productId)
+    if (decreaseQuantity) {
+      decreaseQuantity(productId)
+    }
+  }
+
+  const handleRemoveProduct = (productId: string) => {
+    console.log('Completely removing product:', productId)
+    if (removeItem) {
+      removeItem(productId)
+    }
+  }
+
+  return (
+    <section className="p-8">
+      <h1 className="text-3xl font-bold mb-8">
+        Your cart <span className="text-gray-400">({totalItems})</span>
+      </h1>
+
+      {totalItems === 0 ? (
+        <div className="flex flex-col items-center justify-center mt-20 text-center">
+          <p className="text-gray-500 mb-6">You have not yet added any works to your cart.</p>
+          <Link
+            href="/products"
+            className="bg-black text-white px-6 py-3 font-medium rounded-md hover:bg-gray-900"
+          >
+            Keep exploring
+          </Link>
+        </div>
+      ) : (
+        <>
+          <ul className="flex flex-col">
+            {cartItems.map((item) => (
+              <li key={item._id} className="border p-4 rounded-md flex gap-3">
+                <Image
+                  src={`${urlForImage(item.picture)}`}
+                  width={200}
+                  height={200}
+                  alt="product"
+                  className="object-fit"
+                />
+                <div className="w-full flex flex-col justify-between">
+                  <h2 className="text-lg font-semibold">{item.productName}</h2>
+                  <h3>{item.author?.authorName}</h3>
+                  <p className="text-sm text-gray-600">${item.productPrice}</p>
+                  <div className="inline-flex space-x-4 items-center justify-between">
+                    <div className="flex space-x-4 justify-center items-center jus">
+                      <Button onClick={() => handleDecreaseQuantity(item._id)}>
+                        <span>-</span>
+                      </Button>
+                      <p>{item.quantity}</p>
+
+                      <Button onClick={() => handleAddProduct(item)}>
+                        <span>+</span>
+                      </Button>
+                    </div>
+                    <Button onClick={() => handleRemoveProduct(item._id)}>
+                      <span>delete</span>
+                    </Button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div>
+            <h2>Summary</h2>
+            <div>
+              <p>art name</p>
+              <p>art total price for</p>
+              <p>art units</p>
+            </div>
+            <div>
+              <p>art name</p>
+              <p>art total price for</p>
+              <p>art units</p>
+            </div>
+          </div>
+        </>
+      )}
+    </section>
+  )
+}
