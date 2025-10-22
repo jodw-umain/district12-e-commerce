@@ -260,7 +260,7 @@ export const getProductsByArtistQuery = defineQuery(`
  *[
   _type == "product" &&
   (
-    !defined($artist) || author->authorName == $artist
+    !defined($artist) || author->slug.current == $artist
   )
 ] | order(_createdAt desc) {
   _id,

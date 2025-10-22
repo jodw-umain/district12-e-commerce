@@ -52,6 +52,7 @@ export const author = defineType({
       },
     }),
   ],
+
   preview: {
     select: {
       name: 'authorName',
