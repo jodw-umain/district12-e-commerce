@@ -17,11 +17,12 @@ export default function CartItems() {
   const decreaseQuantity = useStore(useCartStore, (state) => state.decreaseQuantity)
   const removeItem = useStore(useCartStore, (state) => state.removeItem)
   const totalPrice = useStore(useCartStore, (state) => state.getTotalPrice())
+  const clearClart = useStore(useCartStore, (state) => state.clearCart)
+
   const calculateItemTotal = (price: number, quantity: number) => {
     return price * quantity
   }
 
-  console.log(totalPrice)
   // Handle hydration
   useEffect(() => {
     setIsHydrated(true)
@@ -124,7 +125,8 @@ export default function CartItems() {
               )
             })}
             <h3>Total price: ${totalPrice}</h3>
-            <Button>Pay now lol</Button>
+            {/* when paying there should be a loading animation saying "your art are on its way" with popup maybe? then it navigates to the landing page and clears the local storage*/}
+            <Button onClick={() => clearClart()}>Pay now lol</Button>
           </div>
         </div>
       )}
