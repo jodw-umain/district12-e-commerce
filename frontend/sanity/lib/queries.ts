@@ -297,7 +297,8 @@ export const navbarQuery = defineQuery(`
       type,
       url,
       dropdownItems[]{label, url}
-    }
+    },
+    shoppingBagIcon,
   }
 `)
 
