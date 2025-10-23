@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {Card, CardHeader, CardContent, CardTitle} from '../ui/card'
+import {Card, CardHeader, CardContent, CardTitle} from '../ui/card/card'
 import {Author as AuthorType, GetAuthorsQueryResult} from '@/sanity.types'
 import {urlForImage} from '@/sanity/lib/utils'
 import Link from 'next/link'

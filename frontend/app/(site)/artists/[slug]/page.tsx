@@ -4,7 +4,7 @@ import type {GetProductsByArtistQueryResult, Slug} from '@/sanity.types'
 import Image from 'next/image'
 import {Button} from '@/app/components/ui/button'
 import Link from 'next/link'
-import {Card, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card'
+import {Card, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card/card'
 import {urlForImage} from '@/sanity/lib/utils'
 
 type ArtistPageProps = {
