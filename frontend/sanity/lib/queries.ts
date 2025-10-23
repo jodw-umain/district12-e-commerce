@@ -176,8 +176,16 @@ export const getLandingPage = defineQuery(`
         subheading,
         backgroundImage
       }
+      
+    *[_type == "landingPage"][0]{
+      categoryFilterSection {
+        title,
+        filters[]->{
+          title
+        }
+      }
     }
-  `)
+`)
 
 const productFields = /* groq */ `
   _id,
