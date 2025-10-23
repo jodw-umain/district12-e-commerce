@@ -12,24 +12,24 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
   const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
   return (
-    <Link className="" href={`/products/${slug}`}>
+    <Link className="clickable-card" href={`/products/${slug}`}>
       <Card className="flex flex-col items-center p-4">
-        <CardContent className="">
+        <CardContent>
           {productImage && (
             <Image
               src={productImage}
               width={200}
               height={200}
               alt={picture?.alt || productName || 'Product image'}
-              className="w-auto h-auto"
+              className="w-auto h-auto image-wrapper "
               priority={true}
             />
           )}
 
           <div className="flex justify-between w-full">
             <CardHeader className="pt-1">
-              <CardTitle className="">
-                <p className="">{productName}</p>
+              <CardTitle>
+                <p>{productName}</p>
                 {author && <p className="mt-1">{author}</p>}
               </CardTitle>
               {categoriesString && <CardDescription>{categoriesString}</CardDescription>}

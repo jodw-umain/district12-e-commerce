@@ -24,7 +24,7 @@
   --color-black: #0b0b0b;
   --color-white: #fff;
   --color-brand: #f50;
-  --default-transition-duration: 250ms;
+  --default-transition-duration: 300ms;
 }
 
 @theme inline {

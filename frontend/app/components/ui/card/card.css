@@ -1,4 +1,4 @@
-.card {
+.clickable-card {
   background-color: var(--color-card);
   /* background-color: tomato; */
   border: 1px solid var(--color-border);
@@ -6,8 +6,10 @@
   padding: 0.625rem;
   flex-direction: column;
   width: fit-content;
+  z-index: 0;
 }
-.card:hover {
+.clickable-card:hover {
   border: 1px solid var(--color-border-hover);
   transition: var(--default-transition-duration) ease-in-out;
+  opacity: 0.8;
 }

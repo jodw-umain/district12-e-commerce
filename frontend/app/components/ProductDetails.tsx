@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import {PortableText} from '@portabletext/react'
-import {Card, CardDescription, CardContent, CardTitle} from './ui/card'
+import {Card, CardDescription, CardContent, CardTitle} from './ui/card/card'
 import {urlForImage} from '@/sanity/lib/utils'
 import {ProductQueryResult} from '@/sanity.types'
 import AddToCartButton from './AddToCartButton'
