@@ -86,7 +86,7 @@ export default function CheckoutSummary() {
                       <h2>{item.productName}</h2>
                       <h3>{item.author?.authorName}</h3>
                     </div>
-                    <p className="text-sm text-gray-600">${item.productPrice}</p>
+                    <p className="text-gray-600">${item.productPrice}</p>
                   </CardHeader>
                   <CardFooter className="flex justify-between">
                     <div className="flex space-x-2 items-center">
@@ -116,8 +116,8 @@ export default function CheckoutSummary() {
               return (
                 <div key={item._id} className="flex justify-between items-center py-2 border-b">
                   <div className="flex-1">
-                    <p className="font-medium">{item.productName}</p>
-                    <p className="text-sm text-gray-600">
+                    <p>{item.productName}</p>
+                    <p className="text-gray-600">
                       ${item.productPrice} × {item.quantity}
                     </p>
                   </div>
@@ -128,7 +128,7 @@ export default function CheckoutSummary() {
             })}
             <h3>Total price: ${totalPrice}</h3>
             {/* when paying there should be a loading animation saying "your art are on its way" with popup maybe? then it navigates to the landing page and clears the local storage*/}
-            <Button onClick={() => clearClart()}>Pay now lol</Button>
+            <Button onClick={() => clearClart()}>Order</Button>
           </div>
         </div>
       )}
