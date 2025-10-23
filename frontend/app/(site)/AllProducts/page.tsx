@@ -8,9 +8,6 @@ export default async function AllProductsPage() {
   return (
     <section className="flex flex-col items-center p-8 h-fit">
       <h1 className="sm:mb-10 sm:place-self-start mb-8">All Products</h1>
-
-      {/* <ul className="flex flex-col  gap-6 sm:grid sm:grid-cols-3 md:grid-cols-4"> */}
-
       <ul className="columns-1 sm:columns-3 md:columns-4 gap-5 space-y-10">
         {products.data.map((p) => (
           <ProductCard key={p._id} product={p} />
