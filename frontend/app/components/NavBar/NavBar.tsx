@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { navbarQuery } from '@/sanity/lib/queries'
-import AllProductsButton from "./AllProducts";
+import {navbarQuery} from '@/sanity/lib/queries'
+import AllProductsButton from './AllProducts'
 import {urlForImage} from '@/sanity/lib/utils'
-import { sanityFetch } from '@/sanity/lib/live';
-import { NavbarQueryResult } from '@/sanity.types';
+import {sanityFetch} from '@/sanity/lib/live'
+import {NavbarQueryResult} from '@/sanity.types'
+import ShoppingCartIcon from './ShoppingCartIcon'
 
 function Dropdown({
   label,
@@ -12,15 +13,12 @@ function Dropdown({
   url,
 }: {
   label: string
-  items?: { label: string; url: string }[]
+  items?: {label: string; url: string}[]
   url?: string
 }) {
   return (
     <div className="relative group">
-      <Link
-        href={url || '#'}
-        className="px-3 py-2 text-sm hover:text-gray-600"
-      >
+      <Link href={url || '#'} className="px-3 py-2 text-sm hover:text-gray-600">
         {label}
       </Link>
       <div className="absolute left-0 mt-1 hidden group-hover:block bg-white shadow-lg rounded-md z-10">
@@ -38,22 +36,10 @@ function Dropdown({
   )
 }
 
-interface NavbarData {
-  logo?: any
-  items?: {
-    label: string
-    type: 'link' | 'dropdown'
-    url?: string
-    dropdownItems?: { label: string; url: string }[]
-  }[]
-  shoppingBagIcon?: any
-}
-
 export default async function NavBar() {
-  
-  const result = await sanityFetch({ query: navbarQuery })
+  const result = await sanityFetch({query: navbarQuery})
   const data = result.data as NavbarQueryResult | null
-  const { logo, items = [], shoppingBagIcon } = data || {}
+  const {logo, items = [], shoppingBagIcon} = data || {}
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
@@ -72,7 +58,7 @@ export default async function NavBar() {
       </Link>
 
       <div className="flex items-center gap-6">
-        {items?.map((item:any) => {
+        {items?.map((item: any) => {
           if (item.type === 'link') {
             return (
               <Link
@@ -91,7 +77,7 @@ export default async function NavBar() {
                 key={item.label}
                 label={item.label}
                 items={item.dropdownItems}
-                url ={item.url}
+                url={item.url}
               />
             )
           }
@@ -100,20 +86,7 @@ export default async function NavBar() {
         })}
 
         <AllProductsButton />
-
-        <Link href="/shoppingcart" aria-label="Shopping cart">
-          { shoppingBagIcon? (
-            <Image
-              src={urlForImage(shoppingBagIcon)?.url() || ''}
-              alt="shopping Bag Icon"
-              width={40}
-              height={40}
-              priority
-            />
-          ) : (
-            <span className="text-xl font-bold">District 12</span>
-          )}
-        </Link>
+        <ShoppingCartIcon icon={shoppingBagIcon || null} />
       </div>
     </nav>
   )
