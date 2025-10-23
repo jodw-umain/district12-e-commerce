@@ -9,7 +9,7 @@ export default defineType({
       name: "title",
       title: "Title",
       type: "string",
-      description: "Displayed next to the category buttons, e.g. 'Shop by category'",
+      description: "Type of filters this section displays, e.g., 'Shop by Category'.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

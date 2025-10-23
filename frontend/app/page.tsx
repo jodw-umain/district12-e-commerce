@@ -4,6 +4,8 @@ import {Suspense} from 'react'
 import HeroSection from './components/HeroSection/HeroSection'
 import ProductCarouselSection from './components/ProductCarouselSection/ProductCarouselSection'
 import ArtistSection from '@/app/components/ArtistSection/ArtistSection'
+import FilterSection from './components/FilterSection/FilterSection'
+
 export default async function Page() {
   const {data: settings} = await sanityFetch({
     query: settingsQuery,
@@ -13,6 +15,7 @@ export default async function Page() {
     <>
       <div className="">
         <HeroSection />
+        
         <Suspense
           fallback={
             <div>
@@ -21,6 +24,7 @@ export default async function Page() {
           }
         >
           {await ProductCarouselSection()}
+          {await FilterSection()}
           {await ArtistSection()}
         </Suspense>
       </div>

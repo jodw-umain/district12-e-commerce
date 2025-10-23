@@ -170,21 +170,21 @@ export const getAuthorsQuery = defineQuery(`
 `)
 
 export const getLandingPage = defineQuery(`
-    *[_type == "landingPage"][0]{
-      hero {
-        heading,
-        subheading,
-        backgroundImage
-      }
-      
-    *[_type == "landingPage"][0]{
-      categoryFilterSection {
+  *[_type == "landingPage"][0]{
+    hero {
+      heading,
+      subheading,
+      backgroundImage
+    },
+
+    filterSection{
+      title,
+      filters[]->{
         title,
-        filters[]->{
-          title
-        }
+        "slug": slug.current
       }
     }
+  }
 `)
 
 const productFields = /* groq */ `
