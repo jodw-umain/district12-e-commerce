@@ -1,17 +1,13 @@
 import Image from 'next/image'
 import {PortableText} from '@portabletext/react'
-// import ResolvedLink from '@/app/components/ResolvedLink'
-import {Button} from '@/app/components/ui/button'
 import {Card, CardDescription, CardContent, CardTitle} from './ui/card'
 import {urlForImage} from '@/sanity/lib/utils'
 import {ProductQueryResult} from '@/sanity.types'
+import AddToCartButton from './AddToCartButton'
 
 type Product = NonNullable<ProductQueryResult>
 
-export default function ProductDetails(
-  {product}: {product: Product},
-  // {product: Product}
-) {
+export default function ProductDetails({product}: {product: Product}) {
   if (!product) {
     return (
       <section className="container py-12 text-center">
@@ -38,7 +34,10 @@ export default function ProductDetails(
         <div className="flex flex-col gap-3 max-w-lg">
           <CardTitle className="text-4xl font-bold">{productName}</CardTitle>
 
-          {author?.name && <h2 className="text-gray-500 text-xl">{author.name}</h2>}
+          {author?.authorName && (
+            <h2 className="text-gray-500 text-xl">{product.author?.authorName}</h2>
+          )}
+
           <CardDescription>
             {Array.isArray(productDescription) ? (
               <PortableText value={productDescription} />
@@ -60,15 +59,7 @@ export default function ProductDetails(
             )}
           </CardDescription>
 
-          {/* {button?.link && (
-            <ResolvedLink link={button.link}>
-              <Button variant={button.buttonVariant || 'default'} className="mt-4">
-                {button.buttonText || 'Buy now'}
-              </Button>
-            </ResolvedLink>
-          )} */}
-
-          <Button>Add to cart</Button>
+          <AddToCartButton product={product} />
         </div>
       </CardContent>
     </Card>
