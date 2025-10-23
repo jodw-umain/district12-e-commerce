@@ -8,7 +8,7 @@ import {useStore} from 'zustand'
 import {Button} from './ui/button'
 import {useEffect, useState} from 'react'
 
-export default function CartItems() {
+export default function CheckoutSummary() {
   const [isHydrated, setIsHydrated] = useState(false)
 
   const cartItems = useStore(useCartStore, (state) => state.items) || []
