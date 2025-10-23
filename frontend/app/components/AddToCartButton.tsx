@@ -43,9 +43,7 @@ export default function AddToCartButton({product}: AddToCartButtonProps) {
     setIsAdding(true)
 
     try {
-      console.log('Calling addItem with product:', product)
       addItem(product)
-      console.log(`Successfully added ${product.productName} to cart`)
     } catch (error) {
       console.error('Error adding to cart:', error)
     } finally {
