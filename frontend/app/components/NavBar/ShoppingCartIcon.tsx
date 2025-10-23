@@ -1,20 +1,39 @@
 'use client'
 
 import Link from 'next/link'
-import {ShoppingBag} from 'lucide-react'
 import {useCartStore} from '@/lib/stores/useCartStore'
 import useStore from '@/lib/hooks/useStore'
+import {urlForImage} from '@/sanity/lib/utils'
+import Image from 'next/image'
+import {NavbarQueryResult} from '@/sanity.types'
 
-export default function ShoppingCartIcon() {
+type Icon = NonNullable<NavbarQueryResult>['shoppingBagIcon']
+
+export default function ShoppingCartIcon({icon}: {icon: Icon}) {
   const totalItems = useStore(useCartStore, (state) => state.getTotalItems())
 
+  const iconUrl = urlForImage(icon)?.url()
+
   return (
-    <Link href="/shoppingcart" className="relative" aria-label="Shopping cart">
-      <ShoppingBag className="w-5 h-5" />
-      {totalItems !== undefined && totalItems > 0 && (
-        <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-black text-white rounded">
-          {totalItems}
-        </span>
+    <Link href="/shoppingcart" className="relative inline-block" aria-label="Shopping cart">
+      {icon ? (
+        <>
+          <Image src={`${iconUrl}`} alt="Shopping Bag Icon" width={40} height={40} priority />
+          {totalItems !== undefined && totalItems > 0 && (
+            <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-black text-white rounded">
+              {totalItems}
+            </span>
+          )}
+        </>
+      ) : (
+        <>
+          <span className="text-xl font-bold">cart</span>
+          {totalItems !== undefined && totalItems > 0 && (
+            <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-black text-white rounded">
+              {totalItems}
+            </span>
+          )}
+        </>
       )}
     </Link>
   )

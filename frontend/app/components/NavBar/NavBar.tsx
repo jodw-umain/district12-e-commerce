@@ -36,17 +36,6 @@ function Dropdown({
   )
 }
 
-interface NavbarData {
-  logo?: any
-  items?: {
-    label: string
-    type: 'link' | 'dropdown'
-    url?: string
-    dropdownItems?: {label: string; url: string}[]
-  }[]
-  shoppingBagIcon?: any
-}
-
 export default async function NavBar() {
   const result = await sanityFetch({query: navbarQuery})
   const data = result.data as NavbarQueryResult | null
@@ -97,21 +86,7 @@ export default async function NavBar() {
         })}
 
         <AllProductsButton />
-
-        <Link href="/shoppingcart" aria-label="Shopping cart">
-          {shoppingBagIcon ? (
-            <Image
-              src={urlForImage(shoppingBagIcon)?.url() || ''}
-              alt="shopping Bag Icon"
-              width={40}
-              height={40}
-              priority
-            />
-          ) : (
-            <span className="text-xl font-bold">District 12</span>
-          )}
-        </Link>
-        <ShoppingCartIcon />
+        <ShoppingCartIcon icon={shoppingBagIcon || null} />
       </div>
     </nav>
   )
