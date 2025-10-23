@@ -193,6 +193,113 @@ export type Product = {
   >
 }
 
+export type Footer = {
+  _id: string
+  _type: 'footer'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  navigation?: Array<{
+    title?: string
+    links?: Array<{
+      label?: string
+      url?: string
+      _type: 'footerLink'
+      _key: string
+    }>
+    _type: 'footerColumn'
+    _key: string
+  }>
+  contact?: {
+    title?: string
+    contactItems?: Array<{
+      label?: string
+      value?: string
+      url?: string
+      _type: 'contactItem'
+      _key: string
+    }>
+    socialLinks?: Array<{
+      platform?: string
+      url?: string
+      icon?: {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+      }
+      _type: 'socialLink'
+      _key: string
+    }>
+  }
+  logo?: {
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    description?: string
+  }
+}
+
+export type Navbar = {
+  _id: string
+  _type: 'navbar'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  shoppingBagIcon?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  items?: Array<{
+    label?: string
+    type?: 'link' | 'dropdown'
+    url?: string
+    dropdownItems?: Array<{
+      label?: string
+      url?: string
+      _type: 'dropdownItem'
+      _key: string
+    }>
+    _type: 'navItem'
+    _key: string
+  }>
+}
+
 export type LandingPage = {
   _id: string
   _type: 'landingPage'
@@ -640,6 +747,8 @@ export type AllSanitySchemaTypes =
   | BlockContent
   | Category
   | Product
+  | Footer
+  | Navbar
   | LandingPage
   | Settings
   | Page

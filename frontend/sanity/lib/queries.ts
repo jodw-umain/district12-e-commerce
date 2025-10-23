@@ -257,36 +257,27 @@ export const getArtistsQuery = defineQuery(`
 `)
 
 export const getProductsByArtistQuery = defineQuery(`
-  *[
-    _type == "product" &&
-    (
-      !defined($artist)
-      || author->name == $artist
-    )
-  ] | order(_createdAt desc) {
-    _id,
-    _type,
-    productName,
+ *[
+  _type == "product" &&
+  (
+    !defined($artist) || author->slug.current == $artist
+  )
+] | order(_createdAt desc) {
+  _id,
+  productName,
+  productPrice,
+  picture,
+  "slug": slug.current,
+  author->{
+    authorName,
     "slug": slug.current,
-    productPrice,
-    productDescription,
-    picture{
-      alt,
-      "url": asset->url
-    },
-    format,
-    author->{
-      name,
-      picture{
-        alt,
-        "url": asset->url
-      }
-    },
-    categories[]->{
-      title,
-      "slug": slug.current
-    }
+    picture
+  },
+  categories[]->{
+    title,
+    "slug": slug.current
   }
+}
 `)
 
 export const navbarQuery = defineQuery(`
