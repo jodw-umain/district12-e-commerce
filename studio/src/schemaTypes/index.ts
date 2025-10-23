@@ -15,6 +15,7 @@ import {productDetails} from './objects/productDetails'
 import {landingPage} from './singletons/landingPage'
 import navbar from './singletons/navbar'
 import footer from './singletons/footer'
+import filterSection from './objects/filterSection'
 
 // Export an array of all the schema types.  This is used in the Sanity Studio configuration. https://www.sanity.io/docs/schema-types
 
@@ -40,4 +41,5 @@ export const schemaTypes = [
   productsBlock,
   link,
   productDetails,
+  filterSection,
 ]
