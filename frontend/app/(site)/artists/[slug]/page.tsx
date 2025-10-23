@@ -4,7 +4,8 @@ import type {GetProductsByArtistQueryResult} from '@/sanity.types'
 import Image from 'next/image'
 import {Button} from '@/app/components/ui/button'
 import Link from 'next/link'
-import {Card, CardHeader, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card'
+import {Card, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card'
+import {urlForImage} from '@/sanity/lib/utils'
 
 export default async function ArtistsPage({params}: {params: {slug: string}}) {
   const slug = params.slug
@@ -17,7 +18,7 @@ export default async function ArtistsPage({params}: {params: {slug: string}}) {
     return <div>No products found for {slug}</div>
   }
   const artist = data[0].author
-  const artistImageUrl = artist?.picture?.url ?? ''
+  const artistImageUrl = urlForImage(artist?.picture)?.url()
 
   return (
     <section className="p-8 container">
@@ -25,10 +26,10 @@ export default async function ArtistsPage({params}: {params: {slug: string}}) {
         <Card className="flex flex-col sm:pr-8">
           <CardContent>
             <div className="items-center rounded-full w-40 h-40 overflow-hidden">
-              {artist?.picture?.url && (
+              {artistImageUrl && (
                 <Image
-                  src={artist.picture.url}
-                  alt={artist.picture?.alt ?? 'Artist image'}
+                  src={artistImageUrl}
+                  alt={artist?.picture?.alt ?? 'Artist image'}
                   width={200}
                   height={200}
                   className="object-cover"
