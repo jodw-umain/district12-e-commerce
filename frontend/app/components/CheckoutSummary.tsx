@@ -60,11 +60,8 @@ export default function CheckoutSummary() {
       {totalItems === 0 ? (
         <div className="flex flex-col items-center justify-center mt-20 text-center">
           <p className="text-gray-500 mb-6">You have not yet added any works to your cart.</p>
-          <Link
-            href="/products"
-            className="bg-black text-white px-6 py-3 font-medium rounded-md hover:bg-gray-900"
-          >
-            Keep exploring
+          <Link href="/products">
+            <Button>Keep exploring</Button>
           </Link>
         </div>
       ) : (
