@@ -1,9 +1,12 @@
 import {defineType, defineField} from 'sanity'
+import {MenuIcon} from '@sanity/icons'
 
-export default defineType({
+export const navbar = defineType({
   name: 'navbar',
   title: 'Navbar',
   type: 'document',
+  icon: MenuIcon,
+
   fields: [
     defineField({
       name: 'logo',
@@ -13,9 +16,9 @@ export default defineType({
     }),
 
     defineField({
-      name: "shoppingBagIcon",
-      title: "Shopping Bag Icon",
-      type: "image",
+      name: 'shoppingBagIcon',
+      title: 'Shopping Bag Icon',
+      type: 'image',
       description: 'Shopping bag icon shown in the navbar',
     }),
 
