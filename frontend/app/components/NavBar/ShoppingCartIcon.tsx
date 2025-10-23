@@ -5,7 +5,7 @@ import {ShoppingBag} from 'lucide-react'
 import {useCartStore} from '@/lib/stores/useCartStore'
 import useStore from '@/lib/hooks/useStore'
 
-export default function ShoppingCart() {
+export default function ShoppingCartIcon() {
   const totalItems = useStore(useCartStore, (state) => state.getTotalItems())
 
   return (

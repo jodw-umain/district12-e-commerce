@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getClient } from '@/sanity/lib/client'
-import { navbarQuery } from '@/sanity/lib/queries'
-import AllProductsButton from "./AllProducts";
-import ShoppingCart from './ShoppingCart'
+import {getClient} from '@/sanity/lib/client'
+import {navbarQuery} from '@/sanity/lib/queries'
+import AllProductsButton from './AllProducts'
+import ShoppingCartIcon from './ShoppingCartIcon'
 import {urlForImage} from '@/sanity/lib/utils'
 
 function Dropdown({
@@ -12,15 +12,12 @@ function Dropdown({
   url,
 }: {
   label: string
-  items?: { label: string; url: string }[]
+  items?: {label: string; url: string}[]
   url?: string
 }) {
   return (
     <div className="relative group">
-      <Link
-        href={url || '#'}
-        className="px-3 py-2 text-sm hover:text-gray-600"
-      >
+      <Link href={url || '#'} className="px-3 py-2 text-sm hover:text-gray-600">
         {label}
       </Link>
       <div className="absolute left-0 mt-1 hidden group-hover:block bg-white shadow-lg rounded-md z-10">
@@ -44,13 +41,13 @@ interface NavbarData {
     label: string
     type: 'link' | 'dropdown'
     url?: string
-    dropdownItems?: { label: string; url: string }[]
+    dropdownItems?: {label: string; url: string}[]
   }[]
 }
 
 export default async function NavBar() {
   const data: NavbarData | null = await getClient().fetch(navbarQuery)
-  const { logo, items = [] } = (data || {}) as NavbarData
+  const {logo, items = []} = (data || {}) as NavbarData
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
@@ -69,7 +66,7 @@ export default async function NavBar() {
       </Link>
 
       <div className="flex items-center gap-6">
-        {items.map((item:any) => {
+        {items.map((item: any) => {
           if (item.type === 'link') {
             return (
               <Link
@@ -88,7 +85,7 @@ export default async function NavBar() {
                 key={item.label}
                 label={item.label}
                 items={item.dropdownItems}
-                url ={item.url}
+                url={item.url}
               />
             )
           }
@@ -96,7 +93,7 @@ export default async function NavBar() {
           return null
         })}
         <AllProductsButton />
-        <ShoppingCart />
+        <ShoppingCartIcon />
       </div>
     </nav>
   )
