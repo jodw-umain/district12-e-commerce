@@ -1,25 +1,29 @@
 import {getProductsByArtistQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
-import type {GetProductsByArtistQueryResult} from '@/sanity.types'
+import type {GetProductsByArtistQueryResult, Slug} from '@/sanity.types'
 import Image from 'next/image'
 import {Button} from '@/app/components/ui/button'
 import Link from 'next/link'
 import {Card, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card'
 import {urlForImage} from '@/sanity/lib/utils'
 
-export default async function ArtistsPage({params}: {params: {slug: string}}) {
-  const slug = params.slug
+type ArtistPageProps = {
+  params: Promise<{slug: Slug}>
+}
+
+export default async function ArtistsPage({params}: ArtistPageProps) {
+  const {slug} = await params
   const {data}: {data: GetProductsByArtistQueryResult} = await sanityFetch({
     query: getProductsByArtistQuery,
     params: {artist: slug},
   })
 
   if (!data || data.length === 0) {
-    return <div>No products found for {slug}</div>
+    return <div>No products found for {String(slug)}</div>
   }
   const artist = data[0].author
   const artistImageUrl = urlForImage(artist?.picture)?.url()
-
+  console.log(slug)
   return (
     <section className="p-8 container">
       <div className="sm:flex justify-between py-8 ">
@@ -47,7 +51,7 @@ export default async function ArtistsPage({params}: {params: {slug: string}}) {
           <ul className="flex flex-col gap-10">
             {data.map((p) => {
               return (
-                <Card>
+                <Card key={p._id}>
                   <Link href={`/products/${p.slug}`}>
                     <CardContent>
                       <li key={p._id}>
