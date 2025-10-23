@@ -1,4 +1,4 @@
-import CheckoutSummary from '@/app/components/CheckoutSummary'
+import CheckoutCart from '@/app/components/CheckoutCart'
 import {Suspense} from 'react'
 
 export const metadata = {
@@ -9,7 +9,7 @@ export const metadata = {
 export default async function ShoppingCartPage() {
   return (
     <Suspense fallback={<div>loading cart....</div>}>
-      <CheckoutSummary />
+      <CheckoutCart />
     </Suspense>
   )
 }
