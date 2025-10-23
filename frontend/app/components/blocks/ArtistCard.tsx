@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {Card, CardContent, CardHeader, CardTitle} from '../ui/card'
+import {Card, CardContent, CardHeader, CardTitle} from '../ui/card/card'
 import {GetPageQueryResult} from '@/sanity.types'
 
 // Fix the type extraction by handling the null case

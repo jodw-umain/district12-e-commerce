@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {Card, CardHeader, CardContent, CardTitle} from '../ui/card'
+import {Card, CardHeader, CardContent, CardTitle} from '../ui/card/card'
 import {Author as AuthorType, GetAuthorsQueryResult} from '@/sanity.types'
 import {urlForImage} from '@/sanity/lib/utils'
 import Link from 'next/link'
@@ -10,9 +10,9 @@ export default async function ArtistCard({artist}: {artist: GetAuthorsQueryResul
 
   return (
     <Link className="" href={`/artists/${slug}`}>
-      <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
+      <Card className="clickable-card h-full flex flex-col justify-between">
         <div>
-          <CardContent className="w-full p-0">
+          <CardContent className="w-full">
             <div>
               {imageUrl && (
                 <Image
@@ -28,7 +28,7 @@ export default async function ArtistCard({artist}: {artist: GetAuthorsQueryResul
           </CardContent>
         </div>
         <div>
-          <CardHeader className="p-0 pt-4">
+          <CardHeader className="pt-4">
             <CardTitle className="flex flex-col">{authorName}</CardTitle>
           </CardHeader>
         </div>

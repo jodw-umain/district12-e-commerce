@@ -1,5 +1,12 @@
 import Image from 'next/image'
-import {Card, CardHeader, CardDescription, CardContent, CardTitle, CardFooter} from '../ui/card'
+import {
+  Card,
+  CardHeader,
+  CardDescription,
+  CardContent,
+  CardTitle,
+  CardFooter,
+} from '../ui/card/card'
 import {GetPageQueryResult} from '@/sanity.types'
 
 // Extract the product type from the productsBlock
