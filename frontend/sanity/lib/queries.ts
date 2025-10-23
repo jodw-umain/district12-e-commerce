@@ -194,7 +194,7 @@ const productFields = /* groq */ `
   productName,
   productPrice,
   "date": coalesce(date, _updatedAt),
-  "author": author->{name, picture},
+  "author": author->{authorName, picture},
   picture,
   "categories": categories[]->title,
   productDescription,

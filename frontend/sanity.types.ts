@@ -1178,7 +1178,7 @@ export type GetLandingPageResult = {
   } | null
 } | null
 // Variable: productQuery
-// Query: *[_type == "product" && slug.current == $slug] [0] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "slug": slug.current,  productName,  productPrice,  "date": coalesce(date, _updatedAt),  "author": author->{name, picture},  picture,  "categories": categories[]->title,  productDescription,  }
+// Query: *[_type == "product" && slug.current == $slug] [0] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "slug": slug.current,  productName,  productPrice,  "date": coalesce(date, _updatedAt),  "author": author->{authorName, picture},  picture,  "categories": categories[]->title,  productDescription,  }
 export type ProductQueryResult = {
   _id: string
   status: 'draft' | 'published'
@@ -1187,7 +1187,7 @@ export type ProductQueryResult = {
   productPrice: number
   date: string
   author: {
-    name: null
+    authorName: string | null
     picture: {
       asset?: {
         _ref: string
@@ -1397,8 +1397,13 @@ declare module '@sanity/client' {
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->authorName,\n  productPrice,\n  picture,\n  "categories":categories[]->title\n}\n  ': GetAllProductsQueryResult
     '\n  *[_type == "author"] | order(_createdAt desc) {\n    _id,\n    authorName,\n    picture,\n    "slug":slug.current\n  }\n': GetAuthorsQueryResult
+<<<<<<< HEAD
     '\n  *[_type == "landingPage"][0]{\n    hero {\n      heading,\n      subheading,\n      backgroundImage\n    },\n\n    filterSection{\n      title,\n      filters[]->{\n        title,\n        "slug": slug.current\n      }\n    }\n  }\n': GetLandingPageResult
     '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{name, picture},\n  picture,\n  "categories": categories[]->title,\n  productDescription,\n\n  }\n': ProductQueryResult
+=======
+    '\n    *[_type == "landingPage"][0]{\n      hero {\n        heading,\n        subheading,\n        backgroundImage\n      }\n    }\n  ': GetLandingPageResult
+    '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{authorName, picture},\n  picture,\n  "categories": categories[]->title,\n  productDescription,\n\n  }\n': ProductQueryResult
+>>>>>>> development
     '\n  *[_type == "product" && defined(slug.current)]\n  {"slug": slug.current}\n': ProductDetailsPageSlugResult
     '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || category->slug.current == $category\n      || $category in categories[]->slug.current\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    category->{\n      title,\n      "slug": slug.current\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult
     '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
