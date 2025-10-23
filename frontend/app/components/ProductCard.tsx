@@ -12,7 +12,7 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
   const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
   return (
-    <Link className="clickable-card" href={`/products/${slug}`}>
+    <Link className="clickable-card" href={`/AllProducts//${slug}`}>
       <Card className="flex flex-col items-center p-4">
         <CardContent>
           {productImage && (

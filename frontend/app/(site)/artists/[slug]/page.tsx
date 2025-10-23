@@ -55,7 +55,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
 
               return (
                 <Card key={p._id}>
-                  <Link href={`/products/${p.slug}`}>
+                  <Link href={`/allproducts/${p.slug}`}>
                     <CardContent>
                       <li key={p._id}>
                         <div className="w-full h-full">

@@ -56,7 +56,7 @@ export default function CheckoutCart() {
       {totalItems === 0 ? (
         <div className="flex flex-col items-center justify-center mt-20 text-center">
           <p className="text-gray-500 mb-6">You have not yet added any works to your cart.</p>
-          <Link href="/products">
+          <Link href="/allproducts">
             <Button>Keep exploring</Button>
           </Link>
         </div>
