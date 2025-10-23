@@ -34,21 +34,18 @@ export default function CheckoutSummary() {
   }
 
   const handleAddProduct = (product: any) => {
-    console.log('Adding product:', product)
     if (addItem) {
       addItem(product)
     }
   }
 
   const handleDecreaseQuantity = (productId: string) => {
-    console.log('Decreasing quantity for product:', productId)
     if (decreaseQuantity) {
       decreaseQuantity(productId)
     }
   }
 
   const handleRemoveProduct = (productId: string) => {
-    console.log('Completely removing product:', productId)
     if (removeItem) {
       removeItem(productId)
     }
