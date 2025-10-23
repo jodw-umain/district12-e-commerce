@@ -21,7 +21,7 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
               width={200}
               height={200}
               alt={picture?.alt || productName || 'Product image'}
-              className="w-full h-full image-wrapper "
+              className="w-full h-full "
               priority={true}
             />
           )}
