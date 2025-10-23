@@ -7,7 +7,7 @@ import Link from 'next/link'
 import {useStore} from 'zustand'
 import {Button} from './ui/button'
 import {useEffect, useState} from 'react'
-import {Card, CardContent, CardFooter, CardHeader} from './ui/card'
+import {Card, CardContent, CardFooter, CardHeader} from './ui/card/card'
 import CheckoutSummary from './CheckoutSummary'
 
 export default function CheckoutCart() {

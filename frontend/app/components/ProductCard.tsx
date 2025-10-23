@@ -12,8 +12,8 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
   const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
   return (
-    <Link className="clickable-card" href={`/AllProducts//${slug}`}>
-      <Card className="flex flex-col items-center p-4">
+    <Link href={`/AllProducts//${slug}`}>
+      <Card className="clickable-card flex flex-col p-4 mb-10 [break-inside:avoid] ">
         <CardContent>
           {productImage && (
             <Image
@@ -21,7 +21,7 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
               width={200}
               height={200}
               alt={picture?.alt || productName || 'Product image'}
-              className="w-auto h-auto image-wrapper "
+              className="w-full h-full image-wrapper "
               priority={true}
             />
           )}
