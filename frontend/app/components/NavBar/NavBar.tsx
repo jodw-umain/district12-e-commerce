@@ -1,3 +1,4 @@
+import { ShoppingBagIcon } from "lucide-react"
 import Image from 'next/image'
 import Link from 'next/link'
 import { navbarQuery } from '@/sanity/lib/queries'
@@ -111,7 +112,7 @@ export default async function NavBar() {
               priority
             />
           ) : (
-            <span className="text-xl font-bold">District 12</span>
+             <ShoppingBagIcon className="w-6 h-6" />
           )}
         </Link>
       </div>
