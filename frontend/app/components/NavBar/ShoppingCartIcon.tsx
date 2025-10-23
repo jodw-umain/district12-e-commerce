@@ -7,7 +7,7 @@ import {urlForImage} from '@/sanity/lib/utils'
 import Image from 'next/image'
 import {NavbarQueryResult} from '@/sanity.types'
 
-type Icon = NonNullable<NavbarQueryResult>['shoppingBagIcon']
+type Icon = NonNullable<NavbarQueryResult>['shoppingBagIcon'] | undefined
 
 export default function ShoppingCartIcon({icon}: {icon: Icon}) {
   const totalItems = useStore(useCartStore, (state) => state.getTotalItems())
