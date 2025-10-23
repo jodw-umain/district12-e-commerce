@@ -25,7 +25,7 @@ export default function AddToCartButton({product}: AddToCartButtonProps) {
 
   const handleAddToCart = async () => {
     if (!isHydrated) {
-      console.log('Not hydrated yet')
+      console.warn('Not hydrated yet')
       return
     }
 
