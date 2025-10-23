@@ -9,7 +9,7 @@ import {urlForImage} from '@/sanity/lib/utils'
 
 export default async function ArtistsPage({params}: {params: {slug: string}}) {
   const slug = params.slug
-  const {data} = await sanityFetch({
+  const {data}: {data: GetProductsByArtistQueryResult} = await sanityFetch({
     query: getProductsByArtistQuery,
     params: {artist: slug},
   })
