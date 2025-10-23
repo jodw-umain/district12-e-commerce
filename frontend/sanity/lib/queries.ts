@@ -291,6 +291,31 @@ export const navbarQuery = defineQuery(`
       type,
       url,
       dropdownItems[]{label, url}
-    }
+    },
+    shoppingBagIcon,
+  }
+`)
+
+export const footerQuery = defineQuery(`
+ *[_type == "footer"][0]{
+    "columns": navigation[]{
+      title,
+      links[]{ label, url }
+    },
+    contact{
+      title,
+      contactItems[]{
+        label,
+        value,
+        url
+      },
+      socialLinks[]{
+        platform,
+        url,
+        icon{ "url": asset->url }
+      }
+    },
+    "logo": logo.logo,
+    "description": logo.description
   }
 `)
