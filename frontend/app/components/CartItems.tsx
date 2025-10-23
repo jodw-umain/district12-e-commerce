@@ -79,6 +79,7 @@ export default function CartItems() {
                   src={`${urlForImage(item.picture)}`}
                   width={200}
                   height={200}
+                  priority
                   alt="product"
                   className="object-fit"
                 />
