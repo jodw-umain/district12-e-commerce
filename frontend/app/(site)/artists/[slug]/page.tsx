@@ -23,6 +23,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
   }
   const artist = data[0].author
   const artistImageUrl = urlForImage(artist?.picture)?.url()
+
   console.log(slug)
   return (
     <section className="p-8 container">
@@ -50,15 +51,17 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
         <div className="items-center">
           <ul className="flex flex-col gap-10">
             {data.map((p) => {
+              const productImageUrl = urlForImage(p.picture)?.url()
+
               return (
                 <Card key={p._id}>
                   <Link href={`/products/${p.slug}`}>
                     <CardContent>
                       <li key={p._id}>
                         <div className="w-full h-full">
-                          {p.picture?.url && (
+                          {productImageUrl && (
                             <Image
-                              src={p.picture.url}
+                              src={productImageUrl}
                               alt={p.picture?.alt ?? 'Product image'}
                               width={500}
                               height={200}
