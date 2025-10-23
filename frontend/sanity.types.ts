@@ -193,6 +193,113 @@ export type Product = {
   >
 }
 
+export type Footer = {
+  _id: string
+  _type: 'footer'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  navigation?: Array<{
+    title?: string
+    links?: Array<{
+      label?: string
+      url?: string
+      _type: 'footerLink'
+      _key: string
+    }>
+    _type: 'footerColumn'
+    _key: string
+  }>
+  contact?: {
+    title?: string
+    contactItems?: Array<{
+      label?: string
+      value?: string
+      url?: string
+      _type: 'contactItem'
+      _key: string
+    }>
+    socialLinks?: Array<{
+      platform?: string
+      url?: string
+      icon?: {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+      }
+      _type: 'socialLink'
+      _key: string
+    }>
+  }
+  logo?: {
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    description?: string
+  }
+}
+
+export type Navbar = {
+  _id: string
+  _type: 'navbar'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  shoppingBagIcon?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  items?: Array<{
+    label?: string
+    type?: 'link' | 'dropdown'
+    url?: string
+    dropdownItems?: Array<{
+      label?: string
+      url?: string
+      _type: 'dropdownItem'
+      _key: string
+    }>
+    _type: 'navItem'
+    _key: string
+  }>
+}
+
 export type LandingPage = {
   _id: string
   _type: 'landingPage'
@@ -640,6 +747,8 @@ export type AllSanitySchemaTypes =
   | BlockContent
   | Category
   | Product
+  | Footer
+  | Navbar
   | LandingPage
   | Settings
   | Page
@@ -1135,24 +1244,40 @@ export type GetArtistsQueryResult = Array<{
   } | null
 }>
 // Variable: getProductsByArtistQuery
-// Query: *[    _type == "product" &&    (      !defined($artist)      || author->name == $artist    )  ] | order(_createdAt desc) {    _id,    _type,    productName,    "slug": slug.current,    productPrice,    productDescription,    picture{      alt,      "url": asset->url    },    format,    author->{      name,      picture{        alt,        "url": asset->url      }    },    categories[]->{      title,      "slug": slug.current    }  }
+// Query: *[  _type == "product" &&  (    !defined($artist) || author->slug.current == $artist  )] | order(_createdAt desc) {  _id,  productName,  productPrice,  picture,  "slug": slug.current,  author->{    authorName,    "slug": slug.current,    picture  },  categories[]->{    title,    "slug": slug.current  }}
 export type GetProductsByArtistQueryResult = Array<{
   _id: string
-  _type: 'product'
   productName: string | null
-  slug: string | null
   productPrice: number | null
-  productDescription: BlockContent | null
   picture: {
-    alt: string | null
-    url: string | null
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
   } | null
-  format: Array<string> | null
+  slug: string | null
   author: {
-    name: null
+    authorName: string | null
+    slug: string | null
     picture: {
-      alt: string | null
-      url: string | null
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
     } | null
   } | null
   categories: Array<{
@@ -1161,8 +1286,81 @@ export type GetProductsByArtistQueryResult = Array<{
   }> | null
 }>
 // Variable: navbarQuery
-// Query: *[_type == "navbar"][0]{    logo,    items[]{      label,      type,      url,      dropdownItems[]{label, url}    }  }
-export type NavbarQueryResult = null
+// Query: *[_type == "navbar"][0]{    logo,    items[]{      label,      type,      url,      dropdownItems[]{label, url}    },    shoppingBagIcon,  }
+export type NavbarQueryResult = {
+  logo: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  items: Array<{
+    label: string | null
+    type: 'dropdown' | 'link' | null
+    url: string | null
+    dropdownItems: Array<{
+      label: string | null
+      url: string | null
+    }> | null
+  }> | null
+  shoppingBagIcon: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+} | null
+// Variable: footerQuery
+// Query: *[_type == "footer"][0]{    "columns": navigation[]{      title,      links[]{ label, url }    },    contact{      title,      contactItems[]{        label,        value,        url      },      socialLinks[]{        platform,        url,        icon{ "url": asset->url }      }    },    "logo": logo.logo,    "description": logo.description  }
+export type FooterQueryResult = {
+  columns: Array<{
+    title: string | null
+    links: Array<{
+      label: string | null
+      url: string | null
+    }> | null
+  }> | null
+  contact: {
+    title: string | null
+    contactItems: Array<{
+      label: string | null
+      value: string | null
+      url: string | null
+    }> | null
+    socialLinks: Array<{
+      platform: string | null
+      url: string | null
+      icon: {
+        url: string | null
+      } | null
+    }> | null
+  } | null
+  logo: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  description: string | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1184,7 +1382,8 @@ declare module '@sanity/client' {
     '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || category->slug.current == $category\n      || $category in categories[]->slug.current\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    category->{\n      title,\n      "slug": slug.current\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult
     '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
     '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
-    '\n  *[\n    _type == "product" &&\n    (\n      !defined($artist)\n      || author->name == $artist\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      name,\n      picture{\n        alt,\n        "url": asset->url\n      }\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByArtistQueryResult
-    '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    }\n  }\n': NavbarQueryResult
+    '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
+    '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    },\n    shoppingBagIcon,\n  }\n': NavbarQueryResult
+    '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
   }
 }

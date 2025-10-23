@@ -13,6 +13,13 @@ export default defineType({
     }),
 
     defineField({
+      name: "shoppingBagIcon",
+      title: "Shopping Bag Icon",
+      type: "image",
+      description: 'Shopping bag icon shown in the navbar',
+    }),
+
+    defineField({
       name: 'items',
       title: 'Navigation Items',
       type: 'array',
