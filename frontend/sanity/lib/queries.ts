@@ -324,3 +324,28 @@ export const footerQuery = defineQuery(`
     "description": logo.description
   }
 `)
+
+
+export const getFilteredProductsQuery = (price?: string, format?: string) => {
+  let filters = [`_type == "product"`];
+
+  if (format) filters.push(`"${format}" in format`);
+  if (price === "$") filters.push(`productPrice < 100`);
+  else if (price === "$$") filters.push(`productPrice >= 100 && productPrice < 200`);
+  else if (price === "$$$") filters.push(`productPrice >= 200`);
+
+  const filterString = filters.join(" && ");
+
+  return defineQuery(`
+    *[${filterString}] | order(_createdAt desc){
+      _id,
+      "slug": slug.current,
+      productName,
+      "author": author->authorName,
+      productPrice,
+      format,
+      picture,
+      "categories": categories[]->title
+    }
+  `);
+};
