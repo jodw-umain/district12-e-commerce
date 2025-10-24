@@ -20,48 +20,49 @@ export default function ProductDetails({product}: {product: Product}) {
   const productImage = urlForImage(picture)?.url()
 
   return (
-    <Card className="flex items-center">
-      <CardContent className="container flex flex-col md:flex-row items-center justify-center gap-8 py-6 px-2 sm:px-6">
-        <Image
-          src={productImage || '/fallback-image.jpg'}
-          alt={picture?.alt || 'product image'}
-          width={400}
-          height={400}
-          className="rounded-lg object-cover"
-          priority
-        />
+    <section className="flex justify-center sm:py-12 ">
+      <Card className="!border-none ">
+        <CardContent className="flex flex-col h-full md:flex-row items-center gap-8 py-6 px-2 sm:px-6">
+          <Image
+            src={productImage || '/fallback-image.jpg'}
+            alt={picture?.alt || 'product image'}
+            width={400}
+            height={400}
+            className="object-cover"
+            priority
+          />
 
-        <div className="flex flex-col gap-3 max-w-lg">
-          <CardTitle className="text-4xl font-bold">{productName}</CardTitle>
+          <div className="flex flex-col h-full max-w-lg sm:p-0 ">
+            <CardTitle className="mb-3">
+              <h1>{productName}</h1>
+            </CardTitle>
 
-          {author?.authorName && (
-            <h2 className="text-gray-500 text-xl">{product.author?.authorName}</h2>
-          )}
+            {author?.authorName && <h2 className="mb-8">{product.author?.authorName}</h2>}
 
-          <CardDescription>
-            {Array.isArray(productDescription) ? (
-              <PortableText value={productDescription} />
-            ) : productDescription ? (
-              <p>{productDescription}</p>
-            ) : null}
+            <CardDescription>
+              {Array.isArray(productDescription) ? (
+                <PortableText value={productDescription} />
+              ) : productDescription ? (
+                <p>{productDescription}</p>
+              ) : null}
 
-            {productPrice !== undefined && (
-              <p className="text-2xl font-semibold mt-3">${productPrice}</p>
-            )}
-            {categories && categories.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {categories.map((cat, idx) => (
-                  <span key={idx} className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded">
-                    {cat}
-                  </span>
-                ))}
-              </div>
-            )}
-          </CardDescription>
-
-          <AddToCartButton product={product} />
-        </div>
-      </CardContent>
-    </Card>
+              {productPrice !== undefined && <p className="text-xl mt-6">${productPrice}</p>}
+              {categories && categories.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {categories.map((cat, idx) => (
+                    <span key={idx} className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded">
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </CardDescription>
+            <div className="mt-10 sm:mt-15">
+              <AddToCartButton product={product} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
   )
 }
