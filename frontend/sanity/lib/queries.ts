@@ -279,7 +279,8 @@ export const getProductsByArtistQuery = defineQuery(`
   author->{
     authorName,
     "slug": slug.current,
-    picture
+    picture,
+    authorDescription
   },
   categories[]->{
     title,

@@ -1388,6 +1388,20 @@ export type FooterQueryResult = {
   } | null
   description: string | null
 } | null
+// Variable: getProductsSectionTitle
+// Query: *[_type == "landingPage"][0]{    productsSection{      productsHeading    }  }
+export type GetProductsSectionTitleResult = {
+  productsSection: {
+    productsHeading: string | null
+  } | null
+} | null
+// Variable: getArtistSectionTitle
+// Query: *[_type == "landingPage"][0]{    artistsSection{      artistHeading    }  }
+export type GetArtistSectionTitleResult = {
+  artistsSection: {
+    artistHeading: string | null
+  } | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1412,5 +1426,7 @@ declare module '@sanity/client' {
     '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
     '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    },\n    shoppingBagIcon,\n  }\n': NavbarQueryResult
     '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
+    '\n  *[_type == "landingPage"][0]{\n    productsSection{\n      productsHeading\n    }\n  }\n': GetProductsSectionTitleResult
+    '\n  *[_type == "landingPage"][0]{\n    artistsSection{\n      artistHeading\n    }\n  }\n': GetArtistSectionTitleResult
   }
 }
