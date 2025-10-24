@@ -4,6 +4,8 @@ import {Card, CardDescription, CardContent, CardTitle} from './ui/card/card'
 import {urlForImage} from '@/sanity/lib/utils'
 import {ProductQueryResult} from '@/sanity.types'
 import AddToCartButton from './AddToCartButton'
+import Link from 'next/link'
+import {Button} from './ui/button'
 
 type Product = NonNullable<ProductQueryResult>
 
@@ -43,16 +45,18 @@ export default function ProductDetails({product}: {product: Product}) {
               {Array.isArray(productDescription) ? (
                 <PortableText value={productDescription} />
               ) : productDescription ? (
-                <p>{productDescription}</p>
+                <p className="text-sm">{productDescription}</p>
               ) : null}
 
               {productPrice !== undefined && <p className="text-xl mt-6">${productPrice}</p>}
               {categories && categories.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-3">
                   {categories.map((cat, idx) => (
-                    <span key={idx} className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded">
-                      {cat}
-                    </span>
+                    <Link href={`/categories/${cat}`} key={idx}>
+                      <Button key={idx} variant="secondary" className="rounded-full px-6">
+                        {cat}
+                      </Button>
+                    </Link>
                   ))}
                 </div>
               )}
