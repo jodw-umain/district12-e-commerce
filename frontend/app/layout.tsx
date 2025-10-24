@@ -17,6 +17,7 @@ import {settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {handleError} from './client-utils'
 import {ModeToggle} from './components/ModeToggle'
+import {BackToTopButton} from './components/BackToTopButton'
 
 /**
  * Generate metadata for the page.
@@ -90,6 +91,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             {/* <ModeToggle/>  */}
             <main className="">{children}</main>
             <Footer />
+            <BackToTopButton />
           </section>
           <SpeedInsights />
         </ThemeProvider>
