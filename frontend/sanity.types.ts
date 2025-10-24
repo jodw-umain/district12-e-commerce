@@ -286,14 +286,30 @@ export type Navbar = {
     _type: 'image'
   }
   items?: Array<{
-    label?: string
-    type?: 'link' | 'dropdown'
+    label: string
+    type: 'link' | 'dropdown' | 'artists' | 'categories'
     url?: string
     dropdownItems?: Array<{
       label?: string
       url?: string
       _type: 'dropdownItem'
       _key: string
+    }>
+    showAllArtists?: boolean
+    selectedArtists?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'author'
+    }>
+    showAllCategories?: boolean
+    selectedCategories?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'category'
     }>
     _type: 'navItem'
     _key: string
@@ -1307,7 +1323,7 @@ export type GetProductsByArtistQueryResult = Array<{
   }>
 }>
 // Variable: navbarQuery
-// Query: *[_type == "navbar"][0]{    logo,    items[]{      label,      type,      url,      dropdownItems[]{label, url}    },    shoppingBagIcon,  }
+// Query: *[_type == "navbar"][0] {    logo,    shoppingBagIcon,    items[] {      label,      type,      url,      dropdownItems[] {        label,        url      },      showAllArtists,      selectedArtists[]-> {        _id,        authorName,        slug      },      showAllCategories,      selectedCategories[]-> {        _id,        title,        slug      }    },    "allArtists": *[_type == "author"] | order(authorName asc) {      _id,      authorName,      slug    },    "allCategories": *[_type == "category"] | order(title asc) {      _id,      title,      slug    }  }
 export type NavbarQueryResult = {
   logo: {
     asset?: {
@@ -1321,15 +1337,6 @@ export type NavbarQueryResult = {
     crop?: SanityImageCrop
     _type: 'image'
   } | null
-  items: Array<{
-    label: string | null
-    type: 'dropdown' | 'link' | null
-    url: string | null
-    dropdownItems: Array<{
-      label: string | null
-      url: string | null
-    }> | null
-  }> | null
   shoppingBagIcon: {
     asset?: {
       _ref: string
@@ -1342,6 +1349,37 @@ export type NavbarQueryResult = {
     crop?: SanityImageCrop
     _type: 'image'
   } | null
+  items: Array<{
+    label: string
+    type: 'artists' | 'categories' | 'dropdown' | 'link'
+    url: string | null
+    dropdownItems: Array<{
+      label: string | null
+      url: string | null
+    }> | null
+    showAllArtists: boolean | null
+    selectedArtists: Array<{
+      _id: string
+      authorName: string
+      slug: Slug
+    }> | null
+    showAllCategories: boolean | null
+    selectedCategories: Array<{
+      _id: string
+      title: string
+      slug: Slug | null
+    }> | null
+  }> | null
+  allArtists: Array<{
+    _id: string
+    authorName: string
+    slug: Slug
+  }>
+  allCategories: Array<{
+    _id: string
+    title: string
+    slug: Slug | null
+  }>
 } | null
 // Variable: footerQuery
 // Query: *[_type == "footer"][0]{    "columns": navigation[]{      title,      links[]{ label, url }    },    contact{      title,      contactItems[]{        label,        value,        url      },      socialLinks[]{        platform,        url,        icon{ "url": asset->url }      }    },    "logo": logo.logo,    "description": logo.description  }
@@ -1404,7 +1442,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
     '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
     '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
-    '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    },\n    shoppingBagIcon,\n  }\n': NavbarQueryResult
+    '\n  *[_type == "navbar"][0] {\n    logo,\n    shoppingBagIcon,\n    items[] {\n      label,\n      type,\n      url,\n      dropdownItems[] {\n        label,\n        url\n      },\n      showAllArtists,\n      selectedArtists[]-> {\n        _id,\n        authorName,\n        slug\n      },\n      showAllCategories,\n      selectedCategories[]-> {\n        _id,\n        title,\n        slug\n      }\n    },\n    "allArtists": *[_type == "author"] | order(authorName asc) {\n      _id,\n      authorName,\n      slug\n    },\n    "allCategories": *[_type == "category"] | order(title asc) {\n      _id,\n      title,\n      slug\n    }\n  }\n': NavbarQueryResult
     '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
   }
 }
