@@ -7,8 +7,8 @@ export default async function ProductCarouselSection() {
   const {data} = await sanityFetch({query: getAllProductsQuery})
 
   return (
-    <div className="container">
-      <h2 className="text-4xl mb-6">Title</h2>
+    <section className="my-20 ml-20">
+      <h2 className=" mb-6">Explore </h2>
 
       <Carousel
         opts={{
@@ -19,12 +19,12 @@ export default async function ProductCarouselSection() {
       >
         <CarouselContent>
           {data.map((product) => (
-            <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/6" key={product._id}>
+            <CarouselItem className="h-full basis-1/2 md:basis-1/3 lg:basis-1/6" key={product._id}>
               <ProductCard product={product} />
             </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>
-    </div>
+    </section>
   )
 }

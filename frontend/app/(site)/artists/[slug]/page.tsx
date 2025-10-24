@@ -54,7 +54,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
               const productImageUrl = urlForImage(p.picture)?.url()
 
               return (
-                <Card key={p._id}>
+                <Card className="clickable-card" key={p._id}>
                   <Link href={`/allproducts/${p.slug}`}>
                     <CardContent>
                       <li key={p._id}>
