@@ -82,7 +82,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
                         <CardTitle>
                           <h2 className="mt-2">{p.productName}</h2>
                         </CardTitle>
-                        <p className="mt-3 mb-6 text-lg">${p.productPrice}</p>
+                        <p className="mt-3 mb-6">${p.productPrice}</p>
                         {p.categories && p.categories.length > 0 && (
                           <CardFooter className="flex flex-wrap gap-2 mt-2">
                             {p.categories.map((cat) => (
