@@ -324,3 +324,19 @@ export const footerQuery = defineQuery(`
     "description": logo.description
   }
 `)
+
+export const getProductsSectionTitle = defineQuery(`
+  *[_type == "landingPage"][0]{
+    productsSection{
+      productsHeading
+    }
+  }
+`)
+
+export const getArtistSectionTitle = defineQuery(`
+  *[_type == "landingPage"][0]{
+    artistsSection{
+      artistHeading
+    }
+  }
+`)
