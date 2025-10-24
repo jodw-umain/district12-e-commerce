@@ -15,7 +15,6 @@ export default async function Page() {
     <>
       <div className="">
         <HeroSection />
-        
         <Suspense
           fallback={
             <div>
