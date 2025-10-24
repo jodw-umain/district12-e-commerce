@@ -12,7 +12,7 @@ export default function ProductCard({product}: {product: GetAllProductsQueryResu
   const categoriesString = Array.isArray(categories) ? categories.join(', ') : String(categories)
 
   return (
-    <Link className="hover:text-brand underline transition-colors" href={`/AllProducts/${slug}`}>
+    <Link className="hover:text-brand underline transition-colors" href={`/allproducts/${slug}`}>
       <Card className="h-full flex flex-col justify-between p-0 rounded-none border-none shadow-none">
         <CardContent className="w-full p-0">
           {productImage && (
