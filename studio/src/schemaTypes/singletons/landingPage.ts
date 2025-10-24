@@ -47,6 +47,12 @@ export const landingPage = defineType({
         }),
       ],
     }),
+
+    defineField({
+      name: 'filterSection',
+      title: 'Filter Section',
+      type: 'filterSection',
+    }),
   ],
   preview: {
     select: {title: 'title', media: 'hero.backgroundImage'},

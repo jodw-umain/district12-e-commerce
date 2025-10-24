@@ -1,6 +1,5 @@
 import './globals.css'
 import NavBar from './components/NavBar/NavBar'
-
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
@@ -8,15 +7,15 @@ import {draftMode} from 'next/headers'
 import {VisualEditing, toPlainText} from 'next-sanity'
 import {Toaster} from 'sonner'
 import {ThemeProvider} from '@/app/components/theme-provider'
-
 import DraftModeToast from '@/app/components/DraftModeToast'
-import Footer from '@/app/components/Footer'
+import Footer from '@/app/components/Footer/Footer'
 import * as demo from '@/sanity/lib/demo'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {handleError} from './client-utils'
 import {ModeToggle} from './components/ModeToggle'
+import {BackToTopButton} from './components/BackToTopButton'
 import {Suspense} from 'react'
 
 /**
@@ -90,9 +89,10 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             )}
             {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
             <SanityLive onError={handleError} />
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             <main className="">{children}</main>
             <Footer />
+            <BackToTopButton />
           </section>
           <SpeedInsights />
         </ThemeProvider>
