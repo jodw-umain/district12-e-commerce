@@ -2,31 +2,19 @@ import Link from 'next/link';
 import {getAllProductsQuery, getFilteredProductsQuery,} from '@/sanity/lib/queries'
 import ProductCard from '@/app/components/ProductCard'
 import {sanityFetch} from '@/sanity/lib/live'
-
-// export default async function AllProductsPage() {
-//   const products = await sanityFetch({query: getAllProductsQuery})
-
-//   return (
-//     <section className="flex flex-col items-center p-8 h-fit">
-//       <h1 className="sm:mb-10 sm:place-self-start mb-8">All Products</h1>
-//       <ul className="columns-1 sm:columns-3 md:columns-4 gap-5 space-y-10">
-//         {products.data.map((p) => (
-//           <ProductCard key={p._id} product={p} />
-//         ))}
-//       </ul>
-//     </section>
-//   )
-// }
+import {Button} from '@/app/components/ui/button';
 
 export const revalidate = 60;
 
 export default async function AllProductsPage({
   searchParams,
 }: {
-  searchParams?: { price?: string; format?: string };
+  searchParams?: Promise<{ price?: string; format?: string }>;
 }) {
-  const price = searchParams?.price;
-  const format = searchParams?.format;
+  const resolvedSearchParams = await searchParams;
+  const price = resolvedSearchParams?.price;
+  const format = resolvedSearchParams?.format;
+
 
   const query =
     price || format
@@ -40,33 +28,42 @@ export default async function AllProductsPage({
 
   const buildUrl = (next: { price?: string; format?: string }) => {
     const params = new URLSearchParams();
-    if (next.price) params.set("price", next.price);
-    if (next.format) params.set("format", next.format);
+
+    if (price && next.price === undefined) params.set('price', price);
+    if (format && next.format === undefined) params.set('format', format);
+
+    if (next.price !== undefined) {
+      next.price ? params.set('price', next.price) : params.delete('price');
+    }
+    if (next.format !== undefined) {
+      next.format ? params.set('format', next.format) : params.delete('format');
+    }
+
+
     const queryStr = params.toString();
-    return `/AllProducts${queryStr ? "?" + queryStr : ""}`;
+    return `/allproducts${queryStr ? "?" + queryStr : ""}`;
   };
 
   return (
     <section className="flex flex-col items-center p-8">
-      <h1 className="text-3xl font-semibold mb-8">All Products</h1>
+      <h2 className="mb-6">All Products</h2>
 
       <div className="flex flex-wrap gap-4 mb-10">
-        <Link
-          href="/AllProducts"
-          className="border rounded-full px-4 py-2 text-sm hover:bg-gray-100"
-        >
-          Clear All ▾
+        <Link href="/allproducts" >
+          <Button variant="secondary" className="rounded-full sm:px-8 px-4 mb-3">
+            Clear All
+          </Button>
         </Link>
 
         <div className="relative group">
-          <button className="border rounded-full px-4 py-2 text-sm cursor-pointer">
+          <Button variant="secondary" className="rounded-full sm:px-8 px-4 mb-3">
             Price ▾
-          </button>
-          <div className="absolute hidden group-hover:block bg-white border rounded-md shadow-lg mt-2 z-10">
+          </Button>
+          <div className="absolute hidden group-hover:block bg-white border rounded-md shadow-lg mt-0 z-10">
             {["$", "$$", "$$$"].map((symbol) => (
               <Link
                 key={symbol}
-                href={buildUrl({ price: symbol, format })}
+                href={buildUrl({ price: symbol })}
                 className={`block px-4 py-2 hover:bg-gray-50 ${
                   activePrice === symbol? "bg-gray-100 font-medium" : ""
                 }`}
@@ -78,14 +75,14 @@ export default async function AllProductsPage({
         </div>
 
         <div className="relative group">
-          <button className="border rounded-full px-4 py-2 text-sm cursor-pointer">
+          <Button variant="secondary" className="rounded-full sm:px-8 px-4 mb-3">
             Format ▾
-          </button>
-          <div className="absolute hidden group-hover:block bg-white border rounded-md shadow-lg mt-2 z-10">
-            {["digital", "print"].map((fmt) => (
+          </Button>
+          <div className="absolute hidden group-hover:block bg-white border rounded-md shadow-lg mt-0 z-10">
+            {["digital", "physical"].map((fmt) => (
               <Link
                 key={fmt}
-                href={buildUrl({ price, format: fmt })}
+                href={buildUrl({ format: fmt })}
                 className={`block px-4 py-2 hover:bg-gray-50 ${
                   activeFormat === fmt ? "bg-gray-100 font-medium" : ""
                 }`}
