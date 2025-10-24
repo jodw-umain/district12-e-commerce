@@ -86,7 +86,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
                         {p.categories && p.categories.length > 0 && (
                           <CardFooter className="flex flex-wrap gap-2 mt-2">
                             {p.categories.map((cat) => (
-                              <Link href={`/categories/${cat.slug}`}>
+                              <Link key={cat.slug} href={`/categories/${cat.slug}`}>
                                 <Button
                                   key={cat.slug}
                                   variant="secondary"
