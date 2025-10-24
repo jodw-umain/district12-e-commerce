@@ -24,7 +24,7 @@
   --color-black: #0b0b0b;
   --color-white: #fff;
   --color-brand: #f50;
-  --default-transition-duration: 250ms;
+  --default-transition-duration: 300ms;
 }
 
 @theme inline {
@@ -36,6 +36,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-card-hover-opacity: var(--card-hover-opacity);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -48,13 +49,9 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -68,7 +65,7 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0px;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
   --card: oklch(1 0 0);
@@ -82,7 +79,7 @@
   --muted: oklch(0.97 0.001 106.424);
   --muted-foreground: oklch(0.553 0.013 58.071);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
+  --border: oklch(0.5897 0 0);
   --input: oklch(0.923 0.003 48.717);
   --ring: oklch(0.709 0.01 56.259);
   --sidebar: oklch(0.985 0.001 106.423);
@@ -98,11 +95,12 @@
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
+  --background: oklch(0.235 0 0);
   --foreground: oklch(0.985 0.001 106.423);
-  --card: oklch(0.216 0.006 56.043);
+  --card: oklch(0.235 0 0);
   --card-foreground: oklch(0.985 0.001 106.423);
-  --popover: oklch(0.216 0.006 56.043);
+  --card-hover-opacity: oklch(70% 0.235 0 0);
+  --popover: oklch(0.235 0 0);
   --popover-foreground: oklch(0.985 0.001 106.423);
   --primary: oklch(0.923 0.003 48.717);
   --primary-foreground: oklch(0.216 0.006 56.043);
@@ -114,6 +112,7 @@
   --accent-foreground: oklch(0.985 0.001 106.423);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
+  --border-hover: oklch(0.8914 0 0);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.553 0.013 58.071);
   --sidebar: oklch(0.216 0.006 56.043);
@@ -142,6 +141,7 @@
   }
   h2 {
     font-family: 'Antonio', 'Inter', sans-serif;
+    font-size: 32px;
   }
   h3 {
     font-family: 'Antonio', 'Inter', sans-serif;
