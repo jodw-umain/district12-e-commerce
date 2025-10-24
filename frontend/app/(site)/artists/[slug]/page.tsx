@@ -28,7 +28,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
   return (
     <section className="p-8 container">
       <div className="sm:flex justify-between py-8 ">
-        <Card className="flex flex-col sm:pr-8">
+        <Card className="flex flex-col sm:pr-8 !border-none">
           <CardContent>
             <div className="items-center rounded-full w-40 h-40 overflow-hidden">
               {artistImageUrl && (
@@ -42,10 +42,20 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
               )}
             </div>
             <CardTitle>
-              <h1>{artist?.authorName}</h1>
+              <h1 className="my-10">{artist?.authorName}</h1>
             </CardTitle>
             <p>@{artist?.authorName}</p>
-            <Button className="mt-4">Contact</Button>
+            <Button className="mt-4 w-full">Contact</Button>
+            <p className="mt-6 text-sm text-justify max-w-lg">
+              A contemporary digital artist exploring the intersection of creativity and technology.
+              <br />
+              Their work blends visual storytelling, experimental design, and digital techniques to
+              create captivating compositions.
+              <br /> Through the use of color, texture, and light, the artist aims to evoke emotion
+              and curiosity, transforming abstract ideas into visually engaging pieces. <br />
+              Focused on innovation and self expression, their art reflects a constant evolution of
+              style and concept within the digital medium.
+            </p>
           </CardContent>
         </Card>
         <div className="items-center">
@@ -72,13 +82,20 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
                         <CardTitle>
                           <h2 className="mt-2">{p.productName}</h2>
                         </CardTitle>
-                        <p className="text-gray-600">${p.productPrice}</p>
+                        <p className="mt-3 mb-6 text-lg">${p.productPrice}</p>
                         {p.categories && p.categories.length > 0 && (
                           <CardFooter className="flex flex-wrap gap-2 mt-2">
                             {p.categories.map((cat) => (
-                              <p key={cat.slug} className="">
-                                {cat.title}
-                              </p>
+                              <Link href={`/categories/${cat.slug}`}>
+                                <Button
+                                  key={cat.slug}
+                                  variant="secondary"
+                                  className="rounded-full px-6"
+                                >
+                                  {' '}
+                                  {cat.title}
+                                </Button>
+                              </Link>
                             ))}
                           </CardFooter>
                         )}
