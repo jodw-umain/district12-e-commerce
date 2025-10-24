@@ -17,7 +17,14 @@ export default function ShoppingCartIcon({icon}: {icon: Icon}) {
     <div className="relative inline-block">
       {icon ? (
         <>
-          <Image src={`${iconUrl}`} alt="Shopping Bag Icon" width={40} height={40} priority />
+          <Image
+            src={`${iconUrl}`}
+            alt="Shopping Bag Icon"
+            width={40}
+            height={40}
+            priority
+            className="w-8 h-8"
+          />
           {totalItems !== undefined && totalItems > 0 && (
             <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-black text-white rounded">
               {totalItems}
