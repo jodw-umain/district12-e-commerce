@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import {useCartStore} from '@/lib/stores/useCartStore'
 import useStore from '@/lib/hooks/useStore'
 import {urlForImage} from '@/sanity/lib/utils'
@@ -15,7 +14,7 @@ export default function ShoppingCartIcon({icon}: {icon: Icon}) {
   const iconUrl = urlForImage(icon)?.url()
 
   return (
-    <Link href="/checkout" className="relative inline-block" aria-label="Shopping cart icon">
+    <div className="relative inline-block">
       {icon ? (
         <>
           <Image src={`${iconUrl}`} alt="Shopping Bag Icon" width={40} height={40} priority />
@@ -35,6 +34,6 @@ export default function ShoppingCartIcon({icon}: {icon: Icon}) {
           )}
         </>
       )}
-    </Link>
+    </div>
   )
 }
