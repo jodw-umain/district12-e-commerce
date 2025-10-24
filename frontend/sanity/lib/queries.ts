@@ -313,7 +313,6 @@ export const navbarQuery = defineQuery(`
         slug
       }
     },
-    // ADD THESE TWO LINES:
     "allArtists": *[_type == "author"] | order(authorName asc) {
       _id,
       authorName,
