@@ -481,7 +481,7 @@ export type Author = {
     alt?: string
     _type: 'image'
   }
-  ArtistDescription?: BlockContent
+  authorDescription?: BlockContent
   slug?: Slug
 }
 

@@ -481,6 +481,7 @@ export type Author = {
     alt?: string
     _type: 'image'
   }
+  authorDescription?: BlockContent
   slug?: Slug
 }
 
@@ -1271,7 +1272,7 @@ export type GetArtistsQueryResult = Array<{
   } | null
 }>
 // Variable: getProductsByArtistQuery
-// Query: *[  _type == "product" &&  (    !defined($artist) || author->slug.current == $artist  )] | order(_createdAt desc) {  _id,  productName,  productPrice,  picture,  "slug": slug.current,  author->{    authorName,    "slug": slug.current,    picture  },  categories[]->{    title,    "slug": slug.current  }}
+// Query: *[  _type == "product" &&  (    !defined($artist) || author->slug.current == $artist  )] | order(_createdAt desc) {  _id,  productName,  productPrice,  picture,  "slug": slug.current,  author->{    authorName,    "slug": slug.current,    picture,    authorDescription  },  categories[]->{    title,    "slug": slug.current  }}
 export type GetProductsByArtistQueryResult = Array<{
   _id: string
   productName: string | null
@@ -1306,6 +1307,7 @@ export type GetProductsByArtistQueryResult = Array<{
       alt?: string
       _type: 'image'
     } | null
+    authorDescription: BlockContent | null
   } | null
   categories: Array<{
     title: string | null
@@ -1423,7 +1425,7 @@ declare module '@sanity/client' {
     '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || category->slug.current == $category\n      || $category in categories[]->slug.current\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    category->{\n      title,\n      "slug": slug.current\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult
     '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
     '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
-    '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
+    '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture,\n    authorDescription\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
     '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    },\n    shoppingBagIcon,\n  }\n': NavbarQueryResult
     '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
     '\n  *[_type == "landingPage"][0]{\n    productsSection{\n      productsHeading\n    }\n  }\n': GetProductsSectionTitleResult

@@ -42,7 +42,7 @@ export const author = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'AuthorDescription',
+      name: 'authorDescription',
       title: 'Artist Description',
       type: 'blockContent',
       validation: (Rule) => Rule.required(),

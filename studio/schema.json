@@ -2919,7 +2919,7 @@
         },
         "optional": true
       },
-      "ArtistDescription": {
+      "authorDescription": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
