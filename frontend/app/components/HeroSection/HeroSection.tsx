@@ -12,7 +12,7 @@ export default async function HeroSection() {
   return (
     <>
       {hero && (
-        <section className="relative flex items-center sm:min-h-[500px] px-2 sm:px-6">
+        <section className="relative flex items-center sm:min-h-[500px] min-h-[450px] px-2 sm:px-6">
           {imageUrl && (
             <Image
               src={imageUrl}
