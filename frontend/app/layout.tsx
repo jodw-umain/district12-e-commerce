@@ -1,5 +1,5 @@
-import './globals.css';
-import NavBar from "./components/NavBar/NavBar";
+import './globals.css'
+import NavBar from './components/NavBar/NavBar'
 
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
@@ -7,7 +7,7 @@ import {Inter} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {VisualEditing, toPlainText} from 'next-sanity'
 import {Toaster} from 'sonner'
-import { ThemeProvider } from "@/app/components/theme-provider"
+import {ThemeProvider} from '@/app/components/theme-provider'
 
 import DraftModeToast from '@/app/components/DraftModeToast'
 import Footer from '@/app/components/Footer'
@@ -16,8 +16,8 @@ import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {handleError} from './client-utils'
-import { ModeToggle } from './components/ModeToggle'
-import { BackToTopButton } from './components/BackToTopButton';
+import {ModeToggle} from './components/ModeToggle'
+import {BackToTopButton} from './components/BackToTopButton'
 
 /**
  * Generate metadata for the page.
@@ -67,35 +67,33 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     <html lang="en" className={`${inter.variable} bg-white text-black`} suppressHydrationWarning>
       <body>
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-          
-        <div className="fixed top-0 left-0 w-full z-50">
-          <NavBar />
-        </div>
+          <div className="fixed top-0 left-0 w-full z-50">
+            <NavBar />
+          </div>
 
-        <section className="min-h-screen pt-24">
-          {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
-          <Toaster />
-          {isDraftMode && (
-            <>
-              <DraftModeToast />
-              {/*  Enable Visual Editing, only to be rendered when Draft Mode is enabled */}
-              <VisualEditing />
-            </>
-          )}
-          {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-          <SanityLive onError={handleError} />
-          <ModeToggle/> 
-          <main className="">{children}</main>
-          <Footer />
-          <BackToTopButton />
-        </section>
-        <SpeedInsights />
-       
+          <section className="min-h-screen pt-24">
+            {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
+            <Toaster />
+            {isDraftMode && (
+              <>
+                <DraftModeToast />
+                {/*  Enable Visual Editing, only to be rendered when Draft Mode is enabled */}
+                <VisualEditing />
+              </>
+            )}
+            {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
+            <SanityLive onError={handleError} />
+            {/* <ModeToggle/>  */}
+            <main className="">{children}</main>
+            <Footer />
+            <BackToTopButton />
+          </section>
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

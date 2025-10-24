@@ -7,8 +7,8 @@ export default async function ArtistSection() {
   const {data} = await sanityFetch({query: getAuthorsQuery})
 
   return (
-    <div className="container mb-20">
-      <h2 className="mb-6">Title</h2>
+    <section className="my-20 sm:ml-20 ml-4">
+      <h2 className="mb-6">Artists</h2>
 
       <Carousel
         opts={{
@@ -25,6 +25,6 @@ export default async function ArtistSection() {
           ))}
         </CarouselContent>
       </Carousel>
-    </div>
+    </section>
   )
 }

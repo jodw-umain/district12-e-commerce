@@ -45,21 +45,11 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-border-hover: var(--border-hover);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
   --color-custome-btn: var(--custome-btn);
   --color-costume-hover: var(--custome-hover);
 }
@@ -72,7 +62,7 @@
   --card-foreground: oklch(0.147 0.004 49.25);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
+  --primary: oklch(0.147 0.004 49.25);
   --primary-foreground: oklch(0.985 0.001 106.423);
   --secondary: oklch(0.97 0.001 106.424);
   --secondary-foreground: oklch(0.216 0.006 56.043);
@@ -82,16 +72,16 @@
   --border: oklch(0.5897 0 0);
   --input: oklch(0.923 0.003 48.717);
   --ring: oklch(0.709 0.01 56.259);
-  --sidebar: oklch(0.985 0.001 106.423);
-  --sidebar-foreground: oklch(0.147 0.004 49.25);
-  --sidebar-primary: oklch(0.216 0.006 56.043);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.97 0.001 106.424);
-  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-  --sidebar-border: oklch(0.923 0.003 48.717);
-  --sidebar-ring: oklch(0.709 0.01 56.259);
-  --custome-btn: oklch(0.2914 0.1196 29.23);
+  --custome-btn: oklch(0% 0 0);
   --custome-hover: oklch(0.6559 0.2328 34.52);
+  --h1-font-size: 36px;
+  --h1-line-height: 42px;
+
+  --h2-font-size: 24px;
+  --h2-line-height: 30px;
+
+  --h3-font-size: 20px;
+  --h3-line-height: 28px;
 }
 
 .dark {
@@ -102,48 +92,61 @@
   --card-hover-opacity: oklch(70% 0.235 0 0);
   --popover: oklch(0.235 0 0);
   --popover-foreground: oklch(0.985 0.001 106.423);
-  --primary: oklch(0.923 0.003 48.717);
+  --primary: oklch(100% 0.00011 271.152);
   --primary-foreground: oklch(0.216 0.006 56.043);
   --secondary: oklch(0.268 0.007 34.298);
   --secondary-foreground: oklch(0.985 0.001 106.423);
   --muted: oklch(0.268 0.007 34.298);
   --muted-foreground: oklch(0.709 0.01 56.259);
-  --accent: oklch(0.268 0.007 34.298);
-  --accent-foreground: oklch(0.985 0.001 106.423);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --border-hover: oklch(0.8914 0 0);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.553 0.013 58.071);
-  --sidebar: oklch(0.216 0.006 56.043);
-  --sidebar-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.268 0.007 34.298);
-  --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.553 0.013 58.071);
-  --custome-btn: oklch(0.2914 0.1196 29.23);
-  --custome-hover: oklch(0.6559 0.2328 34.52);
+  --custome-btn: oklch(100% 0.00011 271.152);
+  --custome-hover: oklch(0% 0 0);
 }
 
+@media (min-width: 640px) {
+  :root {
+    --h1-font-size: 60px;
+    --h1-line-height: 48px;
+
+    --h2-font-size: 32px;
+    --h2-line-height: 40px;
+
+    --h3-font-size: 26px;
+    --h3-line-height: 32px;
+  }
+}
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    /* @apply border-border outline-ring/50; */
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Roboto', 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
   h1 {
-    font-family: 'Antonio', 'Inter', sans-serif;
-    font-size: 60px;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: var(--h1-font-size);
+    line-height: var(--h1-line-height);
+    font-weight: 900;
   }
   h2 {
-    font-family: 'Antonio', 'Inter', sans-serif;
-    font-size: 32px;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: var(--h2-font-size);
+    line-height: var(--h2-line-height);
+    font-weight: 700;
   }
   h3 {
-    font-family: 'Antonio', 'Inter', sans-serif;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-line-height);
+  }
+  p {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 200;
   }
 }

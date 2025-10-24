@@ -12,7 +12,7 @@ export default async function HeroSection() {
   return (
     <>
       {hero && (
-        <section className="text-white relative flex items-center py-6 px-2 sm:px-6">
+        <section className="relative flex items-center sm:min-h-[500px] min-h-[450px] px-2 sm:px-6">
           {imageUrl && (
             <Image
               src={imageUrl}
@@ -23,9 +23,9 @@ export default async function HeroSection() {
               unoptimized
             />
           )}
-          <div className="flex flex-col justify-between gap-5 z-10 w-full">
-            <h1 className=" px-1 py-10">{hero.heading}</h1>
-            <p className="text-xl self-end">{hero.subheading}</p>
+          <div className="flex flex-col justify-between items-center sm:gap-5 gap-2 z-10 w-full">
+            <h1 className=" ">{hero.heading}</h1>
+            <p className="">{hero.subheading}</p>
           </div>
         </section>
       )}
