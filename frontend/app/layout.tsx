@@ -1,6 +1,5 @@
 import './globals.css'
 import NavBar from './components/NavBar/NavBar'
-
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
@@ -8,9 +7,8 @@ import {draftMode} from 'next/headers'
 import {VisualEditing, toPlainText} from 'next-sanity'
 import {Toaster} from 'sonner'
 import {ThemeProvider} from '@/app/components/theme-provider'
-
 import DraftModeToast from '@/app/components/DraftModeToast'
-import Footer from '@/app/components/Footer'
+import Footer from '@/app/components/Footer/Footer'
 import * as demo from '@/sanity/lib/demo'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
