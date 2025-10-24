@@ -53,7 +53,7 @@ export default function ProductDetails({product}: {product: Product}) {
                 <div className="flex flex-wrap gap-2 mt-3">
                   {categories.map((cat, idx) => (
                     <Link href={`/categories/${cat}`} key={idx}>
-                      <Button key={idx} variant="secondary" className="rounded-full px-6">
+                      <Button key={idx} variant="secondary" className="rounded-full px-6 !text-xs">
                         {cat}
                       </Button>
                     </Link>

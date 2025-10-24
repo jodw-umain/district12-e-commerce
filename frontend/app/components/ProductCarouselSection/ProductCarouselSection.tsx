@@ -7,7 +7,7 @@ export default async function ProductCarouselSection() {
   const {data} = await sanityFetch({query: getAllProductsQuery})
 
   return (
-    <section className="my-20 ml-20">
+    <section className="my-20 sm:ml-20 ml-4">
       <h2 className=" mb-6">Explore </h2>
 
       <Carousel

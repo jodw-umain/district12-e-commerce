@@ -7,7 +7,7 @@ export default async function ArtistSection() {
   const {data} = await sanityFetch({query: getAuthorsQuery})
 
   return (
-    <section className=" my-20 ml-20">
+    <section className="my-20 sm:ml-20 ml-4">
       <h2 className="mb-6">Artists</h2>
 
       <Carousel

@@ -26,7 +26,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
 
   console.log(slug)
   return (
-    <section className="p-8 container">
+    <section className="my-20 sm:mx-20 mx-4">
       <div className="sm:flex justify-between py-8 ">
         <Card className="flex flex-col sm:pr-8 !border-none">
           <CardContent>
@@ -90,7 +90,7 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
                                 <Button
                                   key={cat.slug}
                                   variant="secondary"
-                                  className="rounded-full px-6"
+                                  className="!text-xs rounded-full sm:px-6"
                                 >
                                   {' '}
                                   {cat.title}
