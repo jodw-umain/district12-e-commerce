@@ -72,7 +72,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           disableTransitionOnChange
         >
           <header className="container">
-            <Suspense fallback={<div>loading nav hahahah</div>}>
+            <Suspense fallback={<div>loading nav...</div>}>
               <NavBar />
             </Suspense>
           </header>
