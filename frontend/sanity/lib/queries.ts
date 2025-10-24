@@ -290,15 +290,40 @@ export const getProductsByArtistQuery = defineQuery(`
 `)
 
 export const navbarQuery = defineQuery(`
-  *[_type == "navbar"][0]{
+  *[_type == "navbar"][0] {
     logo,
-    items[]{
+    shoppingBagIcon,
+    items[] {
       label,
       type,
       url,
-      dropdownItems[]{label, url}
+      dropdownItems[] {
+        label,
+        url
+      },
+      showAllArtists,
+      selectedArtists[]-> {
+        _id,
+        authorName,
+        slug
+      },
+      showAllCategories,
+      selectedCategories[]-> {
+        _id,
+        title,
+        slug
+      }
     },
-    shoppingBagIcon,
+    "allArtists": *[_type == "author"] | order(authorName asc) {
+      _id,
+      authorName,
+      slug
+    },
+    "allCategories": *[_type == "category"] | order(title asc) {
+      _id,
+      title,
+      slug
+    }
   }
 `)
 

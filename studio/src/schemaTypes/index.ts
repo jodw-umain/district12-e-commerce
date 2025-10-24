@@ -13,7 +13,7 @@ import {artistCard} from './objects/artistCard'
 import {productsBlock} from './objects/productsBlock'
 import {productDetails} from './objects/productDetails'
 import {landingPage} from './singletons/landingPage'
-import navbar from './singletons/navbar'
+import {navbar} from './singletons/navbar'
 import footer from './singletons/footer'
 import filterSection from './objects/filterSection'
 

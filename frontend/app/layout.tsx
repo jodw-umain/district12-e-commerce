@@ -16,6 +16,7 @@ import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {handleError} from './client-utils'
 import {ModeToggle} from './components/ModeToggle'
 import {BackToTopButton} from './components/BackToTopButton'
+import {Suspense} from 'react'
 
 /**
  * Generate metadata for the page.
@@ -70,9 +71,11 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           enableSystem
           disableTransitionOnChange
         >
-          <div className="fixed top-0 left-0 w-full z-50">
-            <NavBar />
-          </div>
+          <header className="container">
+            <Suspense fallback={<div>loading nav...</div>}>
+              <NavBar />
+            </Suspense>
+          </header>
 
           <section className="min-h-screen pt-24">
             {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
@@ -86,7 +89,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             )}
             {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
             <SanityLive onError={handleError} />
-            {/* <ModeToggle/>  */}
+            {/* <ModeToggle /> */}
             <main className="">{children}</main>
             <Footer />
             <BackToTopButton />
