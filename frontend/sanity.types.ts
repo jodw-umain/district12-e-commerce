@@ -1368,24 +1368,24 @@ export type NavbarQueryResult = {
     showAllArtists: boolean | null
     selectedArtists: Array<{
       _id: string
-      authorName: string
-      slug: Slug
+      authorName: string | null
+      slug: Slug | null
     }> | null
     showAllCategories: boolean | null
     selectedCategories: Array<{
       _id: string
-      title: string
+      title: string | null
       slug: Slug | null
     }> | null
   }> | null
   allArtists: Array<{
     _id: string
-    authorName: string
-    slug: Slug
+    authorName: string | null
+    slug: Slug | null
   }>
   allCategories: Array<{
     _id: string
-    title: string
+    title: string | null
     slug: Slug | null
   }>
 } | null
@@ -1464,7 +1464,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
     '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
     '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture,\n    authorDescription\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
-    '\n  *[_type == "navbar"][0]{\n    logo,\n    items[]{\n      label,\n      type,\n      url,\n      dropdownItems[]{label, url}\n    },\n    shoppingBagIcon,\n  }\n': NavbarQueryResult
+    '\n  *[_type == "navbar"][0] {\n    logo,\n    shoppingBagIcon,\n    items[] {\n      label,\n      type,\n      url,\n      dropdownItems[] {\n        label,\n        url\n      },\n      showAllArtists,\n      selectedArtists[]-> {\n        _id,\n        authorName,\n        slug\n      },\n      showAllCategories,\n      selectedCategories[]-> {\n        _id,\n        title,\n        slug\n      }\n    },\n    "allArtists": *[_type == "author"] | order(authorName asc) {\n      _id,\n      authorName,\n      slug\n    },\n    "allCategories": *[_type == "category"] | order(title asc) {\n      _id,\n      title,\n      slug\n    }\n  }\n': NavbarQueryResult
     '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
     '\n  *[_type == "landingPage"][0]{\n    productsSection{\n      productsHeading\n    }\n  }\n': GetProductsSectionTitleResult
     '\n  *[_type == "landingPage"][0]{\n    artistsSection{\n      artistHeading\n    }\n  }\n': GetArtistSectionTitleResult
