@@ -1,4 +1,10 @@
-import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '../ui/carousel'
 import {getAuthorsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 import ArtistCard from './ArtistCard'
@@ -23,6 +29,7 @@ export default async function ArtistSection() {
           align: 'start',
           dragFree: true,
         }}
+        className="relative"
       >
         <CarouselContent>
           {data.map((artist) => (
@@ -31,6 +38,8 @@ export default async function ArtistSection() {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
       </Carousel>
     </section>
   )
