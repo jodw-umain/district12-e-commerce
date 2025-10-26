@@ -82,32 +82,30 @@ export default async function NavBar() {
   }
 
   return (
-    <header className="w-full border-b">
-      <div className="container mx-auto px-4">
-        {/* mobile nav, hidden on desktop */}
-        <div className="md:hidden py-4">
-          <MobileNav navbarData={navbarData} />
-        </div>
+    <div className="w-full">
+      {/* mobile nav, hidden on desktop */}
+      <div className="md:hidden py-4">
+        <MobileNav navbarData={navbarData} />
+      </div>
 
-        {/* desktop nav, hidden on mobile */}
-        <div className="hidden md:block">
-          <NavigationMenu className="w-full max-w-none">
-            <NavigationMenuList className="w-full justify-between">
-              {/* logo */}
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link href="/" aria-label="Home">
-                    {logo ? (
-                      <Image src={logo} alt="Site logo" width={120} height={40} priority />
-                    ) : (
-                      <span className="text-xl font-bold">District 12</span>
-                    )}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+      {/* desktop nav, hidden on mobile */}
+      <div className="hidden md:block w-full">
+        <div className="flex items-center justify-between w-full py-4">
+          {/* logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" aria-label="Home">
+              {logo ? (
+                <Image src={logo} alt="Site logo" width={120} height={40} priority />
+              ) : (
+                <span className="text-xl font-bold">District 12</span>
+              )}
+            </Link>
+          </div>
 
-              {/* Nav items */}
-              <div className="flex items-center space-x-1">
+          {/* Nav Items */}
+          <div className="flex items-center">
+            <NavigationMenu>
+              <NavigationMenuList className="flex items-center space-x-1">
                 {items?.map((item) => {
                   if (!item) return null
 
@@ -121,13 +119,16 @@ export default async function NavBar() {
                         </NavigationMenuLink>
                       ) : (
                         <>
-                          <NavigationMenuTrigger className={navigationMenuTriggerStyle()}>
+                          <NavigationMenuTrigger className={`${navigationMenuTriggerStyle()} `}>
                             {item.label}
                           </NavigationMenuTrigger>
                           <NavigationMenuContent>
-                            <ul>
+                            <ul className="grid w-[300px] gap-4">
                               {getDropdownItems(item).map((dropdownItem) => (
-                                <li key={dropdownItem.label}>
+                                <li
+                                  key={dropdownItem.label}
+                                  className="hover:bg-primary hover:text-secondary"
+                                >
                                   <NavigationMenuLink asChild>
                                     <Link href={dropdownItem.url}>
                                       <div>{dropdownItem.label}</div>
@@ -151,11 +152,11 @@ export default async function NavBar() {
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
-              </div>
-            </NavigationMenuList>
-          </NavigationMenu>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
   )
 }
