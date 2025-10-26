@@ -1,6 +1,12 @@
 import {sanityFetch} from '@/sanity/lib/live'
 import ProductCard from '../ProductCard'
-import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '../ui/carousel'
 import {getAllProductsQuery} from '@/sanity/lib/queries'
 import {getProductsSectionTitle} from '@/sanity/lib/queries'
 import {GetProductsSectionTitleResult} from '@/sanity.types'
@@ -31,6 +37,8 @@ export default async function ProductCarouselSection() {
             </CarouselItem>
           ))}
         </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
       </Carousel>
     </section>
   )
