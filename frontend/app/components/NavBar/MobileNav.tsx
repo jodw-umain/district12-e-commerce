@@ -87,23 +87,25 @@ export default function MobileNav({navbarData}: MobileNavProps) {
       {/* Logo */}
       <Link href="/" aria-label="Home">
         {logo ? (
-          <Image src={`${logo}`} alt="Site logo" width={120} height={40} priority />
+          <Image src={`${logo}`} alt="Site logo" width={60} height={40} priority />
         ) : (
           <span className="text-xl font-bold">District 12</span>
         )}
       </Link>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         {/* Shopping Cart */}
-        <Link href="/checkout" aria-label="Shopping cart icon">
-          <ShoppingCartIcon icon={shoppingCartIcon} />
-        </Link>
+        <Button variant={'ghost'} size={'icon'} aria-label="Open cart">
+          <Link href="/checkout" aria-label="Shopping cart icon" className="w-6 items-center">
+            <ShoppingCartIcon icon={shoppingCartIcon} />
+          </Link>
+        </Button>
 
         {/* Mobile Menu Drawer */}
         <Drawer>
-          <DrawerTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Open menu">
-              <Menu className="h-6 w-6" />
+          <DrawerTrigger asChild aria-label="Open Menu">
+            <Button variant={'ghost'} size={'icon'} aria-label="Open menu">
+              <Menu width={40} height={60} />
             </Button>
           </DrawerTrigger>
           <DrawerContent className="h-[80vh] flex flex-col">
