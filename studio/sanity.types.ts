@@ -287,13 +287,29 @@ export type Navbar = {
   }
   items?: Array<{
     label?: string
-    type?: 'link' | 'dropdown'
+    type?: 'link' | 'dropdown' | 'artists' | 'categories'
     url?: string
     dropdownItems?: Array<{
       label?: string
       url?: string
       _type: 'dropdownItem'
       _key: string
+    }>
+    showAllArtists?: boolean
+    selectedArtists?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'author'
+    }>
+    showAllCategories?: boolean
+    selectedCategories?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'category'
     }>
     _type: 'navItem'
     _key: string
@@ -310,19 +326,7 @@ export type LandingPage = {
   hero?: {
     heading?: string
     subheading?: string
-    backgroundImage?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
-    }
+    media?: Media
   }
   productsSection?: {
     productsHeading?: string
@@ -343,6 +347,34 @@ export type FilterSection = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'category'
   }>
+}
+
+export type Media = {
+  _type: 'media'
+  type?: 'image' | 'video'
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  video?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    media?: unknown
+    _type: 'file'
+  }
 }
 
 export type Settings = {
@@ -771,6 +803,7 @@ export type AllSanitySchemaTypes =
   | Navbar
   | LandingPage
   | FilterSection
+  | Media
   | Settings
   | Page
   | Post
