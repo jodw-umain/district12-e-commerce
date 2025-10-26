@@ -15,6 +15,7 @@ import {Button} from '../ui/button'
 import {Menu} from 'lucide-react'
 import ShoppingCartIcon from './ShoppingCartIcon'
 import {NavbarQueryResult} from '@/sanity.types'
+import {urlForImage} from '@/sanity/lib/utils'
 
 interface DropdownItemResult {
   label: string
@@ -28,7 +29,7 @@ interface MobileNavProps {
 type NavItem = NonNullable<NonNullable<NavbarQueryResult>['items']>[number]
 
 export default function MobileNav({navbarData}: MobileNavProps) {
-  const logo = navbarData?.logo
+  const logo = urlForImage(navbarData?.logo)?.url()
   const items = navbarData?.items
   const shoppingCartIcon = navbarData?.shoppingBagIcon
 
