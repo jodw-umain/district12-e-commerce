@@ -286,8 +286,8 @@ export type Navbar = {
     _type: 'image'
   }
   items?: Array<{
-    label: string
-    type: 'link' | 'dropdown' | 'artists' | 'categories'
+    label?: string
+    type?: 'link' | 'dropdown' | 'artists' | 'categories'
     url?: string
     dropdownItems?: Array<{
       label?: string
@@ -326,19 +326,7 @@ export type LandingPage = {
   hero?: {
     heading?: string
     subheading?: string
-    backgroundImage?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
-    }
+    media?: Media
   }
   productsSection?: {
     productsHeading?: string
@@ -359,6 +347,34 @@ export type FilterSection = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'category'
   }>
+}
+
+export type Media = {
+  _type: 'media'
+  type?: 'image' | 'video'
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  video?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    media?: unknown
+    _type: 'file'
+  }
 }
 
 export type Settings = {
@@ -787,6 +803,7 @@ export type AllSanitySchemaTypes =
   | Navbar
   | LandingPage
   | FilterSection
+  | Media
   | Settings
   | Page
   | Post
@@ -1173,24 +1190,12 @@ export type GetAuthorsQueryResult = Array<{
   slug: string | null
 }>
 // Variable: getLandingPage
-// Query: *[_type == "landingPage"][0]{    hero {      heading,      subheading,      backgroundImage    },    filterSection{      title,      filters[]->{        title,        "slug": slug.current      }    }  }
+// Query: *[_type == "landingPage"][0]{    hero,    filterSection{      title,      filters[]->{        title,        "slug": slug.current      }    }  }
 export type GetLandingPageResult = {
   hero: {
-    heading: string | null
-    subheading: string | null
-    backgroundImage: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
-    } | null
+    heading?: string
+    subheading?: string
+    media?: Media
   } | null
   filterSection: {
     title: string | null
@@ -1358,8 +1363,8 @@ export type NavbarQueryResult = {
     _type: 'image'
   } | null
   items: Array<{
-    label: string
-    type: 'artists' | 'categories' | 'dropdown' | 'link'
+    label: string | null
+    type: 'artists' | 'categories' | 'dropdown' | 'link' | null
     url: string | null
     dropdownItems: Array<{
       label: string | null
@@ -1457,7 +1462,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->authorName,\n  productPrice,\n  picture,\n  "categories":categories[]->title\n}\n  ': GetAllProductsQueryResult
     '\n  *[_type == "author"] | order(_createdAt desc) {\n    _id,\n    authorName,\n    picture,\n    "slug":slug.current\n  }\n': GetAuthorsQueryResult
-    '\n  *[_type == "landingPage"][0]{\n    hero {\n      heading,\n      subheading,\n      backgroundImage\n    },\n\n    filterSection{\n      title,\n      filters[]->{\n        title,\n        "slug": slug.current\n      }\n    }\n  }\n': GetLandingPageResult
+    '\n  *[_type == "landingPage"][0]{\n    hero,\n\n    filterSection{\n      title,\n      filters[]->{\n        title,\n        "slug": slug.current\n      }\n    }\n  }\n': GetLandingPageResult
     '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{authorName, picture},\n  picture,\n  "categories": categories[]->title,\n  productDescription,\n\n  }\n': ProductQueryResult
     '\n  *[_type == "product" && defined(slug.current)]\n  {"slug": slug.current}\n': ProductDetailsPageSlugResult
     '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || category->slug.current == $category\n      || $category in categories[]->slug.current\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    _type,\n    productName,\n    "slug": slug.current,\n    productPrice,\n    productDescription,\n    picture{\n      alt,\n      "url": asset->url\n    },\n    format,\n    author->{\n      firstName,\n      lastName,\n      image\n    },\n    category->{\n      title,\n      "slug": slug.current\n    },\n    categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': GetProductsByCategoryQueryResult

@@ -33,20 +33,13 @@ export const landingPage = defineType({
           type: 'string',
         }),
         defineField({
-          name: 'backgroundImage',
-          title: 'Background Image',
-          type: 'image',
-          fields: [
-            defineField({
-              name: 'alt',
-              type: 'string',
-              title: 'Alternative text',
-              description: 'Important for SEO and accessibility.',
-            }),
-          ],
+          name: 'media',
+          title: 'Background Media',
+          type: 'media',
         }),
       ],
     }),
+
     defineField({
       name: 'productsSection',
       title: 'Products Section',
@@ -79,9 +72,9 @@ export const landingPage = defineType({
     }),
   ],
   preview: {
-    select: {title: 'title', media: 'hero.backgroundImage'},
+    select: {title: 'title', media: 'media'},
     prepare({title, media}) {
-      return {title, subtitle: 'Landing Page', media}
+      return {title, subtitle: 'Landing Page', media}
     },
   },
 })
