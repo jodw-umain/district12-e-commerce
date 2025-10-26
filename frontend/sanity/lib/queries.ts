@@ -171,11 +171,7 @@ export const getAuthorsQuery = defineQuery(`
 
 export const getLandingPage = defineQuery(`
   *[_type == "landingPage"][0]{
-    hero {
-      heading,
-      subheading,
-      backgroundImage
-    },
+    hero,
 
     filterSection{
       title,

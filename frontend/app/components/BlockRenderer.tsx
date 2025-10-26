@@ -2,7 +2,7 @@ import React from 'react'
 
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
-import Hero from '@/app/components/HeroSection/Hero'
+import Hero from '@/app/components/blocks/Hero'
 import {dataAttr} from '@/sanity/lib/utils'
 import ArtistCardComponent from './blocks/ArtistCard'
 import ProductsBlockComponent from './blocks/ProductsBlock'

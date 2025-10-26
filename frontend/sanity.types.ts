@@ -286,8 +286,8 @@ export type Navbar = {
     _type: 'image'
   }
   items?: Array<{
-    label: string
-    type: 'link' | 'dropdown' | 'artists' | 'categories'
+    label?: string
+    type?: 'link' | 'dropdown' | 'artists' | 'categories'
     url?: string
     dropdownItems?: Array<{
       label?: string
@@ -326,19 +326,7 @@ export type LandingPage = {
   hero?: {
     heading?: string
     subheading?: string
-    backgroundImage?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
-    }
+    media?: Media
   }
   productsSection?: {
     productsHeading?: string
@@ -359,6 +347,34 @@ export type FilterSection = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'category'
   }>
+}
+
+export type Media = {
+  _type: 'media'
+  type?: 'image' | 'video'
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  video?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    media?: unknown
+    _type: 'file'
+  }
 }
 
 export type Settings = {
@@ -787,6 +803,7 @@ export type AllSanitySchemaTypes =
   | Navbar
   | LandingPage
   | FilterSection
+  | Media
   | Settings
   | Page
   | Post
@@ -1178,19 +1195,7 @@ export type GetLandingPageResult = {
   hero: {
     heading: string | null
     subheading: string | null
-    backgroundImage: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: string
-      _type: 'image'
-    } | null
+    backgroundImage: null
   } | null
   filterSection: {
     title: string | null
@@ -1358,8 +1363,8 @@ export type NavbarQueryResult = {
     _type: 'image'
   } | null
   items: Array<{
-    label: string
-    type: 'artists' | 'categories' | 'dropdown' | 'link'
+    label: string | null
+    type: 'artists' | 'categories' | 'dropdown' | 'link' | null
     url: string | null
     dropdownItems: Array<{
       label: string | null
