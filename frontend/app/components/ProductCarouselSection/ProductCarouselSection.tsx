@@ -2,13 +2,20 @@ import {sanityFetch} from '@/sanity/lib/live'
 import ProductCard from '../ProductCard'
 import {Carousel, CarouselContent, CarouselItem} from '../ui/carousel'
 import {getAllProductsQuery} from '@/sanity/lib/queries'
+import {getProductsSectionTitle} from '@/sanity/lib/queries'
+import {GetProductsSectionTitleResult} from '@/sanity.types'
 
 export default async function ProductCarouselSection() {
   const {data} = await sanityFetch({query: getAllProductsQuery})
+  const {data: sectionTitleData} = (await sanityFetch({
+    query: getProductsSectionTitle,
+  })) as {data: GetProductsSectionTitleResult}
+
+  const sectionTitle = sectionTitleData?.productsSection?.productsHeading ?? 'Explore'
 
   return (
     <section className="my-20 sm:ml-20 ml-4">
-      <h2 className=" mb-6">Explore </h2>
+      <h2 className=" mb-6">{sectionTitle}</h2>
 
       <Carousel
         opts={{

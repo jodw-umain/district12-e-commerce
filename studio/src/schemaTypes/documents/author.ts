@@ -42,6 +42,12 @@ export const author = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'authorDescription',
+      title: 'Artist Description',
+      type: 'blockContent',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',

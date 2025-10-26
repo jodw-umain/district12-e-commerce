@@ -1,4 +1,4 @@
-import { ShoppingBagIcon } from "lucide-react"
+import {ShoppingBagIcon} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {navbarQuery} from '@/sanity/lib/queries'
@@ -51,15 +51,15 @@ export default async function NavBar() {
         if (item.showAllArtists) {
           return (
             navbarData?.allArtists?.map((artist) => ({
-              label: artist.authorName,
-              url: `/artists/${artist.slug.current}`,
+              label: artist.authorName || '',
+              url: `/artists/${artist.slug?.current || ''}`,
             })) || []
           )
         }
         return (
           item.selectedArtists?.map((artist) => ({
-            label: artist.authorName,
-            url: `/artists/${artist.slug.current}`,
+            label: artist.authorName || '',
+            url: `/artists/${artist.slug?.current || ''}`,
           })) || []
         )
 
@@ -67,14 +67,14 @@ export default async function NavBar() {
         if (item.showAllCategories) {
           return (
             navbarData?.allCategories?.map((category) => ({
-              label: category.title,
+              label: category.title || '',
               url: `/categories/${category.slug?.current || ''}`,
             })) || []
           )
         }
         return (
           item.selectedCategories?.map((category) => ({
-            label: category.title,
+            label: category.title || '',
             url: `/categories/${category.slug?.current || ''}`,
           })) || []
         )

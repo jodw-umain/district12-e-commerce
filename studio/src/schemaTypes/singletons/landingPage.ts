@@ -47,11 +47,35 @@ export const landingPage = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'productsSection',
+      title: 'Products Section',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'productsHeading',
+          title: 'Products Section Heading',
+          type: 'string',
+        }),
+      ],
+    }),
 
     defineField({
       name: 'filterSection',
       title: 'Filter Section',
       type: 'filterSection',
+    }),
+    defineField({
+      name: 'artistsSection',
+      title: 'Artists Section',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'artistHeading',
+          title: 'Artists Section Heading',
+          type: 'string',
+        }),
+      ],
     }),
   ],
   preview: {

@@ -324,6 +324,25 @@ export type LandingPage = {
       _type: 'image'
     }
   }
+  productsSection?: {
+    productsHeading?: string
+  }
+  filterSection?: FilterSection
+  artistsSection?: {
+    artistHeading?: string
+  }
+}
+
+export type FilterSection = {
+  _type: 'filterSection'
+  title?: string
+  filters?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'category'
+  }>
 }
 
 export type Settings = {
@@ -462,6 +481,7 @@ export type Author = {
     alt?: string
     _type: 'image'
   }
+  authorDescription?: BlockContent
   slug?: Slug
 }
 
@@ -750,6 +770,7 @@ export type AllSanitySchemaTypes =
   | Footer
   | Navbar
   | LandingPage
+  | FilterSection
   | Settings
   | Page
   | Post
