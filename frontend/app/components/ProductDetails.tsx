@@ -52,7 +52,7 @@ export default function ProductDetails({product}: {product: Product}) {
               {categories && categories.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-3">
                   {categories.map((cat, idx) => (
-                    <Link href={`/categories/${cat}`} key={idx}>
+                    <Link href={`/categories/${cat?.toLocaleLowerCase()}`} key={idx}>
                       <Button key={idx} variant="secondary" className="rounded-full px-6 !text-xs">
                         {cat}
                       </Button>

@@ -215,30 +215,17 @@ export const getProductsByCategoryQuery = defineQuery(`
       || $category in categories[]->slug.current
     )
   ] | order(_createdAt desc) {
-    _id,
-    _type,
-    productName,
-    "slug": slug.current,
-    productPrice,
-    productDescription,
-    picture{
-      alt,
-      "url": asset->url
-    },
-    format,
-    author->{
-      firstName,
-      lastName,
-      image
-    },
+   _id,
+  "slug":slug.current,
+  productName,
+  "author":author->authorName,
+  productPrice,
+  picture,
     category->{
       title,
       "slug": slug.current
     },
-    categories[]->{
-      title,
-      "slug": slug.current
-    }
+   "categories":categories[]->title
   }
 `)
 
