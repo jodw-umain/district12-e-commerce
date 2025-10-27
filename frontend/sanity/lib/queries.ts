@@ -374,3 +374,4 @@ export const getFilteredProductsQuery = (price?: string, format?: string) => {
     }
   `);
 };
+
