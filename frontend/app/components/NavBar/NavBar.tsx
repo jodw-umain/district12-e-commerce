@@ -82,7 +82,7 @@ export default async function NavBar() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       {/* mobile nav, hidden on desktop */}
       <div className="md:hidden py-4">
         <MobileNav navbarData={navbarData} />
