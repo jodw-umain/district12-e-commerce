@@ -46,7 +46,7 @@ export default async function AllProductsPage({
 
   return (
     <section className="flex flex-col items-center p-8">
-      <h2 className="mb-6">All Products</h2>
+      <h1 className="mb-6">All Products</h1>
 
       <div className="flex flex-wrap gap-4 mb-10">
         <Link href="/allproducts" >
