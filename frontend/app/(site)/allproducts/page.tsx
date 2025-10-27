@@ -89,7 +89,7 @@ export default async function AllProductsPage({
                 href={buildUrl({ format: fmt })}
                 className={`block px-4 py-2 
                           hover:bg-gray-50
-                          
+                          text-black dark:text-white  
                   ${
                   activeFormat === fmt ? "bg-gray-100 font-medium" : ""
                 }`}
