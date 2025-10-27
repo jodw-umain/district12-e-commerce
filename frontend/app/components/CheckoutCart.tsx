@@ -95,7 +95,7 @@ export default function CheckoutCart() {
                       </Button>
                     </div>
                     <Button onClick={() => handleRemoveProduct(item._id)}>
-                      <span>delete</span>
+                      <span>Delete</span>
                     </Button>
                   </CardFooter>
                 </Card>
