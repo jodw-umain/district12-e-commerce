@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {getAllProductsQuery, getFilteredProductsQuery,} from '@/sanity/lib/queries'
+import type { GetAllProductsQueryResult } from '@/sanity.types';
 import ProductCard from '@/app/components/ProductCard'
 import {sanityFetch} from '@/sanity/lib/live'
 import {Button} from '@/app/components/ui/button';
@@ -21,7 +22,7 @@ export default async function AllProductsPage({
       ? getFilteredProductsQuery(price, format)
       : getAllProductsQuery;
 
-  const products = await sanityFetch({ query });
+  const products = (await sanityFetch({ query })) as { data: GetAllProductsQueryResult };
 
   const activePrice = price ?? "";
   const activeFormat = format ?? "";

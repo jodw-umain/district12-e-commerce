@@ -6,6 +6,7 @@ import {Button} from '@/app/components/ui/button'
 import Link from 'next/link'
 import {Card, CardContent, CardTitle, CardFooter} from '@/app/components/ui/card/card'
 import {urlForImage} from '@/sanity/lib/utils'
+import {PortableText} from '@portabletext/react'
 
 type ArtistPageProps = {
   params: Promise<{slug: Slug}>
@@ -23,39 +24,36 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
   }
   const artist = data[0].author
   const artistImageUrl = urlForImage(artist?.picture)?.url()
-
-  console.log(slug)
   return (
     <section className="my-20 sm:mx-20 mx-4">
-      <div className="sm:flex justify-between py-8 ">
+      <div className="sm:flex justify-between py-8 sm:gap-4">
         <Card className="flex flex-col sm:pr-8 !border-none">
           <CardContent>
-            <div className="items-center rounded-full w-40 h-40 overflow-hidden">
-              {artistImageUrl && (
-                <Image
-                  src={artistImageUrl}
-                  alt={artist?.picture?.alt ?? 'Artist image'}
-                  width={200}
-                  height={200}
-                  className="object-cover"
-                />
-              )}
+            <div className="">
+              <div className="items-center rounded-full w-40 h-40 overflow-hidden">
+                {artistImageUrl && (
+                  <Image
+                    src={artistImageUrl}
+                    alt={artist?.picture?.alt ?? 'Artist image'}
+                    width={200}
+                    height={200}
+                    className="object-cover "
+                  />
+                )}
+              </div>
+              <div>
+                <CardTitle>
+                  <h1 className="my-10">{artist?.authorName}</h1>
+                </CardTitle>
+                <p>@{artist?.authorName}</p>
+                <Button className="mt-4 w-full">Contact</Button>
+                <div className="mt-20 mb-10 text-sm text-justify max-w-lg text-white">
+                  {artist?.authorDescription ? (
+                    <PortableText value={artist.authorDescription} />
+                  ) : null}
+                </div>
+              </div>
             </div>
-            <CardTitle>
-              <h1 className="my-10">{artist?.authorName}</h1>
-            </CardTitle>
-            <p>@{artist?.authorName}</p>
-            <Button className="mt-4 w-full">Contact</Button>
-            <p className="mt-6 text-sm text-justify max-w-lg">
-              A contemporary digital artist exploring the intersection of creativity and technology.
-              <br />
-              Their work blends visual storytelling, experimental design, and digital techniques to
-              create captivating compositions.
-              <br /> Through the use of color, texture, and light, the artist aims to evoke emotion
-              and curiosity, transforming abstract ideas into visually engaging pieces. <br />
-              Focused on innovation and self expression, their art reflects a constant evolution of
-              style and concept within the digital medium.
-            </p>
           </CardContent>
         </Card>
         <div className="items-center">
@@ -83,25 +81,29 @@ export default async function ArtistsPage({params}: ArtistPageProps) {
                           <h2 className="mt-2">{p.productName}</h2>
                         </CardTitle>
                         <p className="mt-3 mb-6">${p.productPrice}</p>
-                        {p.categories && p.categories.length > 0 && (
-                          <CardFooter className="flex flex-wrap gap-2 mt-2">
-                            {p.categories.map((cat) => (
-                              <Link key={cat.slug} href={`/categories/${cat.slug}`}>
-                                <Button
-                                  key={cat.slug}
-                                  variant="secondary"
-                                  className="!text-xs rounded-full sm:px-6"
-                                >
-                                  {' '}
-                                  {cat.title}
-                                </Button>
-                              </Link>
-                            ))}
-                          </CardFooter>
-                        )}
                       </li>
                     </CardContent>
                   </Link>
+                  {p.categories && p.categories.length > 0 && (
+                    <CardFooter className="flex flex-wrap gap-2 mt-2">
+                      {p.categories.map((cat) => (
+                        <Link
+                          className="cursor-pointer"
+                          key={cat.slug}
+                          href={`/categories/${cat.slug}`}
+                        >
+                          <Button
+                            key={cat.slug}
+                            variant="secondary"
+                            className="!text-xs rounded-full sm:px-6 z-10"
+                          >
+                            {' '}
+                            {cat.title}
+                          </Button>
+                        </Link>
+                      ))}
+                    </CardFooter>
+                  )}
                 </Card>
               )
             })}

@@ -17,16 +17,9 @@ export default function ShoppingCartIcon({icon}: {icon: Icon}) {
     <div className="relative inline-block">
       {icon ? (
         <>
-          <Image
-            src={`${iconUrl}`}
-            alt="Shopping Bag Icon"
-            width={40}
-            height={40}
-            priority
-            className="w-8 h-8"
-          />
+          <Image src={`${iconUrl}`} alt="Shopping Bag Icon" width={20} height={20} priority />
           {totalItems !== undefined && totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-black text-white rounded">
+            <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-brand text-background rounded">
               {totalItems}
             </span>
           )}
@@ -35,7 +28,7 @@ export default function ShoppingCartIcon({icon}: {icon: Icon}) {
         <>
           <span className="text-xl font-bold">cart</span>
           {totalItems !== undefined && totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-black text-white rounded">
+            <span className="absolute -top-2 -right-2 text-[10px] px-[6px] py-[2px] bg-brand text-background rounded">
               {totalItems}
             </span>
           )}

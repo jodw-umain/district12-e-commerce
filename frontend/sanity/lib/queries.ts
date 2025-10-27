@@ -171,11 +171,7 @@ export const getAuthorsQuery = defineQuery(`
 
 export const getLandingPage = defineQuery(`
   *[_type == "landingPage"][0]{
-    hero {
-      heading,
-      subheading,
-      backgroundImage
-    },
+    hero,
 
     filterSection{
       title,
@@ -279,7 +275,8 @@ export const getProductsByArtistQuery = defineQuery(`
   author->{
     authorName,
     "slug": slug.current,
-    picture
+    picture,
+    authorDescription
   },
   categories[]->{
     title,
@@ -347,6 +344,22 @@ export const footerQuery = defineQuery(`
     },
     "logo": logo.logo,
     "description": logo.description
+  }
+`)
+
+export const getProductsSectionTitle = defineQuery(`
+  *[_type == "landingPage"][0]{
+    productsSection{
+      productsHeading
+    }
+  }
+`)
+
+export const getArtistSectionTitle = defineQuery(`
+  *[_type == "landingPage"][0]{
+    artistsSection{
+      artistHeading
+    }
   }
 `)
 

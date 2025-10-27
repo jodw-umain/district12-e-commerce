@@ -8,7 +8,7 @@ import pluralize from 'pluralize-esm'
  * Learn more: https://www.sanity.io/docs/structure-builder-introduction
  */
 
-const DISABLED_TYPES = ['settings', 'assist.instruction.context', 'footer', 'navbar']
+const DISABLED_TYPES = ['settings', 'assist.instruction.context', 'footer', 'navbar', 'landingPage']
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
@@ -36,4 +36,9 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
         .title('Navbar Settings')
         .child(S.document().schemaType('navbar').documentId('navbar'))
         .icon(MenuIcon),
+
+      S.listItem()
+        .title('Landing Page')
+        .child(S.document().schemaType('landingPage').documentId('landingPage'))
+        .icon(CogIcon),
     ])

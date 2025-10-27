@@ -81,3 +81,15 @@ export function dataAttr(config: DataAttributeConfig) {
     baseUrl: studioUrl,
   }).combine(config)
 }
+
+export function urlForFile(source: any) {
+  // sanity file assets have the _ref structure: file-<hash>-<ext>
+  const ref = source?.asset?._ref
+  if (!ref) return undefined
+
+  const [file, id, ext] = ref.split('-')
+  if (file !== 'file') return undefined
+
+  // use your project ID and dataset from imports at the top
+  return `https://cdn.sanity.io/files/${projectId}/${dataset}/${id}.${ext}`
+}
