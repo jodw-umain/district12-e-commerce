@@ -46,12 +46,12 @@ export default async function AllProductsPage({
 
   return (
     <section className="flex flex-col items-center p-8">
-      <h1 className="mb-6">All Products</h1>
+      <h1 className="sm:mb-10 sm:place-self-start mb-8">All Products</h1>
 
       <div className="flex flex-wrap gap-4 mb-10">
         <Link href="/allproducts" >
           <Button variant="secondary" className="rounded-full sm:px-8 px-4 mb-3">
-            Clear All
+            Clear All
           </Button>
         </Link>
 
