@@ -1,4 +1,4 @@
-import {CogIcon} from '@sanity/icons'
+import {CogIcon, MenuIcon} from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 import pluralize from 'pluralize-esm'
 
@@ -8,7 +8,7 @@ import pluralize from 'pluralize-esm'
  * Learn more: https://www.sanity.io/docs/structure-builder-introduction
  */
 
-const DISABLED_TYPES = ['settings', 'assist.instruction.context']
+const DISABLED_TYPES = ['settings', 'assist.instruction.context', 'footer', 'navbar', 'landingPage']
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
@@ -25,5 +25,20 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.listItem()
         .title('Site Settings')
         .child(S.document().schemaType('settings').documentId('siteSettings'))
+        .icon(CogIcon),
+
+      S.listItem()
+        .title('Footer')
+        .icon(CogIcon)
+        .child(S.document().schemaType('footer').documentId('footer')),
+
+      S.listItem()
+        .title('Navbar Settings')
+        .child(S.document().schemaType('navbar').documentId('navbar'))
+        .icon(MenuIcon),
+
+      S.listItem()
+        .title('Landing Page')
+        .child(S.document().schemaType('landingPage').documentId('landingPage'))
         .icon(CogIcon),
     ])

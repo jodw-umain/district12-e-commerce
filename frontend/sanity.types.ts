@@ -13,31 +13,55 @@
  */
 
 // Source: schema.json
-export type CallToAction = {
-  _type: 'callToAction'
-  heading: string
-  text?: string
-  buttonText?: string
-  link?: Link
+export type ProductDetails = {
+  _type: 'productDetails'
+  product?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'product'
+  }
+  overrideTitle?: string
+  overrideDescription?: string
+  button?: {
+    link?: string
+    buttonText?: string
+    buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
+  }
 }
 
-export type Link = {
-  _type: 'link'
-  linkType?: 'href' | 'page' | 'post'
-  href?: string
-  page?: {
+export type ProductsBlock = {
+  _type: 'productsBlock'
+  heading?: string
+}
+
+export type ArtistCard = {
+  _type: 'artistCard'
+  artist?: {
     _ref: string
     _type: 'reference'
     _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'page'
+    [internalGroqTypeReferenceTo]?: 'author'
   }
-  post?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'post'
-  }
-  openInNewTab?: boolean
+}
+
+export type HeroSection = {
+  _type: 'heroSection'
+  heading?: string
+  subheading?: string
+}
+
+export type CallToAction = {
+  _type: 'callToAction'
+  heading?: string
+  text?: string
+  buttons?: Array<{
+    buttonText?: string
+    link?: Link
+    buttonVariant?: 'default' | 'secondary' | 'ghost' | 'destructive'
+    _type: 'button'
+    _key: string
+  }>
 }
 
 export type InfoSection = {
@@ -111,13 +135,255 @@ export type BlockContent = Array<{
   _key: string
 }>
 
+export type Category = {
+  _id: string
+  _type: 'category'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+}
+
+export type Product = {
+  _id: string
+  _type: 'product'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: string
+  productName?: string
+  author?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'author'
+  }
+  productDescription?: BlockContent
+  productPrice?: number
+  format?: Array<string>
+  categories?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'category'
+  }>
+  picture?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  slug?: Slug
+  pageBuilder?: Array<
+    | ({
+        _key: string
+      } & CallToAction)
+    | ({
+        _key: string
+      } & InfoSection)
+  >
+}
+
+export type Footer = {
+  _id: string
+  _type: 'footer'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  navigation?: Array<{
+    title?: string
+    links?: Array<{
+      label?: string
+      url?: string
+      _type: 'footerLink'
+      _key: string
+    }>
+    _type: 'footerColumn'
+    _key: string
+  }>
+  contact?: {
+    title?: string
+    contactItems?: Array<{
+      label?: string
+      value?: string
+      url?: string
+      _type: 'contactItem'
+      _key: string
+    }>
+    socialLinks?: Array<{
+      platform?: string
+      url?: string
+      icon?: {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+      }
+      _type: 'socialLink'
+      _key: string
+    }>
+  }
+  logo?: {
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    description?: string
+  }
+}
+
+export type Navbar = {
+  _id: string
+  _type: 'navbar'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  shoppingBagIcon?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  items?: Array<{
+    label?: string
+    type?: 'link' | 'dropdown' | 'artists' | 'categories'
+    url?: string
+    dropdownItems?: Array<{
+      label?: string
+      url?: string
+      _type: 'dropdownItem'
+      _key: string
+    }>
+    showAllArtists?: boolean
+    selectedArtists?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'author'
+    }>
+    showAllCategories?: boolean
+    selectedCategories?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'category'
+    }>
+    _type: 'navItem'
+    _key: string
+  }>
+}
+
+export type LandingPage = {
+  _id: string
+  _type: 'landingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  hero?: {
+    heading?: string
+    subheading?: string
+    media?: Media
+  }
+  productsSection?: {
+    productsHeading?: string
+  }
+  filterSection?: FilterSection
+  artistsSection?: {
+    artistHeading?: string
+  }
+}
+
+export type FilterSection = {
+  _type: 'filterSection'
+  title?: string
+  filters?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'category'
+  }>
+}
+
+export type Media = {
+  _type: 'media'
+  type?: 'image' | 'video'
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  video?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    media?: unknown
+    _type: 'file'
+  }
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
+  title?: string
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -172,9 +438,9 @@ export type Page = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  name: string
-  slug: Slug
-  heading: string
+  name?: string
+  slug?: Slug
+  heading?: string
   subheading?: string
   pageBuilder?: Array<
     | ({
@@ -183,6 +449,15 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & HeroSection)
+    | ({
+        _key: string
+      } & ArtistCard)
+    | ({
+        _key: string
+      } & ProductsBlock)
   >
 }
 
@@ -192,11 +467,11 @@ export type Post = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
-  slug: Slug
+  title?: string
+  slug?: Slug
   content?: BlockContent
   excerpt?: string
-  coverImage: {
+  coverImage?: {
     asset?: {
       _ref: string
       _type: 'reference'
@@ -214,19 +489,18 @@ export type Post = {
     _ref: string
     _type: 'reference'
     _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'person'
+    [internalGroqTypeReferenceTo]?: 'author'
   }
 }
 
-export type Person = {
+export type Author = {
   _id: string
-  _type: 'person'
+  _type: 'author'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  firstName: string
-  lastName: string
-  picture: {
+  authorName?: string
+  picture?: {
     asset?: {
       _ref: string
       _type: 'reference'
@@ -239,6 +513,27 @@ export type Person = {
     alt?: string
     _type: 'image'
   }
+  authorDescription?: BlockContent
+  slug?: Slug
+}
+
+export type Link = {
+  _type: 'link'
+  linkType?: 'href' | 'page' | 'post'
+  href?: string
+  page?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'page'
+  }
+  post?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'post'
+  }
+  openInNewTab?: boolean
 }
 
 export type SanityAssistInstructionTask = {
@@ -281,7 +576,7 @@ export type SanityAssistOutputField = {
 
 export type SanityAssistInstructionContext = {
   _type: 'sanity.assist.instruction.context'
-  reference: {
+  reference?: {
     _ref: string
     _type: 'reference'
     _weak?: boolean
@@ -314,7 +609,7 @@ export type AssistInstructionContext = {
 
 export type SanityAssistInstructionUserInput = {
   _type: 'sanity.assist.instruction.userInput'
-  message: string
+  message?: string
   description?: string
 }
 
@@ -483,7 +778,7 @@ export type Geopoint = {
 
 export type Slug = {
   _type: 'slug'
-  current: string
+  current?: string
   source?: string
 }
 
@@ -495,14 +790,25 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
+  | ProductDetails
+  | ProductsBlock
+  | ArtistCard
+  | HeroSection
   | CallToAction
-  | Link
   | InfoSection
   | BlockContent
+  | Category
+  | Product
+  | Footer
+  | Navbar
+  | LandingPage
+  | FilterSection
+  | Media
   | Settings
   | Page
   | Post
-  | Person
+  | Author
+  | Link
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations
@@ -536,7 +842,7 @@ export type SettingsQueryResult = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
+  title?: string
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -585,29 +891,47 @@ export type SettingsQueryResult = {
   }
 } | null
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },       _type == "artistCard" => {        ...,        artist->{          _id,          _type,          name,          picture{            "url": asset->url,            alt          }        }      },      _type == "productsBlock" => {        ...,        "allProducts": *[_type == "product"]{          _id,          slug,          productName,          productPrice,          "author": author->name,          "productImage": picture.asset->{url},          "productImageAlt": picture.alt,          "categories": categories[]->title        }      },      _type == "productDetails" => {      overrideTitle,      overrideDescription,      button,      product->{        productName,        "artist": author->name,        productDescription,        productPrice,        "categories": categories[]->{          title        },        picture      }    }  }}
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
-  name: string
-  slug: Slug
-  heading: string
+  name: string | null
+  slug: Slug | null
+  heading: string | null
   subheading: string | null
   pageBuilder: Array<
     | {
         _key: string
-        _type: 'callToAction'
-        heading: string
-        text?: string
-        buttonText?: string
-        link: {
-          _type: 'link'
-          linkType?: 'href' | 'page' | 'post'
-          href?: string
-          page: string | null
-          post: string | null
-          openInNewTab?: boolean
+        _type: 'artistCard'
+        artist: {
+          _id: string
+          _type: 'author'
+          name: null
+          picture: {
+            url: string | null
+            alt: string | null
+          } | null
         } | null
+      }
+    | {
+        _key: string
+        _type: 'callToAction'
+        heading?: string
+        text?: string
+        buttons?: Array<{
+          buttonText?: string
+          link?: Link
+          buttonVariant?: 'default' | 'destructive' | 'ghost' | 'secondary'
+          _type: 'button'
+          _key: string
+        }>
+        link: null
+      }
+    | {
+        _key: string
+        _type: 'heroSection'
+        heading?: string
+        subheading?: string
       }
     | {
         _key: string
@@ -637,18 +961,35 @@ export type GetPageQueryResult = {
           _key: string
         }> | null
       }
+    | {
+        _key: string
+        _type: 'productsBlock'
+        heading?: string
+        allProducts: Array<{
+          _id: string
+          slug: Slug | null
+          productName: string | null
+          productPrice: number | null
+          author: null
+          productImage: {
+            url: string | null
+          } | null
+          productImageAlt: string | null
+          categories: Array<string | null> | null
+        }>
+      }
   > | null
 } | null
 // Variable: sitemapData
 // Query: *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
 export type SitemapDataResult = Array<
   | {
-      slug: string
+      slug: string | null
       _type: 'page'
       _updatedAt: string
     }
   | {
-      slug: string
+      slug: string | null
       _type: 'post'
       _updatedAt: string
     }
@@ -658,8 +999,8 @@ export type SitemapDataResult = Array<
 export type AllPostsQueryResult = Array<{
   _id: string
   status: 'draft' | 'published'
-  title: string
-  slug: string
+  title: string | 'Untitled'
+  slug: string | null
   excerpt: string | null
   coverImage: {
     asset?: {
@@ -673,11 +1014,11 @@ export type AllPostsQueryResult = Array<{
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
-  }
+  } | null
   date: string
   author: {
-    firstName: string
-    lastName: string
+    firstName: null
+    lastName: null
     picture: {
       asset?: {
         _ref: string
@@ -690,7 +1031,7 @@ export type AllPostsQueryResult = Array<{
       crop?: SanityImageCrop
       alt?: string
       _type: 'image'
-    }
+    } | null
   } | null
 }>
 // Variable: morePostsQuery
@@ -698,8 +1039,8 @@ export type AllPostsQueryResult = Array<{
 export type MorePostsQueryResult = Array<{
   _id: string
   status: 'draft' | 'published'
-  title: string
-  slug: string
+  title: string | 'Untitled'
+  slug: string | null
   excerpt: string | null
   coverImage: {
     asset?: {
@@ -713,11 +1054,11 @@ export type MorePostsQueryResult = Array<{
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
-  }
+  } | null
   date: string
   author: {
-    firstName: string
-    lastName: string
+    firstName: null
+    lastName: null
     picture: {
       asset?: {
         _ref: string
@@ -730,7 +1071,7 @@ export type MorePostsQueryResult = Array<{
       crop?: SanityImageCrop
       alt?: string
       _type: 'image'
-    }
+    } | null
   } | null
 }>
 // Variable: postQuery
@@ -760,8 +1101,8 @@ export type PostQueryResult = {
   }> | null
   _id: string
   status: 'draft' | 'published'
-  title: string
-  slug: string
+  title: string | 'Untitled'
+  slug: string | null
   excerpt: string | null
   coverImage: {
     asset?: {
@@ -775,11 +1116,11 @@ export type PostQueryResult = {
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
-  }
+  } | null
   date: string
   author: {
-    firstName: string
-    lastName: string
+    firstName: null
+    lastName: null
     picture: {
       asset?: {
         _ref: string
@@ -792,31 +1133,344 @@ export type PostQueryResult = {
       crop?: SanityImageCrop
       alt?: string
       _type: 'image'
-    }
+    } | null
   } | null
 } | null
 // Variable: postPagesSlugs
 // Query: *[_type == "post" && defined(slug.current)]  {"slug": slug.current}
 export type PostPagesSlugsResult = Array<{
-  slug: string
+  slug: string | null
 }>
 // Variable: pagesSlugs
 // Query: *[_type == "page" && defined(slug.current)]  {"slug": slug.current}
 export type PagesSlugsResult = Array<{
-  slug: string
+  slug: string | null
 }>
+// Variable: getAllProductsQuery
+// Query: *[_type=="product"]{  _id,  "slug":slug.current,  productName,  "author":author->authorName,  productPrice,  picture,  "categories":categories[]->title}
+export type GetAllProductsQueryResult = Array<{
+  _id: string
+  slug: string | null
+  productName: string | null
+  author: string | null
+  productPrice: number | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  categories: Array<string | null> | null
+}>
+// Variable: getAuthorsQuery
+// Query: *[_type == "author"] | order(_createdAt desc) {    _id,    authorName,    picture,    "slug":slug.current  }
+export type GetAuthorsQueryResult = Array<{
+  _id: string
+  authorName: string | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  slug: string | null
+}>
+// Variable: getLandingPage
+// Query: *[_type == "landingPage"][0]{    hero,    filterSection{      title,      filters[]->{        title,        "slug": slug.current      }    }  }
+export type GetLandingPageResult = {
+  hero: {
+    heading?: string
+    subheading?: string
+    media?: Media
+  } | null
+  filterSection: {
+    title: string | null
+    filters: Array<{
+      title: string | null
+      slug: string | null
+    }> | null
+  } | null
+} | null
+// Variable: productQuery
+// Query: *[_type == "product" && slug.current == $slug] [0] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "slug": slug.current,  productName,  productPrice,  "date": coalesce(date, _updatedAt),  "author": author->{authorName, picture},  picture,  "categories": categories[]->title,  productDescription,  }
+export type ProductQueryResult = {
+  _id: string
+  status: 'draft' | 'published'
+  slug: string | null
+  productName: string | null
+  productPrice: number | null
+  date: string
+  author: {
+    authorName: string | null
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  categories: Array<string | null> | null
+  productDescription: BlockContent | null
+} | null
+// Variable: productDetailsPageSlug
+// Query: *[_type == "product" && defined(slug.current)]  {"slug": slug.current}
+export type ProductDetailsPageSlugResult = Array<{
+  slug: string | null
+}>
+// Variable: getProductsByCategoryQuery
+// Query: *[    _type == "product" &&    (      !defined($category)      || category->slug.current == $category      || $category in categories[]->slug.current    )  ] | order(_createdAt desc) {   _id,  "slug":slug.current,  productName,  "author":author->authorName,  productPrice,  picture,    category->{      title,      "slug": slug.current    },   "categories":categories[]->title  }
+export type GetProductsByCategoryQueryResult = Array<{
+  _id: string
+  slug: string | null
+  productName: string | null
+  author: string | null
+  productPrice: number | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  category: null
+  categories: Array<string | null> | null
+}>
+// Variable: getCategoriesQuery
+// Query: *[_type == "category"]{    title,    "slug": slug.current  }
+export type GetCategoriesQueryResult = Array<{
+  title: string | null
+  slug: string | null
+}>
+// Variable: getArtistsQuery
+// Query: *[_type == "author"] | order(name asc) {    _id,    name,    picture {      "url": asset->url,      alt    }  }
+export type GetArtistsQueryResult = Array<{
+  _id: string
+  name: null
+  picture: {
+    url: string | null
+    alt: string | null
+  } | null
+}>
+// Variable: getProductsByArtistQuery
+// Query: *[  _type == "product" &&  (    !defined($artist) || author->slug.current == $artist  )] | order(_createdAt desc) {  _id,  productName,  productPrice,  picture,  "slug": slug.current,  author->{    authorName,    "slug": slug.current,    picture,    authorDescription  },  categories[]->{    title,    "slug": slug.current  }}
+export type GetProductsByArtistQueryResult = Array<{
+  _id: string
+  productName: string | null
+  productPrice: number | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  slug: string | null
+  author: {
+    authorName: string | null
+    slug: string | null
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    authorDescription: BlockContent | null
+  } | null
+  categories: Array<{
+    title: string | null
+    slug: string | null
+  }> | null
+}>
+// Variable: navbarQuery
+// Query: *[_type == "navbar"][0] {    logo,    shoppingBagIcon,    items[] {      label,      type,      url,      dropdownItems[] {        label,        url      },      showAllArtists,      selectedArtists[]-> {        _id,        authorName,        slug      },      showAllCategories,      selectedCategories[]-> {        _id,        title,        slug      }    },    "allArtists": *[_type == "author"] | order(authorName asc) {      _id,      authorName,      slug    },    "allCategories": *[_type == "category"] | order(title asc) {      _id,      title,      slug    }  }
+export type NavbarQueryResult = {
+  logo: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  shoppingBagIcon: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  items: Array<{
+    label: string | null
+    type: 'artists' | 'categories' | 'dropdown' | 'link' | null
+    url: string | null
+    dropdownItems: Array<{
+      label: string | null
+      url: string | null
+    }> | null
+    showAllArtists: boolean | null
+    selectedArtists: Array<{
+      _id: string
+      authorName: string | null
+      slug: Slug | null
+    }> | null
+    showAllCategories: boolean | null
+    selectedCategories: Array<{
+      _id: string
+      title: string | null
+      slug: Slug | null
+    }> | null
+  }> | null
+  allArtists: Array<{
+    _id: string
+    authorName: string | null
+    slug: Slug | null
+  }>
+  allCategories: Array<{
+    _id: string
+    title: string | null
+    slug: Slug | null
+  }>
+} | null
+// Variable: footerQuery
+// Query: *[_type == "footer"][0]{    "columns": navigation[]{      title,      links[]{ label, url }    },    contact{      title,      contactItems[]{        label,        value,        url      },      socialLinks[]{        platform,        url,        icon{ "url": asset->url }      }    },    "logo": logo.logo,    "description": logo.description  }
+export type FooterQueryResult = {
+  columns: Array<{
+    title: string | null
+    links: Array<{
+      label: string | null
+      url: string | null
+    }> | null
+  }> | null
+  contact: {
+    title: string | null
+    contactItems: Array<{
+      label: string | null
+      value: string | null
+      url: string | null
+    }> | null
+    socialLinks: Array<{
+      platform: string | null
+      url: string | null
+      icon: {
+        url: string | null
+      } | null
+    }> | null
+  } | null
+  logo: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  description: string | null
+} | null
+// Variable: getProductsSectionTitle
+// Query: *[_type == "landingPage"][0]{    productsSection{      productsHeading    }  }
+export type GetProductsSectionTitleResult = {
+  productsSection: {
+    productsHeading: string | null
+  } | null
+} | null
+// Variable: getArtistSectionTitle
+// Query: *[_type == "landingPage"][0]{    artistsSection{      artistHeading    }  }
+export type GetArtistSectionTitleResult = {
+  artistsSection: {
+    artistHeading: string | null
+  } | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n       _type == "artistCard" => {\n        ...,\n        artist->{\n          _id,\n          _type,\n          name,\n          picture{\n            "url": asset->url,\n            alt\n          }\n        }\n      },\n      _type == "productsBlock" => {\n        ...,\n        "allProducts": *[_type == "product"]{\n          _id,\n          slug,\n          productName,\n          productPrice,\n          "author": author->name,\n          "productImage": picture.asset->{url},\n          "productImageAlt": picture.alt,\n          "categories": categories[]->title\n        }\n      },\n      _type == "productDetails" => {\n      overrideTitle,\n      overrideDescription,\n      button,\n      product->{\n        productName,\n        "artist": author->name,\n        productDescription,\n        productPrice,\n        "categories": categories[]->{\n          title\n        },\n        picture\n      }\n    }\n  }\n}\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
+    '\n*[_type=="product"]\n{\n  _id,\n  "slug":slug.current,\n  productName,\n  "author":author->authorName,\n  productPrice,\n  picture,\n  "categories":categories[]->title\n}\n  ': GetAllProductsQueryResult
+    '\n  *[_type == "author"] | order(_createdAt desc) {\n    _id,\n    authorName,\n    picture,\n    "slug":slug.current\n  }\n': GetAuthorsQueryResult
+    '\n  *[_type == "landingPage"][0]{\n    hero,\n\n    filterSection{\n      title,\n      filters[]->{\n        title,\n        "slug": slug.current\n      }\n    }\n  }\n': GetLandingPageResult
+    '\n  *[_type == "product" && slug.current == $slug] [0] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "slug": slug.current,\n  productName,\n  productPrice,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{authorName, picture},\n  picture,\n  "categories": categories[]->title,\n  productDescription,\n\n  }\n': ProductQueryResult
+    '\n  *[_type == "product" && defined(slug.current)]\n  {"slug": slug.current}\n': ProductDetailsPageSlugResult
+    '\n  *[\n    _type == "product" &&\n    (\n      !defined($category)\n      || category->slug.current == $category\n      || $category in categories[]->slug.current\n    )\n  ] | order(_createdAt desc) {\n   _id,\n  "slug":slug.current,\n  productName,\n  "author":author->authorName,\n  productPrice,\n  picture,\n    category->{\n      title,\n      "slug": slug.current\n    },\n   "categories":categories[]->title\n  }\n': GetProductsByCategoryQueryResult
+    '\n  *[_type == "category"]{\n    title,\n    "slug": slug.current\n  }\n': GetCategoriesQueryResult
+    '\n  *[_type == "author"] | order(name asc) {\n    _id,\n    name,\n    picture {\n      "url": asset->url,\n      alt\n    }\n  }\n': GetArtistsQueryResult
+    '\n *[\n  _type == "product" &&\n  (\n    !defined($artist) || author->slug.current == $artist\n  )\n] | order(_createdAt desc) {\n  _id,\n  productName,\n  productPrice,\n  picture,\n  "slug": slug.current,\n  author->{\n    authorName,\n    "slug": slug.current,\n    picture,\n    authorDescription\n  },\n  categories[]->{\n    title,\n    "slug": slug.current\n  }\n}\n': GetProductsByArtistQueryResult
+    '\n  *[_type == "navbar"][0] {\n    logo,\n    shoppingBagIcon,\n    items[] {\n      label,\n      type,\n      url,\n      dropdownItems[] {\n        label,\n        url\n      },\n      showAllArtists,\n      selectedArtists[]-> {\n        _id,\n        authorName,\n        slug\n      },\n      showAllCategories,\n      selectedCategories[]-> {\n        _id,\n        title,\n        slug\n      }\n    },\n    "allArtists": *[_type == "author"] | order(authorName asc) {\n      _id,\n      authorName,\n      slug\n    },\n    "allCategories": *[_type == "category"] | order(title asc) {\n      _id,\n      title,\n      slug\n    }\n  }\n': NavbarQueryResult
+    '\n *[_type == "footer"][0]{\n    "columns": navigation[]{\n      title,\n      links[]{ label, url }\n    },\n    contact{\n      title,\n      contactItems[]{\n        label,\n        value,\n        url\n      },\n      socialLinks[]{\n        platform,\n        url,\n        icon{ "url": asset->url }\n      }\n    },\n    "logo": logo.logo,\n    "description": logo.description\n  }\n': FooterQueryResult
+    '\n  *[_type == "landingPage"][0]{\n    productsSection{\n      productsHeading\n    }\n  }\n': GetProductsSectionTitleResult
+    '\n  *[_type == "landingPage"][0]{\n    artistsSection{\n      artistHeading\n    }\n  }\n': GetArtistSectionTitleResult
   }
 }
