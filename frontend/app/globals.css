@@ -1,6 +1,16 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Antonio';
+  src: url('/assets/font/Antonio/Antonio-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@custom-variant dark (&:is(.dark *));
+
 @plugin "@tailwindcss/typography";
+@plugin 'tailwindcss-animate';
 
 @utility container {
   margin: 0 auto;
@@ -14,22 +24,126 @@
   --color-black: #0b0b0b;
   --color-white: #fff;
   --color-brand: #f50;
-  --color-blue: #0052ff;
-  --color-yellow: #cdea19;
-  --color-gray-50: #f6f6f8;
-  --color-gray-100: #eeeef1;
-  --color-gray-200: #e3e4e8;
-  --color-gray-300: #bbbdc9;
-  --color-gray-400: #9499ad;
-  --color-gray-500: #727892;
-  --color-gray-600: #515870;
-  --color-gray-700: #383d51;
-  --color-gray-800: #252837;
-  --color-gray-900: #1b1d27;
-  --color-gray-950: #13141b;
+  --default-transition-duration: 300ms;
+}
 
-  --font-display: 'Inter', 'sans-serif';
-  --font-sans: 'Inter', 'sans-serif';
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-card-hover-opacity: var(--card-hover-opacity);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-custome-btn: var(--custome-btn);
+  --color-costume-hover: var(--custome-hover);
+}
 
-  --default-transition-duration: 250ms;
+:root {
+  --radius: 0px;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.147 0.004 49.25);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.147 0.004 49.25);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.147 0.004 49.25);
+  --primary: oklch(0.147 0.004 49.25);
+  --primary-foreground: oklch(0.985 0.001 106.423);
+  --secondary: oklch(0.97 0.001 106.424);
+  --secondary-foreground: oklch(0.216 0.006 56.043);
+  --muted: oklch(0.97 0.001 106.424);
+  --muted-foreground: oklch(0.553 0.013 58.071);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.5897 0 0);
+  --input: oklch(0.923 0.003 48.717);
+  --ring: oklch(0.709 0.01 56.259);
+  --custome-btn: oklch(0% 0 0);
+  --custome-hover: oklch(0.6559 0.2328 34.52);
+  --h1-font-size: 36px;
+  --h1-line-height: 42px;
+
+  --h2-font-size: 24px;
+  --h2-line-height: 30px;
+
+  --h3-font-size: 20px;
+  --h3-line-height: 28px;
+}
+
+.dark {
+  --background: oklch(0.235 0 0);
+  --foreground: oklch(0.985 0.001 106.423);
+  --card: oklch(0.235 0 0);
+  --card-foreground: oklch(0.985 0.001 106.423);
+  --card-hover-opacity: oklch(70% 0.235 0 0);
+  --popover: oklch(0.235 0 0);
+  --popover-foreground: oklch(0.985 0.001 106.423);
+  --primary: oklch(100% 0.00011 271.152);
+  --primary-foreground: oklch(0.216 0.006 56.043);
+  --secondary: oklch(0.268 0.007 34.298);
+  --secondary-foreground: oklch(0.985 0.001 106.423);
+  --muted: oklch(0.268 0.007 34.298);
+  --muted-foreground: oklch(0.709 0.01 56.259);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --border-hover: oklch(0.8914 0 0);
+  --input: oklch(1 0 0 / 15%);
+  --custome-btn: oklch(100% 0.00011 271.152);
+  --custome-hover: oklch(0% 0 0);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --h1-font-size: 60px;
+    --h1-line-height: 48px;
+
+    --h2-font-size: 32px;
+    --h2-line-height: 40px;
+
+    --h3-font-size: 26px;
+    --h3-line-height: 32px;
+  }
+}
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1 {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: var(--h1-font-size);
+    line-height: var(--h1-line-height);
+    font-weight: 900;
+  }
+  h2 {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: var(--h2-font-size);
+    line-height: var(--h2-line-height);
+    font-weight: 700;
+  }
+  h3 {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-line-height);
+  }
+  p {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 200;
+  }
 }

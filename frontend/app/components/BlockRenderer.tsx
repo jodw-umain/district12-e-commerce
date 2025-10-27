@@ -2,8 +2,11 @@ import React from 'react'
 
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
+import Hero from '@/app/components/blocks/Hero'
 import {dataAttr} from '@/sanity/lib/utils'
-
+import ArtistCardComponent from './blocks/ArtistCard'
+import ProductsBlockComponent from './blocks/ProductsBlock'
+import ProductDetails from './ProductDetails'
 type BlocksType = {
   [key: string]: React.FC<any>
 }
@@ -23,6 +26,10 @@ type BlockProps = {
 const Blocks: BlocksType = {
   callToAction: Cta,
   infoSection: Info,
+  heroSection: Hero,
+  artistCard: ArtistCardComponent,
+  productsBlock: ProductsBlockComponent,
+  productDetails: ProductDetails,
 }
 
 /**
