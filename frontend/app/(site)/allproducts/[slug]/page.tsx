@@ -6,7 +6,6 @@ import {productDetailsPageSlug, productQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 
 type Props = {
-  //   params: {slug: string}
   params: Promise<{slug: string}>
 }
 
@@ -17,8 +16,6 @@ export async function generateStaticParams() {
     perspective: 'published',
     stega: false,
   })
-
-  //   return data.map((item: {slug: string}) => ({slug: item.slug}))
   return data
 }
 
