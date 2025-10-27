@@ -60,13 +60,16 @@ export default async function AllProductsPage({
           <Button variant="secondary" className="rounded-full sm:px-8 px-4 mb-3">
             Price ▾
           </Button>
-          <div className="absolute hidden group-hover:block bg-white border rounded-md shadow-lg mt-0 z-10">
+          <div className="absolute hidden group-hover:block  bg-primary border rounded-md shadow-lg mt-0 z-10">
             {["$", "$$", "$$$"].map((symbol) => (
               <Link
                 key={symbol}
                 href={buildUrl({ price: symbol })}
-                className={`block px-4 py-2 hover:bg-gray-50 ${
-                  activePrice === symbol? "bg-gray-100 font-medium" : ""
+                className={`block px-4 py-2 
+                           hover:bg-gray-50 
+                           text-black dark:text-white
+                  ${
+                  activePrice === symbol? "bg-gray-300 font-medium" : ""
                 }`}
               >
                 {symbol}
@@ -79,12 +82,15 @@ export default async function AllProductsPage({
           <Button variant="secondary" className="rounded-full sm:px-8 px-4 mb-3">
             Format ▾
           </Button>
-          <div className="absolute hidden group-hover:block bg-white border rounded-md shadow-lg mt-0 z-10">
+          <div className="absolute hidden group-hover:block bg-primary border rounded-md shadow-lg mt-0 z-10">
             {["digital", "physical"].map((fmt) => (
               <Link
                 key={fmt}
                 href={buildUrl({ format: fmt })}
-                className={`block px-4 py-2 hover:bg-gray-50 ${
+                className={`block px-4 py-2 
+                          hover:bg-gray-50
+                          text-black dark:text-white  
+                  ${
                   activeFormat === fmt ? "bg-gray-100 font-medium" : ""
                 }`}
               >
